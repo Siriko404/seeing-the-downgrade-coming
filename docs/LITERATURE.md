@@ -19,7 +19,8 @@ years, its own question (how far ahead), and its own way of testing. The numbers
 - Ours, 0.802, sits in the middle of the reported range. That is not a claim that ours is better or worse than any
   paper's.
 - In Malone, Smales & Liu, the ordered logit is much weaker than the tree models (0.536 against 0.741 and 0.768). In our
-  test the logit scored slightly above the tree-based engines (see [RESULTS.md](RESULTS.md)). The sample, the inputs and
+  test the logit was close to the tree-based engines: boosting scored slightly above it (0.808 against 0.802) but its
+  interval included zero, while XGBoost and the random forest scored below (0.800 and 0.794). The sample, the inputs and
   the way of testing differ, so we cannot say why.
 
 ## Why a random split can flatter or hurt

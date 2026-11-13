@@ -35,11 +35,12 @@ FIRST_TESTED = 2016                             # first out-of-sample year of ev
 
 
 def prepare(df: pd.DataFrame) -> pd.DataFrame:
-    """The same two preparation steps evaluate.main applies: clip the interest-cover ratio, add the report year."""
+    """The preparation steps evaluate.main applies: clip the interest-cover ratio, add the report year, and put the
+    rows in evaluate's fixed order (so a different file order cannot change the fitted models)."""
     df = df.copy()
     df["ebit_interest"] = df["ebit_interest"].clip(-50, 100)
     df["year"] = pd.to_datetime(df["t"]).dt.year
-    return df
+    return E.fixed_order(df)
 
 
 def main():

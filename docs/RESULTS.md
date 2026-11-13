@@ -21,11 +21,16 @@ probability, 13.5%, has the right overall rate and no skill at all.
 
 ## The numbers
 
+The comparison numbers below were rerun on 13 November 2026 with a fixed row order, because before that the row order
+of the table file decided which rows boosting set aside for its own early stopping and so its numbers were partly luck.
+The slides PDF now shows the rerun numbers.
+
 | Result | Number | In plain words |
 |---|---|---|
 | Logit, ROC-AUC | 0.802 | Pick one report that was followed by a downgrade and one that was not. The logit gave the first a higher score in about 80% of such pairs. 0.5 would be a coin flip. |
 | Logit, PR-AUC | 0.494 | A harder score when downgrades are rare. A model with no skill scores about the share of downgrades, 0.135. |
-| Other single engines that are not fly models (gradient boosting, boosting with direction rules, random forest, XGBoost, neural network), ROC-AUC | 0.787 to 0.795 | All scored slightly below the logit's 0.802. Averages of several models that include the logit scored up to 0.809; the logit-boosting average's edge over the logit (+0.007) is the only interval above zero. |
+| Other single engines that are not fly models (gradient boosting, boosting with direction rules, random forest, XGBoost, neural network), ROC-AUC | 0.785 to 0.808 | Boosting (0.808) is slightly above the logit, but its interval includes zero, so no single engine is clearly better than the logit. The neural network (0.785) is clearly below. The calibrated flag line caught 431 downgrades for boosting. |
+| Averages of several models that include the logit, ROC-AUC | 0.817 and 0.813 | Both are clearly above the logit: the logit-boosting average by +0.014 (interval +0.009 to +0.020; it is also ahead on PR-AUC, +0.019) and the average of all non-fly models by +0.011. The logit-boosting average's calibrated flag line caught 425 downgrades. |
 | S&P rating state alone, ROC-AUC | 0.757 | The company's rating, outlook and watch status, with no financial ratios, no market data and no economy. It already does most of the work. |
 | Fly brain models, ROC-AUC | 0.759 to 0.807 | Networks with fixed fruit-fly wiring and a trained readout. The top value, 0.807, is a whole-brain model with shuffled wiring. Every fly model's PR-AUC (0.369 to 0.476) is below the logit's 0.494. Across the three seeds, one fly model's AUC varied by about 0.025 to 0.036. |
 | Real fly wiring against shuffled wiring | no consistent edge | Scrambling the fly's connections did not lower the score in a consistent way. There is no sign that the real wiring pattern helped. |
@@ -54,8 +59,9 @@ glossary.
 - **A better AUC is not a better trade.** The results listed here are about downgrades, not stock returns or profit. The
   lecture also checked the later stock returns of flagged firms in a separate analysis (model step 9); that is not a
   trading strategy.
-- **The differences between engines are small.** On these numbers no engine is clearly better than the logit, and the
-  fly brain's real wiring shows no advantage. That does not prove that the fly brain, or any one engine, is useless.
+- **The single engines are close; the averages are ahead.** No single engine is clearly better than the logit, but both
+  averages that include the logit are clearly above it, and the fly brain's real wiring shows no advantage. That does not
+  prove that the fly brain, or any one engine, is useless.
 - **The score is for a particular sample.** US companies with a 10-K and an S&P rating, excluding financials and
   utilities, 2016 to 2024. It says nothing about other countries, other agencies or private companies.
 - **Free data will give different numbers** (for example, free price histories often omit companies that stopped

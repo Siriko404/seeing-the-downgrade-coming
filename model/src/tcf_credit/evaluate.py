@@ -25,16 +25,21 @@ volatility, negative EBITDA, beta, idiosyncratic volatility, first-release econo
 features_v2.
 
 Usage: python -m tcf_credit.evaluate PANEL_CSV OUT_DIR [--first 2016 --last 2024 --flag 0.10]
-       [--text] [--drop COL,COL] [--zoo] [--only NAME,NAME] [--tune-end YEAR]
+       [--text] [--drop COL,COL] [--zoo] [--only NAME,NAME] [--tune-end YEAR] [--jobs N]
 --first, --last: first and last test year. --flag: the share (0.10 = top 10%) of an earlier year's scores that sets
 the flag line, and the share the rank rule flags within each test year; the flag line flags more or fewer reports (888
 of 6,380 for the logit in the lecture run).
 --tune-end: last validation year (default first-2, so every validation outcome is known before the first test year
 starts).
+--jobs: number of worker processes that run the test years (default: os.cpu_count(); --jobs 1 runs the years one
+after another in this process). The settings are tuned first; after that the test years do not depend on each other.
+The parent puts the years back in order, so per_year.csv, pooled.csv and predictions.csv are the same for any --jobs.
 """
 import json
+import os
 import sys
 import time
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 import numpy as np
@@ -53,6 +58,15 @@ MARKET = ["ret_12m", "ret_6m", "vol_12m", "mcap_debt", "dd_naive"]
 # Change in Loughran-McDonald negative / uncertainty word shares since the previous 10-K (used with --text).
 TEXT = ["lm_neg_chg", "lm_unc_chg"]
 EXTRA = []   # filled in main: V2_COLUMNS (the features_v2 inputs) and MARKET always, TEXT with --text
+
+
+def fixed_order(df):
+    """Put the rows in one fixed order: by report date (t), then company (cik), then report number (accn).
+
+    The panel file may list the same rows in any order. Boosting (and the other tree models) draw their validation
+    rows by position, so a different file order would give a different model and different scores. A stable sort by
+    these three keys makes a rebuilt panel give the same result."""
+    return df.sort_values(["t", "cik", "accn"], kind="stable").reset_index(drop=True)
 
 
 class Prep:
@@ -201,6 +215,104 @@ def tune(df, first, end=None):
                                          "average_precision_by_setting": scores}}
 
 
+def thread_budget(jobs):
+    """How many threads each worker may use: the cores split evenly over the workers, at least one.
+    With N workers each taking all cores, the workers would fight for the same cores (oversubscription)."""
+    return max(1, (os.cpu_count() or 1) // max(1, jobs))
+
+
+def limit_threads(budget, zoo_on=False):
+    """Give this process at most `budget` threads for the libraries that start their own threads.
+
+    The parent sets the same variables before the pool starts, so a worker that starts fresh (forkserver or spawn)
+    reads them before the heavy imports. threadpoolctl (if installed) also limits libraries that are already loaded.
+    The zoo engines keep their own n_jobs unless the budget is smaller."""
+    for name in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"):
+        os.environ[name] = str(budget)
+    try:
+        from threadpoolctl import threadpool_limits
+        WORKER["threads"] = threadpool_limits(budget)     # kept alive here so the limit stays in force
+    except Exception:                                      # threadpoolctl is optional
+        pass
+    if zoo_on:
+        try:
+            import torch
+            torch.set_num_threads(budget)
+        except Exception:                                  # torch is only needed by the fly models
+            pass
+        from tcf_credit import zoo
+        for fixed in (zoo.XGB_FIXED, zoo.RF_FIXED):
+            if fixed.get("n_jobs", 1) > budget:
+                fixed["n_jobs"] = budget
+
+
+WORKER = {}   # data kept by a worker process: the panel, the chosen settings and the run options
+
+
+def worker_init(df, params, flag, cfg, budget):
+    """Set up one worker process once: keep the plain data it needs and apply the thread budget."""
+    WORKER.update(df=df, params=params, flag=flag, cfg=cfg)
+    limit_threads(budget, cfg["zoo"])
+
+
+def worker_year(year):
+    """Run one test year in a worker process, using the data that worker_init saved."""
+    w = WORKER
+    return evaluate_year(year, w["df"], w["params"], w["flag"], w["cfg"])
+
+
+def evaluate_year(year, df, params, flag, cfg):
+    """Score one test year and return dict(year, rows, preds, timing).
+
+    Takes only plain arguments, so it can run in a worker process with fork, forkserver or spawn. `cfg` holds the
+    --drop, --text/--zoo/--only choices, because a worker process does not share the parent's globals."""
+    DROP[:] = cfg["drop"]
+    EXTRA[:] = cfg["extra"]
+    ZOO = cfg["zoo"]
+    ONLY[:] = cfg["only"]
+    ms = models(params)
+    avgs = averages(list(ms))
+    train, test = df[df.year <= year - 2], df[df.year == year]
+    calib_train, calib = df[df.year <= year - 4], df[df.year == year - 2]
+    y = test.label.to_numpy()
+    scored, timing = {}, {}
+    for name, (make, cols_, impute, sectors) in ms.items():
+        t0 = time.time()
+        ptr, pte = fit_predict(make, cols_, impute, sectors, train, test)
+        _, pcal = fit_predict(make, cols_, impute, sectors, calib_train, calib)
+        scored[name] = (ptr, pte, pcal)
+        timing[name] = timing.get(name, 0.0) + time.time() - t0
+    for name, members in avgs.items():
+        scored[name] = tuple(np.mean([scored[m][i] for m in members], axis=0) for i in range(3))
+    rows, preds = [], []
+    for name, (ptr, pte, pcal) in scored.items():
+        # Rule 1 (calibrated cut, the one the lecture reports): a model trained on years <= Y-4 scores year Y-2 out
+        # of sample; the cut flags the top `flag` share of those scores, so the line is set from an earlier year.
+        # Rule 2 (rank): flag the riskiest `flag` share within the test year itself (for comparison only).
+        f_cut = pte >= np.quantile(pcal, 1 - flag)
+        f_rank = pte >= np.quantile(pte, 1 - flag)
+        base = dict(year=year, model=name, n=len(test), downgrades=int(y.sum()),
+                    auc=roc_auc_score(y, pte) if y.min() != y.max() else None,
+                    train_auc=roc_auc_score(train.label, ptr))
+        rows.append({**base, "rule": "calibrated_cut", **confusion(f_cut, y)})
+        rows.append({**base, "rule": "rank_top", **confusion(f_rank, y)})
+        preds.append(pd.DataFrame({"year": year, "model": name, "cik": test.cik, "t": test.t, "label": y, "p": pte,
+                                   "flag_cut": f_cut, "flag_rank": f_rank}))
+    return dict(year=year, rows=rows, preds=pd.concat(preds), timing=timing)
+
+
+def merge_year_results(results):
+    """Put the per-year results back in YEAR ORDER and join them (a worker may finish out of order).
+    Returns (per_year, predictions, timing); timing is the sum over the years for each model."""
+    results = sorted(results, key=lambda r: r["year"])
+    rows = [row for r in results for row in r["rows"]]
+    timing = {}
+    for r in results:
+        for name, seconds in r["timing"].items():
+            timing[name] = timing.get(name, 0.0) + seconds
+    return pd.DataFrame(rows), pd.concat([r["preds"] for r in results]), timing
+
+
 def confusion(f, y):
     """Count the four outcomes of a flag rule: flagged downgrade (TP), false alarm (FP), missed downgrade (FN),
     quiet non-downgrade (TN)."""
@@ -213,11 +325,16 @@ def main():
     global ZOO
     args = sys.argv[1:]
     df = pd.read_csv(args[0])
+    # Fixed row order, so that the same panel with its rows in another order gives the same models and scores.
+    df = fixed_order(df)
     out = Path(args[1]); out.mkdir(parents=True, exist_ok=True)
     first = int(args[args.index("--first") + 1]) if "--first" in args else 2016
     last = int(args[args.index("--last") + 1]) if "--last" in args else 2024
     flag = float(args[args.index("--flag") + 1]) if "--flag" in args else 0.10
     tune_end = int(args[args.index("--tune-end") + 1]) if "--tune-end" in args else first - 2
+    jobs = int(args[args.index("--jobs") + 1]) if "--jobs" in args else (os.cpu_count() or 1)
+    if jobs < 1:
+        raise SystemExit("--jobs must be at least 1")
     if "--drop" in args:
         DROP.extend(args[args.index("--drop") + 1].split(","))
     if "--text" in args:
@@ -236,7 +353,10 @@ def main():
     params = tune(df, first, tune_end)
     ms = models(params)
     avgs = averages(list(ms))
-    rows, preds, timing = [], [], {}
+    # A worker process does not share the parent's globals, so pass the run options as plain values.
+    cfg = {"drop": list(DROP), "extra": list(EXTRA), "zoo": ZOO, "only": list(ONLY)}
+    # Find the test years first: this also checks the calibration year before any work starts.
+    years = []
     for Y in range(first, last + 1):
         train, test = df[df.year <= Y - 2], df[df.year == Y]
         if test.empty or train.label.nunique() < 2:
@@ -244,32 +364,37 @@ def main():
         calib_train, calib = df[df.year <= Y - 4], df[df.year == Y - 2]
         if calib.empty or calib_train.label.nunique() < 2:
             raise SystemExit(f"no calibration data for test year {Y}; start later with --first")
-        y = test.label.to_numpy()
-        scored = {}
-        for name, (make, cols_, impute, sectors) in ms.items():
-            t0 = time.time()
-            ptr, pte = fit_predict(make, cols_, impute, sectors, train, test)
-            _, pcal = fit_predict(make, cols_, impute, sectors, calib_train, calib)
-            scored[name] = (ptr, pte, pcal)
-            timing[name] = timing.get(name, 0.0) + time.time() - t0
-        for name, members in avgs.items():
-            scored[name] = tuple(np.mean([scored[m][i] for m in members], axis=0) for i in range(3))
-        for name, (ptr, pte, pcal) in scored.items():
-            # Rule 1 (calibrated cut, the one the lecture reports): a model trained on years <= Y-4 scores year Y-2 out
-            # of sample; the cut flags the top `flag` share of those scores, so the line is set from an earlier year.
-            # Rule 2 (rank): flag the riskiest `flag` share within the test year itself (for comparison only).
-            f_cut = pte >= np.quantile(pcal, 1 - flag)
-            f_rank = pte >= np.quantile(pte, 1 - flag)
-            base = dict(year=Y, model=name, n=len(test), downgrades=int(y.sum()),
-                        auc=roc_auc_score(y, pte) if y.min() != y.max() else None,
-                        train_auc=roc_auc_score(train.label, ptr))
-            rows.append({**base, "rule": "calibrated_cut", **confusion(f_cut, y)})
-            rows.append({**base, "rule": "rank_top", **confusion(f_rank, y)})
-            preds.append(pd.DataFrame({"year": Y, "model": name, "cik": test.cik, "t": test.t, "label": y, "p": pte,
-                                       "flag_cut": f_cut, "flag_rank": f_rank}))
-        print(f"test year {Y} done", flush=True)
-    per_year = pd.DataFrame(rows)
-    allp = pd.concat(preds)
+        years.append(Y)
+    total = len(years)
+    workers = min(jobs, total)     # no point starting more processes than there are years
+    results = []
+    if workers <= 1:
+        for done, Y in enumerate(years, 1):
+            results.append(evaluate_year(Y, df, params, flag, cfg))
+            print(f"test year {Y} done ({done} of {total})", flush=True)
+    else:
+        # The environment is set before the pool starts, so workers that start fresh (forkserver or spawn) read the
+        # thread limit before they import pandas and scikit-learn. worker_init sets it again in each worker.
+        budget = thread_budget(workers)
+        names = ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS")
+        old = {name: os.environ.get(name) for name in names}
+        for name in names:
+            os.environ[name] = str(budget)
+        try:
+            with ProcessPoolExecutor(max_workers=workers, initializer=worker_init,
+                                     initargs=(df, params, flag, cfg, budget)) as pool:
+                futures = [pool.submit(worker_year, Y) for Y in years]
+                for done, future in enumerate(as_completed(futures), 1):
+                    r = future.result()
+                    results.append(r)
+                    print(f"test year {r['year']} done ({done} of {total})", flush=True)
+        finally:
+            for name, value in old.items():
+                if value is None:
+                    os.environ.pop(name, None)
+                else:
+                    os.environ[name] = value
+    per_year, allp, timing = merge_year_results(results)
     pooled = []
     for name, g in allp.groupby("model", sort=False):
         for rule, col in (("calibrated_cut", "flag_cut"), ("rank_top", "flag_rank")):

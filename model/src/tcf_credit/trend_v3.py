@@ -92,6 +92,8 @@ def score_momentum(df: pd.DataFrame) -> pd.DataFrame:
     from tcf_credit import evaluate as E
     cols = E.cols(E.RATIOS + E.RATING + E.BINARY + V2_COLUMNS + E.MARKET)
     d = df[df.has_prices == 1].copy()
+    # Same fixed row order as evaluate.main (without resetting the index, which the score series below relies on).
+    d = d.sort_values(["t", "cik", "accn"], kind="stable")
     d["ebit_interest"] = d["ebit_interest"].clip(-50, 100)        # as evaluate.main
     oos = pd.Series(np.nan, index=df.index)
     for y in sorted(d.year.unique()):

@@ -45,6 +45,7 @@ model/
     02_train_and_test.ipynb
     03_flag_line_and_errors.ipynb
     04_fly_brain.ipynb
+    05_real_data.ipynb
 agent/
   README.md                how to install and run credit-watch
   skills/credit-watch/     the skill itself
@@ -89,13 +90,18 @@ Then follow [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
 ## Three ways to study the model
 
 1. **Example data (anyone).** A made-up table with the real column names, made by `model/synthetic/make_panel.py`. The
-   model's test steps (7 and 8 in `model/README.md`) and the four model notebooks run on it; the download and
+   model's test steps (7 and 8 in `model/README.md`) and model notebooks 1 to 4 run on it; the download and
    licensed-data steps do not. The numbers mean nothing.
 2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories, the Loughran-McDonald
-   10-K header file, FRED and Philadelphia Fed economy files, and free Yahoo prices. Your results will differ from the
-   lecture. This route has not been run from start to end, and the script that converts the Philadelphia Fed economy
-   files is missing from the package. See [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
-3. **Licensed data (only if your library gives you WRDS).** The lecture's own route.
+   10-K header file, FRED and Philadelphia Fed economy files, and free Yahoo prices in place of the licensed ones. One
+   command runs every step: `python -m tcf_credit.rebuild DATA OUT --route free` (the rating files and the
+   Loughran-McDonald file must be downloaded by hand; the command prints where). Free prices miss many companies that
+   stopped trading, so your results will differ from the lecture. This route has not yet been run from start to end
+   on fresh downloads. See notebook 5 and [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
+3. **Licensed data (only if your library gives you WRDS).** The lecture's own route, with your own WRDS account:
+   `python -m tcf_credit.rebuild DATA OUT --route wrds --wrds-user YOUR_NAME` (it asks for your WRDS password). On the
+   lecture's saved data the package's code rebuilds the lecture's table and results exactly; the WRDS download itself
+   has not been run against WRDS yet (no account was available).
 
 ## What is NOT included, and why
 
@@ -112,9 +118,10 @@ Then follow [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
   the slides: Compass Minerals (CMP), model chance 51% of an S&P downgrade within 12 months, from its 10-K filed on 29
   November 2023 (S&P cut its rating 204 days after the filing, 203 days after the snapshot date, the day after the
   filing). There is no other real score and no file of real scores (the agent tests use a small file of made-up scores
-  for firms that do not exist). The four model notebooks run on made-up data; the agent tutorial runs on saved rating
-  passages from real filings and shows no model score. The model's code is in `model/`, but the trained model, its
-  licensed training data and its scores are not included, so a note made with this package shows no model score.
+  for firms that do not exist). Model notebooks 1 to 4 run on made-up data, and notebook 5 reads the table you build
+  yourself; the agent tutorial runs on saved rating passages from real filings and shows no model score. The model's
+  code is in `model/`, but the trained model, its licensed training data and its scores are not included, so a note
+  made with this package shows no model score.
 - **The slides are a PDF** (`deck/lecture-slides.pdf`), not an editable file.
 
 ## Read next

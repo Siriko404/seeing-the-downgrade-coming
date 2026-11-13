@@ -8,3 +8,5 @@ xgboost==3.4.1
 ipykernel==7.4.0
 jupyterlab==4.6.6
 nbconvert==7.17.2
+openpyxl==3.1.5
+wrds==3.1.6

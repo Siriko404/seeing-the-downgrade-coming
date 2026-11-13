@@ -27,8 +27,8 @@ and some of these may be companies that were downgraded. This was not tested her
 2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories, FRED and Philadelphia
    Fed economy files, the Loughran-McDonald 10-K header file (and, for the side test, their 10-X summaries file of word
    counts) and free Yahoo prices in place of CRSP. Results will differ from the lecture. This route has not been run
-   from start to end, and one script is missing (the one that converts the Philadelphia Fed economy files; see the
-   outline below), so expect to debug.
+   from start to end, so expect to debug. `fetch_public.py` fetches the free inputs and `philly_fed.py` converts the
+   Philadelphia Fed economy files (see the outline below).
 3. **Licensed data (if your library gives you WRDS).** The lecture's route. See the last section.
 
 ## The inputs, in groups
@@ -54,7 +54,8 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
 
 - **Where.** The SEC publishes the numbers in each company's filings in a standard computer-readable form (XBRL),
   collected as "company facts" on EDGAR. Values are taken as first filed in that 10-K, not as later restated.
-- **Code.** `fetch_sec_bulk.py` downloads the SEC's bulk files (company facts, submissions, the ticker list).
+- **Code.** `fetch_sec_bulk.py --tickers-only` downloads the SEC's ticker list, the only SEC bulk file the pipeline
+  needs (without the option it also downloads the bulk company facts and filing lists, about 2 GB).
   `fetch_companyfacts.py` fetches the facts of chosen companies and keeps the tags listed in its TAGS table (the model
   reads all of them except four). `build_panel.py` builds the table (the panel) from them.
 - **Terms.** The SEC asks every program to declare a contact (your name and e-mail address) in its requests, and allows
@@ -97,10 +98,11 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
 - **Where.** FRED (the St. Louis Fed's free database) for the daily series (corporate bond spread over the 10-year
   Treasury, yield-curve slope, VIX). Unemployment and GDP growth are used **as first released**; industrial production
   growth is computed inside the latest monthly vintage published before *t*. All three come from the Philadelphia Fed's
-  Real-Time Data Set, so that later revisions do not leak in. Its spreadsheets were converted to CSV files by a script
-  that is NOT in this package.
-- **Code.** `features_v2.py` reads a folder of these files and picks the latest figure that was public by *t*. Its
-  module description explains the date rules.
+  Real-Time Data Set, so that later revisions do not leak in. Its spreadsheets are converted to CSV files by
+  `philly_fed.py`.
+- **Code.** `fetch_public.py` downloads the FRED series and the Philadelphia Fed spreadsheets; `philly_fed.py` converts
+  the spreadsheets. `features_v2.py` reads a folder of these files and picks the latest figure that was public by *t*.
+  Its module description explains the date rules.
 - **Terms.** Free to download. Some series have another owner (VIX belongs to Cboe), and FRED shows a notice on each
   series page. Read it. Do not redistribute.
 
@@ -117,7 +119,7 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
 
 ## What you must do, in short
 
-- Download every file yourself.
+- Fetch or download every file yourself.
 - Do not put any downloaded file, or any table made from it, into a public place.
 - Give the SEC your own contact in every program that calls it.
 - Keep the request pace the code sets.
@@ -125,17 +127,16 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
 
 ## A rough outline of the public route (way 2)
 
-This is an outline, not a recipe. It has not been run from start to end, and one script it needs (the one that converts
-the Philadelphia Fed spreadsheets to CSV files) is missing from this package.
+This is an outline, not a recipe. It has not been run from start to end.
 
-1. SEC: `fetch_sec_bulk.py`.
+1. SEC: `fetch_sec_bulk.py --tickers-only`.
 2. Ratings: download the 17g-7 archives, run `ratings_parser.py`, then `link_obligors.py`, then `fetch_companyfacts.py`
    on the links file it writes (for the companies you want).
 3. `build_panel.py` makes the panel.
 4. Prices: `fetch_yahoo.py`, then `yahoo_market.py`, then `market_features.py`.
-5. Economy: download the FRED series and the Philadelphia Fed files; convert the Philadelphia Fed spreadsheets to the
-   CSV names that `features_v2.py` reads (no conversion script is included, see `model/README.md`); put them in
-   `DATA/fred` and `DATA/fred/realtime`; then run `features_v2.py`.
+5. Economy: run `fetch_public.py` for the FRED series and the Philadelphia Fed spreadsheets, then run `philly_fed.py`
+   to convert the spreadsheets to the CSV names that `features_v2.py` reads; put them in `DATA/fred` and
+   `DATA/fred/realtime`; then run `features_v2.py`.
 6. `evaluate.py` runs the rolling-origin test.
 
 Each program's first lines (its docstring) tell you its arguments.
@@ -145,12 +146,24 @@ Each program's first lines (its docstring) tell you its arguments.
 This route is the lecture's. It is open only to students whose library subscribes to WRDS with CRSP and Compustat. Read
 your library's terms first; keep the files on your own machine and out of any public place.
 
-- `fetch_crsp.py` links SEC CIK to Compustat gvkey (the `comp_company.cik` column), then to CRSP permno through the CCM
-  link table (link types LU and LC, primary links P and C). It copies each file of your library's local copy of the data
-  to a temporary folder, keeps only the linked companies, and deletes the copy. It writes `crsp_links.csv`,
-  `crsp_daily.parquet` (permno, date, prc, ret, shrout, cfacpr) and `crsp_sp500.csv` (date, sprtrn).
-- `fetch_crsp_delist.py` adds delisting returns (used only by the stock-return analysis, `returns.py`) and the
-  value-weighted market return (also needed by `features_v2.py` for beta and idiosyncratic volatility).
+- `fetch_wrds.py` is the one-command route. It signs in with the official `wrds` Python package (the package asks for
+  your password itself and can save it in your own `~/.pgpass`; the code never prints, stores or logs it), runs SQL on
+  WRDS, and writes the same market folder that the old pair of programs writes:
+  `python -m tcf_credit.fetch_wrds OUT/panel.csv OUT/crsp [--username NAME] [--from-year 2009]`.
+  It links SEC CIK to Compustat gvkey (the `comp.company.cik` column), then to CRSP permno through the CCM link table
+  (`crsp.ccmxpf_lnkhist`; link types LU and LC, primary links P and C), using the same rule as `fetch_crsp.py`.
+  It writes `crsp_links.csv`, `crsp_daily.parquet` (permno, date, prc, ret, shrout, cfacpr), `crsp_sp500.csv`
+  (date, sprtrn), `crsp_vwretd.csv` (date, vwretd), `crsp_delist.csv` (permno, date, dlret, dlstcd) and
+  `wrds_crsp_stocknames.parquet` (the stock-names history that `audit_returns.py` reads).
+  It pulls only the linked stocks and the needed dates, in chunks. CRSP's legacy files (`crsp.dsf`, `crsp.dsi`,
+  `crsp.dsedelist`, `crsp.stocknames`) stop with the December 2024 release, so the program uses the CIZ tables
+  (`crsp.dsf_v2`, `crsp.wrds_dailyindexret_query`, `crsp.stkdelists`, `crsp.stocknames_v2`) for later dates. The
+  module's docstring names the WRDS page behind each table. It has not been run against a real WRDS account.
+- The old files remain for people who already have a local copy of the CRSP daily files. `fetch_crsp.py` links the
+  companies and copies each file of that local copy to a temporary folder, keeps only the linked stocks, and deletes
+  the copy. It writes `crsp_links.csv`, `crsp_daily.parquet` and `crsp_sp500.csv`. `fetch_crsp_delist.py` then adds
+  delisting returns (used only by `returns.py`) and the value-weighted market return (also needed by `features_v2.py`
+  for beta and idiosyncratic volatility).
 - `market_features.py` and `features_v2.py` read the same folder layout that `yahoo_market.py` writes, so both routes
   end in the same code (`evaluate.py` then reads the panel they write).
 - Anything these programs write holds vendor data. Keep it out of any shared folder, and do not send it to an online

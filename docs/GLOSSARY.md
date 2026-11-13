@@ -77,7 +77,8 @@ The model's unemployment, industrial production and GDP growth come from the Phi
 instead.
 
 **Gradient boosting.** A method that builds many small decision trees one after another, each one correcting the
-mistakes of the trees before it. It can find patterns a logit cannot, and it can also overfit.
+mistakes of the trees before it. It can find patterns a logit cannot, and it can also overfit. In the lecture's
+comparison it scored close to the logit: slightly above, but not clearly better.
 
 **Input.** A number the model uses to make a prediction, such as debt divided by assets. Machine-learning books call it
 a *feature*. Most columns of the panel are inputs; a few (names, dates, raw amounts, years rated) are kept for reference
@@ -94,7 +95,8 @@ report, and 0 if it does not.
 
 **Logit.** Short for logistic regression. It adds up the inputs, each times a weight, and turns the sum into a
 probability between 0 and 1. It is the main model here: it was named as such on 4 November 2026, before the extra models
-were run, and the other models are compared with it.
+were run, and the other models are compared with it. In the lecture's comparison no single engine was clearly better,
+but both averages that include the logit were.
 
 **Look-ahead bias.** Using information that was not yet public at the time of the prediction, for example a figure that
 a company restated a year later. It makes a model look better than it could have been in real life.
@@ -105,7 +107,8 @@ Loughran and Bill McDonald for 10-K text. The model's text test counts how often
 **Miss.** A company that is downgraded within 12 months but that the model did not flag.
 
 **Neural network.** A model built from layers of small units that each add up their inputs and pass on a result. With
-enough units it can fit very complex shapes, and it can overfit.
+enough units it can fit very complex shapes, and it can overfit. In the lecture's comparison it scored clearly below the
+logit.
 
 **Notch.** One step on a rating scale. AA to AA- is one notch; BBB- to BB+ is also one notch. In the panel, notch counts
 from 1 (AAA) upward.
