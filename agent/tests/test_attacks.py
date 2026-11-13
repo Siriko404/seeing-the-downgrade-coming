@@ -1,8 +1,12 @@
-"""Attacks on check.py and finish.py: wrong rows and wrong note sentences that must be caught.
+"""Attack tests for check.py: nine wrong rating rows or cases that it must reject or still report.
 
-Each test plants a wrong row or note sentence that misstates its filing or cited rows, checks that a valid control
-still passes, and checks that the checker rejects the wrong one (or lists the gap). Input: a frozen copy of the
-2026-11-07 HON RY SJ run in tests/fixtures/, so a new run does not change these tests.
+Each test plants a wrong row (in Attack 9, an unrelated row that must not hide a gap), checks that a correct control
+still passes, and checks that check.py rejects the wrong row (or lists the gap). Input: a frozen copy of the 2026-11-07
+HON RY SJ run in tests/fixtures/hon-ry-sj-2026-11-07, so a new run does not change these tests. Attacks on the note's
+sentences were removed because finish.py now writes every note line from checked rows; tests/test_note.py covers that.
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_attacks.py
+Standard library only.
 """
 import subprocess
 import sys
@@ -60,7 +64,8 @@ class CheckRowAttacks(FrozenRunAttackBase):
     """Attacks on check.py C1-C4 and gaps_for where wrong rows pass unchecked."""
 
     def test_attack_01_prose_upgrade_inverted_to_downgrade_and_old_from_grade(self):
-        """Attack C-01: Prose upgrade 'to AA+ from AA' reported as a 'downgrade' to the old grade 'AA'."""
+        """Attack 1: the sentence 'upgraded ... to AA+ from AA' is reported as a downgrade to the old grade AA;
+        check.py must reject that row."""
         p21 = self.passages["P21"]
         tk = self.tickers["RY"]
         quote = (
@@ -91,11 +96,12 @@ class CheckRowAttacks(FrozenRunAttackBase):
         why, _ = K.check_row(wrong_row, p21, tk)
         self.assertTrue(
             why,
-            "Attack C-01 passed check.py: prose upgrade 'to AA+ from AA' was accepted as action='downgrade' with old grade='AA'.",
+            "Attack 1 passed check.py: prose upgrade 'to AA+ from AA' was accepted as action='downgrade' with old grade='AA'.",
         )
 
     def test_attack_02_prose_outlook_change_reports_old_from_outlook(self):
-        """Attack C-02: Prose 'from stable to review for downgrade' reported as outlook 'stable'."""
+        """Attack 2: the sentence 'outlook from stable to review for downgrade' is reported with the old outlook
+        'stable'; check.py must reject that row."""
         p11 = self.passages["P11"]
         tk = self.tickers["HON"]
         quote = "On February 2, 2026, Moody's revised their credit rating outlook from stable to review for downgrade."
@@ -120,11 +126,12 @@ class CheckRowAttacks(FrozenRunAttackBase):
         why, _ = K.check_row(wrong_row, p11, tk)
         self.assertTrue(
             why,
-            "Attack C-02 passed check.py: 'from stable to review for downgrade' was accepted with outlook_or_watch='stable'.",
+            "Attack 2 passed check.py: 'from stable to review for downgrade' was accepted with outlook_or_watch='stable'.",
         )
 
     def test_attack_03_prose_outlook_fabricated_watch_prefix_via_last_word_match(self):
-        """Attack C-03: C2 checks only o.split()[-1], accepting 'CreditWatch negative' when quote has no watch/review."""
+        """Attack 3: the sentence 'outlook from review for downgrade to negative' is reported as 'CreditWatch negative'
+        with action 'watch placed'; check.py must reject that row."""
         p13 = self.passages["P13"]
         tk = self.tickers["HON"]
         quote = "On June 25, 2026, Moody's revised their credit rating outlook from review for downgrade to negative."
@@ -150,11 +157,12 @@ class CheckRowAttacks(FrozenRunAttackBase):
         why, norm = K.check_row(wrong_row, p13, tk)
         self.assertTrue(
             why,
-            f"Attack C-03 passed check.py: 'CreditWatch negative' (normalised '{norm.get('outlook')}') accepted on a quote with no watch/review.",
+            f"Attack 3 passed check.py: 'CreditWatch negative' (normalised '{norm.get('outlook')}') accepted on a quote with no watch/review.",
         )
 
     def test_attack_04_table_substring_label_collision_legacy_vs_bail_in_senior(self):
-        """Attack C-04: same_item substring check accepts 'Senior long-term debt' with Legacy grade 'AA' instead of 'AA-'."""
+        """Attack 4: in the Fitch table row, legacy senior long-term debt is AA and senior long-term debt is AA-; a row
+        for 'Senior long-term debt' with the legacy grade AA must be rejected."""
         p15 = self.passages["P15"]
         tk = self.tickers["RY"]
         quote = "Row: Fitch Ratings \u2021 (6) | Short-term debt: F1+ | Legacy senior long-term debt (2): AA | Senior long-term debt (3): AA- | Outlook: stable"
@@ -179,11 +187,12 @@ class CheckRowAttacks(FrozenRunAttackBase):
         why, norm = K.check_row(wrong_row, p15, tk)
         self.assertTrue(
             why,
-            f"Attack C-04 passed check.py: 'Senior long-term debt' with grade 'AA' (Legacy grade) passed and bucketed into '{norm.get('item')}'.",
+            f"Attack 4 passed check.py: 'Senior long-term debt' with grade 'AA' (Legacy grade) passed and bucketed into '{norm.get('item')}'.",
         )
 
     def test_attack_05_action_date_stolen_from_another_agency_in_same_passage(self):
-        """Attack C-05: C3 checks p['text'] instead of quote, letting S&P's March 6 row take Moody's February 2 date."""
+        """Attack 5: an S&P row whose quote says 'On March 6, 2026' is given the date 2026-02-02, which is Moody's date
+        in another sentence of the same passage; check.py must reject that row."""
         p11 = self.passages["P11"]
         tk = self.tickers["HON"]
         quote = "On March 6, 2026, S&P revised their credit rating outlook from watch negative to negative."
@@ -208,11 +217,12 @@ class CheckRowAttacks(FrozenRunAttackBase):
         why, _ = K.check_row(wrong_row, p11, tk)
         self.assertTrue(
             why,
-            "Attack C-05 passed check.py: S&P quote stating 'On March 6, 2026' was accepted with rating_date='2026-02-02'.",
+            "Attack 5 passed check.py: S&P quote stating 'On March 6, 2026' was accepted with rating_date='2026-02-02'.",
         )
 
     def test_attack_06_multi_agency_prose_cross_attribution_fitch_outlook_given_to_sp(self):
-        """Attack C-06: Prose quote with S&P (negative) and Fitch (stable) lets S&P be assigned Fitch's 'stable' outlook."""
+        """Attack 6: a quote holds an S&P outlook (negative) and a Fitch outlook (stable); a row that gives S&P the
+        outlook 'stable' must be rejected, or kept only with a note that several agencies are in the quote."""
         p11 = self.passages["P11"]
         tk = self.tickers["HON"]
         quote = (
@@ -239,12 +249,13 @@ class CheckRowAttacks(FrozenRunAttackBase):
         }
         why, norm = K.check_row(wrong_row, p11, tk)
         self.assertTrue(
-            why or "several" in norm.get("read", ""),  # G3 option C: kept only when flagged for a person
-            "Attack C-06 passed check.py: S&P was accepted with Fitch's 'stable' outlook from a two-sentence quote.",
+            why or "several" in norm.get("read", ""),  # kept only when flagged for a person to verify
+            "Attack 6 passed check.py: S&P was accepted with Fitch's 'stable' outlook from a two-sentence quote.",
         )
 
     def test_attack_07_prose_wrong_item_assigns_long_term_grade_to_short_term_debt(self):
-        """Attack C-07: Prose check ignores what_is_rated, allowing short-term debt to be given long-term grade AA+."""
+        """Attack 7: the quote names a long-term upgrade to AA+ and a short-term rating of F1+; a row for 'short-term
+        debt rating' with the long-term grade AA+ must be rejected."""
         p21 = self.passages["P21"]
         tk = self.tickers["RY"]
         quote = (
@@ -274,11 +285,12 @@ class CheckRowAttacks(FrozenRunAttackBase):
         why, _ = K.check_row(wrong_row, p21, tk)
         self.assertTrue(
             why,
-            "Attack C-07 passed check.py: 'short-term debt rating' was accepted with long-term grade 'AA+'.",
+            "Attack 7 passed check.py: 'short-term debt rating' was accepted with long-term grade 'AA+'.",
         )
 
     def test_attack_08_entity_of_substring_rewrites_separate_company_to_filer(self):
-        """Attack C-08: entity_of maps 'Honeywell Aerospace Inc.' (separate ticker HONA) or 'Canada Inc.' to the filer."""
+        """Attack 8: a row names 'Honeywell Aerospace Inc.' (a separate company, ticker HONA) as the rated entity, but
+        it is not in the quote; check.py must reject it and not rename it to the filer."""
         p1 = self.passages["P1"]
         tk = self.tickers["HON"]
         quote = "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
@@ -303,11 +315,13 @@ class CheckRowAttacks(FrozenRunAttackBase):
         why, norm = K.check_row(wrong_row, p1, tk)
         self.assertTrue(
             why,
-            f"Attack C-08 passed check.py: unmentioned separate company 'Honeywell Aerospace Inc.' was rewritten to '{norm.get('entity')}'.",
+            f"Attack 8 passed check.py: unmentioned separate company 'Honeywell Aerospace Inc.' was rewritten to '{norm.get('entity')}'.",
         )
 
     def test_attack_09_unrelated_affirmation_suppresses_ga_outlook_change_gap(self):
-        """Attack C-09: dated_action in G-a (iii) accepts any action != 'none' (e.g. short-term affirmed), suppressing an unexplained outlook jump."""
+        """Attack 9: an S&P outlook goes from watch negative (2025-12-31) to stable (2026-03-31) with no dated action;
+        an unrelated 'reviewed' row for short-term debt (2026-01-15) must not hide the gap that check.py lists for
+        it."""
         tk_map = {"HON": {"name": "Honeywell International Inc.", "filings": 2, "manual": 0, "unreadable": []}}
         base_rows = [
             {
@@ -365,7 +379,7 @@ class CheckRowAttacks(FrozenRunAttackBase):
         gaps = K.gaps_for(attack_rows, tk_map, "2026-05-01", "2025-05-01")
         self.assertTrue(
             any(g["rule"] == "G-a changed, no date" for g in gaps),
-            "Attack C-09 suppressed G-a: an unrelated 'reviewed' row hid an unexplained outlook jump from watch negative to stable.",
+            "Attack 9 suppressed G-a: an unrelated 'reviewed' row hid an unexplained outlook jump from watch negative to stable.",
         )
 
 # The note-sentence attacks on finish.py (free text checked by regex) were removed on 2026-11-07: code now

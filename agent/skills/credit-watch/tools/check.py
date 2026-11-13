@@ -44,6 +44,7 @@ SILENT_DAYS = 457                                   # 15 months
 
 
 def low(s):
+    """The text with white space tidied (C.norm_space) and in lower case."""
     return C.norm_space(s).lower()
 
 
@@ -255,6 +256,8 @@ def new_state(text: str) -> str:
     'from stable to negative' -> 'to negative'; 'to AA+ from AA' -> 'to AA+'; 'from its prior A rating' -> ''.
     Words between 'from' and the old state are never taken out, so 'from developing on our Aa2 rating' keeps Aa2."""
     def cut(m):
+        """Replacement for one OLD_STATE match: a blank if the word after 'from' is a grade or an outlook or watch
+        state, else the text as it was."""
         t = m.group("tok")
         if re.search(r"negative|positive|developing|stable|evolving|downgrade|upgrade", t, re.I) or t in GRADES or \
                 re.sub(r"\s+", "", t) in GRADES:
@@ -535,6 +538,7 @@ def check_row(row: dict, p: dict | None, tk: dict | None, filing_text: str = "")
 
 
 def days(a: str, b: str) -> int:
+    """Whole days from date b to date a (both 'YYYY-MM-DD'); positive when a is the later date."""
     return (dt.date.fromisoformat(a) - dt.date.fromisoformat(b)).days
 
 
@@ -633,15 +637,20 @@ def gaps_for(rows: list, tickers: dict, as_of: str, start: str) -> list:
     out = []
 
     def add(t, rule, d1, d2, follow, refs, what):
+        """Add one gap (rule, dates, follow-up text and the rows it refers to) to the list of gaps."""
         out.append({"ticker": t, "rule": rule, "from": d1, "to": d2, "what": what, "follow_up": follow, "rows": refs})
 
     def dated_action(t, ent, ag, d1, d2, kinds=None, item=None):
+        """Rows of this firm, entity and agency that give a dated action (any action but 'none') after d1 and up to d2.
+        With kinds, only those actions; with item, only that item or a general one such as 'issuer' or 'credit
+        ratings'."""
         return [r for r in rows if r["ticker"] == t and r["entity"] == ent and r["agency"] == ag and r["rating_date"]
                 and r["date_kind"] == "action" and r["action"] not in ("none",) and d1 < r["rating_date"] <= d2
                 and (kinds is None or r["action"] in kinds)
                 and (item is None or r["item"] == item or GENERIC_ITEM.fullmatch(r["item"]))]   # another item's action: no
 
     def when(r):
+        """The date a row is about: its rating date, or the filing date when it has none."""
         return r["rating_date"] or r["filed"]
 
     for r in rows:                                               # G-a (i): an action with no full date
@@ -756,6 +765,7 @@ def gaps_for(rows: list, tickers: dict, as_of: str, start: str) -> list:
 
 
 def load_rows(path: Path) -> list:
+    """The rating rows the AI wrote in rows.json; stops with a plain message if the file is missing or not JSON."""
     if not path.exists():
         sys.exit(f"missing {path}: write the rows first (step 2)")
     try:
@@ -766,6 +776,7 @@ def load_rows(path: Path) -> list:
 
 
 def cell(s) -> str:
+    """A value made safe for a markdown table cell: '|' becomes '/' and a line break becomes a space."""
     return str(s).replace("|", "/").replace("\n", " ")
 
 

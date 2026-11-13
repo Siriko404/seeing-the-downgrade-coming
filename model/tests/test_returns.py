@@ -1,3 +1,7 @@
+"""Tests for returns.py (pipeline step 9: stock returns after the report, minus the market return).
+
+The tests use made-up daily returns in memory. They need no data and no internet.
+"""
 import unittest
 
 import numpy as np
@@ -14,6 +18,7 @@ def setup(ret=0.01, n=300, start="2020-01-01"):
 
 
 class ForwardReturnTests(unittest.TestCase):
+    """Checks of `forward_returns`: the window, delisting returns, the market return, no overwriting."""
     def test_snapshot_day_is_excluded_and_window_is_after_t(self):
         dates, daily, vw = setup(ret=0.0)
         t = dates[10]

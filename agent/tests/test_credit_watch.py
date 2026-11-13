@@ -1,7 +1,11 @@
-"""Tests for the credit-watch tools. Standard library only: python3 -m unittest discover -s tests
+"""Main tests of the credit-watch tools: fetch.py, check.py and finish.py.
 
-Each check gets planted failures (must be rejected, with the right check named) and a negative control
-(a correct row or sentence that must be kept), so a check that rejects everything also fails.
+Each check gets planted failures (must be rejected, with the right check named) and a control (a correct row or
+sentence that must be kept), so a check that rejects everything also fails. Also covers table layouts, notes, the
+model hook, holdings files, the data files and firm lookup.
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_credit_watch.py
+Standard library only.
 """
 import csv
 import json
@@ -16,7 +20,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SKILL = Path(__file__).resolve().parents[1] / "skills" / "credit-watch"
 TOOLS = SKILL / "tools"
-MADE_UP = HERE / "fixtures" / "made-up-scores"     # a stand-in for the skill's data/ folder: made-up scores for tests
+MADE_UP = HERE / "fixtures" / "made-up-scores"     # made-up scores.csv that tests copy next to the real data files
 sys.path.insert(0, str(TOOLS))
 os.environ["CREDIT_WATCH_SCORES"] = str(Path(tempfile.gettempdir()) / "credit-watch-tests-no-scores.csv")  # not this
 os.environ["CREDIT_WATCH_MODEL"] = ""                       # device's own scores file or model
@@ -69,6 +73,7 @@ def run(tool, cwd, *args, env=None):
 
 
 class Base(unittest.TestCase):
+    """Sets up a temporary project folder with one manual test filing (TST) and runs fetch.py on it."""
     def setUp(self):
         self.d = Path(tempfile.mkdtemp())
         m = self.d / "credit-watch" / "manual" / "TST"
@@ -95,6 +100,7 @@ class Base(unittest.TestCase):
 
 
 class FetchTests(Base):
+    """What fetch.py writes into passages: table text, stamps, dropped text, and the offline window."""
     def test_table_caption_and_columns_on_every_row(self):
         t = self.pid("Row: Long-term")
         p = next(p for p in self.ps["passages"] if p["id"] == t)
@@ -159,7 +165,8 @@ class FetchTests(Base):
 
 
 class TableLayoutTests(unittest.TestCase):
-    """Table layouts from the sealed test (Fortis 6-K and annual information form, 2025-2026)."""
+    """Fortis-style rating tables: a blank first cell takes the label of the row above, the item comes from the type
+    column, and a row that holds only a name starts a group for that company."""
     HTML = ("<table><tr><td colspan=3>As at June 30, 2025</td><td colspan=3>Rating</td><td colspan=3>Type</td>"
             "<td colspan=3>Outlook</td></tr>"
             "<tr><td colspan=3>S&amp;P</td><td colspan=3>A-</td><td colspan=3>Issuer</td><td colspan=3>Negative</td></tr>"
@@ -240,6 +247,7 @@ class EntityRowLabelTests(unittest.TestCase):
 
 
 class AgencyNameTests(unittest.TestCase):
+    """'S&P Global' counts as an agency name only where the text is about ratings."""
     def test_sp_global_is_the_agency_only_in_rating_context(self):
         yes = ["The Term Loan B was assigned a Ba2 rating from Moody's and BB rating from S&P Global.",   # 10-K wording
                "S&P Global lowered our rating to BB", "rated BB by S&P Global", "S&P Global Ratings affirmed A"]
@@ -251,7 +259,9 @@ class AgencyNameTests(unittest.TestCase):
 
 
 class MissingCellTests(unittest.TestCase):
-    """The unread-cell list: real skipped cells only (sealed test, Fortis and Northern Trust tables)."""
+    """The unread-cell list: only grade or outlook cells that were really left unread are listed. Scale text, N/A and
+    dash cells, a reinsurer table and a minimum-grade column are not counted, and a bank's cells are not covered by
+    its holding company's rows."""
 
     def passage(self, html, caption="Credit ratings of the Corporation"):
         b = [x for x in F.blocks_of(html.encode(), "x.htm") if x["kind"] == "table"][0]
@@ -325,6 +335,7 @@ class MissingCellTests(unittest.TestCase):
 
 
 class MissingActionTests(unittest.TestCase):
+    """Dated rating actions with no row are listed; the agency must be the one acting."""
     def test_month_dated_action_with_no_row_is_listed(self):
         import check as K
         ps = [{"id": "P1", "kind": "text", "ticker": "FTS", "text": "In January 2026, Moody's Investor Services, Inc. "
@@ -351,6 +362,8 @@ class MissingActionTests(unittest.TestCase):
 
 
 class TextItemTests(unittest.TestCase):
+    """An agency heading split over two table rows ('Standard' and '& Poor's'), and a text row whose item is not in its
+    quote, which is recorded as 'long-term (item not named)'."""
     def test_agency_heading_broken_over_two_rows(self):
         """'Standard' on one header row, '& Poor's' on the next (a line break in the heading cell)."""
         html = ("<table><tr><td></td><td></td><td>Standard</td><td></td></tr>"
@@ -416,6 +429,7 @@ class TwoLevelHeaderTests(unittest.TestCase):
 
 
 class CheckTests(Base):
+    """check.py on a prepared run: planted wrong rows are rejected, controls are kept, rounds and gaps."""
     def test_gradeless_row_beside_a_row_of_the_same_quote_adds_nothing(self):
         good, act, undated, bad = self.rows()
         bare = {**act, "outlook_or_watch": "", "action": "outlook change"}  # same quote, states no grade or outlook
@@ -594,6 +608,7 @@ class CheckTests(Base):
 
 
 class FinishTests(Base):
+    """finish.py: the note written by code for each firm, its model lines and the scores it reads."""
     def setUp(self):
         super().setUp()
         c = CheckTests.rows(self)
@@ -686,7 +701,10 @@ def row(i, agency, grade="", outlook="", action="none", date="", kind="as_of", f
 
 
 class NoteShapeTests(unittest.TestCase):
-    """One screen: a move a dated action states is listed once; credit flags from the company's own grades."""
+    """The lines of the note and the rows behind them: a move stated by a dated action is listed once, a withdrawal
+    ends an agency's grades, other entities get one line each, equal actions are merged, credit flags use the
+    company's own grades, and each note of a saved run has at most 45 lines. Also: a security is not a rated
+    company, a removed watch keeps the new outlook, and exhibit text can belong to another company."""
     def test_move_listed_once_when_a_dated_action_states_it(self):
         import finish as N
         table = [row(1, "S&P", outlook="watch negative", date="2025-12-31"),
@@ -842,7 +860,7 @@ class NoteShapeTests(unittest.TestCase):
                 L = (d / f"credit-watch/run/note_{t}.md").read_text().splitlines()
                 # 30 lines of content (blank lines between sections are for the eye)
                 self.assertLessEqual(len([x for x in L if x.strip()]), 30, t)
-                self.assertLessEqual(len(L), 45, t)                       # with the blank lines: still one screen
+                self.assertLessEqual(len(L), 45, t)                       # with the blank lines: 45 lines at most for these saved runs
                 heads = [i for i, x in enumerate(L) if x.startswith("## ")]
                 self.assertEqual(len(heads), 6, t)
                 for i in heads:
@@ -1033,6 +1051,7 @@ class HoldingsTests(unittest.TestCase):
 
 
 class LatestScoreTests(unittest.TestCase):
+    """The latest score snapshot wins when several scores files hold the same firm."""
     def test_latest_snapshot_wins_across_files(self):
         """A backtest leaves an old score in this device's file; a later score in data/scores.csv still wins."""
         import finish as N
@@ -1054,6 +1073,7 @@ class LatestScoreTests(unittest.TestCase):
 
 
 class DataTests(unittest.TestCase):
+    """The data files: hyphens, no licensed columns in the scores, and the agencies in the scales."""
     def test_special_hyphens_are_hyphens(self):
         """Filings write 'P\u20112' with a non-breaking hyphen; correct rows were rejected."""
         for h in ("\u2010", "\u2011", "\u2012", "\u2212"):
@@ -1120,8 +1140,8 @@ class LookupTests(unittest.TestCase):
         self.assertEqual(c("ADS=1101215", object())["cik"], "1101215")       # the CIK form works
 
 
-class AuditFixTests(unittest.TestCase):
-    """Fixes made after a review of the checker: each test fails on the code before the fix."""
+class CheckerFixTests(unittest.TestCase):
+    """Checker, lookup and note fixes: each test checks one fix or behaviour; the name of the test says which."""
     def setUp(self):
         self.d = Path(tempfile.mkdtemp())
 
@@ -1160,6 +1180,7 @@ class AuditFixTests(unittest.TestCase):
         index = lambda n: (f'<tr><td>1</td><td>q</td><td><a href="/x/{n}">{n}</a></td><td>10-Q</td></tr>').encode()
 
         class Sec:
+            """A stand-in for the SEC client: one document fails to download, the other is the test filing."""
             def get(self, url, keep):
                 if "submissions" in url:
                     return json.dumps(sub).encode()
@@ -1186,6 +1207,7 @@ class AuditFixTests(unittest.TestCase):
                 '<td>&nbsp;</td><td>24952</td></tr>').encode()
 
         class Sec:
+            """A stand-in for the SEC client that returns a filing index listing only the complete submission text file."""
             def get(self, url, keep):
                 return page
         f = {"accn": "0001005477-97-000064", "filed": "1997-01-23", "form": "8-K", "primary": ""}
@@ -1195,6 +1217,7 @@ class AuditFixTests(unittest.TestCase):
                 '<tr><td>2</td><td>q</td><td><a href="/x/q.pdf">q.pdf</a></td><td>10-Q</td></tr>').encode()
 
         class Sec2:
+            """A stand-in for the SEC client that returns a filing index listing the same filing as .htm and as .pdf."""
             def get(self, url, keep):
                 return both
         g = dict(f, form="10-Q", primary="q.htm")

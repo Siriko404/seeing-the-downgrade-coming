@@ -1,3 +1,7 @@
+"""Tests for market_features.py (pipeline step 5b: stock-market inputs added to the panel).
+
+The tests build a made-up daily price history in memory. They need no data and no internet.
+"""
 import unittest
 
 import numpy as np
@@ -12,6 +16,7 @@ def series(n_days, start="2019-01-01", ret=0.001, prc=10.0, shrout=1000.0):
 
 
 class MarketFeatureTests(unittest.TestCase):
+    """Checks of `stock_features` and `row_features`: no look-ahead, excess return, missing history."""
     def test_uses_only_days_before_t(self):
         h = series(400)
         t = h.date.iloc[300]

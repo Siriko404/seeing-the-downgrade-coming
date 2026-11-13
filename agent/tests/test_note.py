@@ -1,7 +1,10 @@
 """The note is written by code: every line that cites rows may state only those rows' values.
 
-Runs check.py and finish.py on a saved run (HON RY SJ, 152 rows) and checks each note line that
-cites R# ids: every grade, ISO date, day count and agency in the line belongs to a cited row.
+Runs check.py and finish.py on a saved run (HON RY SJ, 152 rows) and checks each note line that cites R# ids:
+every grade, ISO date, day count and agency in the line belongs to a cited row.
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_note.py
+Standard library only.
 """
 import json
 import os
@@ -40,6 +43,7 @@ def bad_values(line: str, cited: list) -> list:
 
 
 class NoteFromRows(unittest.TestCase):
+    """Notes written from the saved HON RY SJ run: each cited line states only its rows."""
     @classmethod
     def setUpClass(cls):
         cls.d = Path(tempfile.mkdtemp())

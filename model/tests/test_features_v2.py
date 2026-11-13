@@ -1,3 +1,9 @@
+"""Tests for features_v2.py (pipeline step 6: changes since the last report, beta and the economy as first
+released) and for the `Prep` class of evaluate.py (step 7: input preparation).
+
+The tests use small made-up tables and economy files written to a temporary folder.
+They need no data and no internet.
+"""
 import tempfile
 import unittest
 from pathlib import Path
@@ -16,6 +22,7 @@ def firm(dates, ebit_assets, cik="1"):
 
 
 class FeaturesV2Tests(unittest.TestCase):
+    """Checks of the step 6 helpers: debt/EBITDA fix, ratio changes, volatility, vintage dates, beta, `Macro`."""
     def test_negative_ebitda_zeroed_and_flagged(self):
         df = pd.DataFrame({"debt": [100.0, 100.0, 0.0], "debt_ebitda": [-4.0, 3.0, np.nan]})
         out = fix_debt_ebitda(df)
@@ -80,6 +87,7 @@ class FeaturesV2Tests(unittest.TestCase):
 
 
 class PrepEmptyColumnTest(unittest.TestCase):
+    """Checks that `Prep` copes with an input column that is empty in the training years."""
     def test_column_empty_in_training_window_gives_no_nan(self):
         from tcf_credit.evaluate import Prep
         train = pd.DataFrame({"a": [1.0, 2.0, 3.0], "b": [np.nan] * 3, "sector": ["x"] * 3})

@@ -1,3 +1,8 @@
+"""Tests for ratings_parser.py (pipeline step 2: reading the agencies' rating files into one table of events).
+
+The tests use short XBRL snippets and a small ZIP file made in a temporary folder.
+They need no data and no internet.
+"""
 import gzip
 import tempfile
 import unittest
@@ -28,6 +33,7 @@ MOODYS = """<ROCRA><OD><OSC contextRef="m1">Corporate</OSC><OBNAME contextRef="m
 
 
 class ParseXbrl(unittest.TestCase):
+    """Checks of `parse_xbrl` on short S&P, Fitch and Moody's snippets."""
     def rows(self, agency, text):
         return [dict(zip(COLUMNS, r)) for r in parse_xbrl(agency, "2026-11-01", text)]
 
@@ -55,6 +61,7 @@ class ParseXbrl(unittest.TestCase):
 
 
 class ParseArchives(unittest.TestCase):
+    """Check of `parse_archives` on a small ZIP archive."""
     def test_end_to_end_on_a_small_archive(self):
         with tempfile.TemporaryDirectory() as d:
             data, out = Path(d, "data"), Path(d, "out")

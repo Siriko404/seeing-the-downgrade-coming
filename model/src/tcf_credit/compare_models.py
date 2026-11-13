@@ -5,11 +5,11 @@ Comes out: comparison.csv and a printed table: each model's pooled ROC-AUC and P
           reference model, and a 95% interval for that difference.
 Data:     no licensed data; works on the example panel's run too.
 
-The reference model (default: logit) was named the main model before the extra models were run (its inputs were
-extended later), so the comparison asks "does anything beat the one model we named first?" and not "which of many
-models looks best?". The interval comes from a
-firm-clustered bootstrap: whole companies are drawn again with replacement, so a firm's several years stay together
-(its years are not independent). The same draws are used for every model, which makes the differences comparable.
+The reference model (default: logit) was named the main model before the extra models were run (its inputs were extended
+later), so the comparison asks "does anything beat the one model we named first?" and not "which of many models looks
+best?". The interval comes from a firm-clustered bootstrap: whole companies are drawn again with replacement, so a
+firm's several years stay together (its years are not independent). The same draws are used for every model, which makes
+the differences comparable.
 Usage: python -m tcf_credit.compare_models RUN_DIR [--ref logit] [--boot 2000] [--out comparison.csv]
 """
 import sys

@@ -2,7 +2,8 @@
 
 Goes in:  the market folder that fetch_crsp wrote (it reads CRSP_DIR/crsp_links.csv) and the same CRSP source.
 Comes out: CRSP_DIR/crsp_delist.csv (permno, date, dlret, dlstcd: the return a stock earned when it was delisted and
-          why) and CRSP_DIR/crsp_vwretd.csv (the market return). features_v2 needs the second file; returns.py needs both.
+          why) and CRSP_DIR/crsp_vwretd.csv (the market return). features_v2 needs the second file; returns.py needs
+          both.
 Data:     needs CRSP through WRDS. Vendor data stays on your computer: never put it in a repository.
 
 Reads only the needed columns of each source file (copied to a temporary folder and deleted). Give the source with

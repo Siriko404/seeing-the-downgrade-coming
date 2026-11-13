@@ -1,3 +1,8 @@
+"""Tests for yahoo_market.py (pipeline step 5a, the free stand-in for CRSP: Yahoo prices written in the CRSP layout).
+
+The test writes small made-up price files to a temporary folder and runs the module as a command.
+It needs no data and no internet.
+"""
 import subprocess
 import sys
 import tempfile
@@ -10,6 +15,7 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 
 
 class YahooMarketTests(unittest.TestCase):
+    """Check that the command writes the CRSP-format price, link and market-return files from Yahoo-style prices."""
     def test_writes_crsp_format(self):
         with tempfile.TemporaryDirectory() as d:
             d = Path(d)

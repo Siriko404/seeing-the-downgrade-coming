@@ -24,7 +24,9 @@ Inputs at snapshot t (t = 10-K filing date + 1 day):
     500 days); empty with fewer than three.
   neg_ebitda: 1 if EBITDA < 0 (debt/EBITDA negative with positive debt); debt_ebitda is then set to 0.
   beta_12m, idio_vol_12m: OLS of the stock's daily return on the CRSP value-weighted return over the last 252 trading
-    days before t; idio_vol is the annualised residual standard deviation. Needs the market-sample coverage rules.
+    days before t; idio_vol is the annualised residual standard deviation. Empty unless the stock has at least 253
+    trading days before t, has a daily record dated within the 10 calendar days before t, and has at least 200 days
+    with both returns.
   unemp: latest monthly unemployment rate as first published, among months whose first vintage was out by t;
     unemp_chg_12m: that value minus the first-published value for the same month a year earlier.
   ip_growth_12m: 12-month growth of industrial production within the latest monthly vintage out by t.
@@ -32,8 +34,7 @@ Inputs at snapshot t (t = 10-K filing date + 1 day):
     (taken as 35 days after the quarter ends).
   baa10y, t10y3m: last daily value before t; vix_20d: mean VIX over the last 20 observations before t.
 Vintage dates (Philadelphia Fed Real-Time Data Set; the monthly rule is our assumption, not checked): monthly vintage
-YYMm is out by the 15th of that month; quarterly
-vintage YYQn by the 15th of the middle month of quarter n.
+YYMm is out by the 15th of that month; quarterly vintage YYQn by the 15th of the middle month of quarter n.
 Usage: python -m tcf_credit.features_v2 PANEL_CSV CRSP_DIR FRED_DIR OUT_CSV
 """
 import re
@@ -90,7 +91,8 @@ def ratio_history(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def beta_idio(hist: pd.DataFrame, mkt: pd.Series, t: pd.Timestamp):
-    """Market beta and idiosyncratic volatility from the stock's last 252 trading days strictly before t (no look-ahead)."""
+    """Market beta and idiosyncratic volatility from the stock's last 252 trading days strictly before t
+    (no look-ahead)."""
     hist = hist[hist.date < t]
     if len(hist) < WINDOW + 1 or hist.date.iloc[-1] < t - pd.Timedelta(days=10):
         return np.nan, np.nan
@@ -114,10 +116,13 @@ def read_fred(path: Path) -> pd.Series:
 
 class Macro:
     """The economy as it was known on a given day. Reads, from FRED_DIR/realtime/, the Philadelphia Fed real-time files
-    unemployment_first_release.csv, indpro_vintages.csv and gdp_growth_first_second_third.csv, and from FRED_DIR the daily
-    series BAA10Y.csv, T10Y3M.csv and VIXCLS.csv (the daily series are FRED downloads; the three real-time files are CSVs converted from the Philadelphia Fed's public spreadsheets by a script that is not in this package)."""
+    unemployment_first_release.csv, indpro_vintages.csv and gdp_growth_first_second_third.csv, and from FRED_DIR the
+    daily series BAA10Y.csv, T10Y3M.csv and VIXCLS.csv (the daily series are FRED downloads; the three real-time files
+    are CSVs converted from the Philadelphia Fed's public spreadsheets by a script that is not in this package)."""
 
     def __init__(self, fred: Path):
+        """Read the six files. For each real-time number keep the date it became known: the vintage date for
+        unemployment and industrial production, 35 days after the quarter ends for GDP growth."""
         rt = fred / "realtime"
         u = pd.read_csv(rt / "unemployment_first_release.csv", dtype={"date": str})
         u["month"] = pd.to_datetime(u.date.str.replace(":", "-") + "-01")

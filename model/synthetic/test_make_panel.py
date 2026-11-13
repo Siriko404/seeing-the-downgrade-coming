@@ -39,6 +39,7 @@ def roundtrip(panel):
 
 
 class ColumnTests(unittest.TestCase):
+    """Checks of the panel columns: names, types and gaps."""
     @classmethod
     def setUpClass(cls):
         cls.panel = mp.make_panel(n_firms=120, seed=3)
@@ -64,6 +65,7 @@ class ColumnTests(unittest.TestCase):
 
 
 class ReproducibilityTests(unittest.TestCase):
+    """Checks that the same seed gives the same file and another seed a different one."""
     def write(self, name, **kw):
         d = Path(tempfile.mkdtemp())
         path = d / name
@@ -86,6 +88,7 @@ class ReproducibilityTests(unittest.TestCase):
 
 
 class ContentTests(unittest.TestCase):
+    """Checks of the values in the example panel: made-up names, flags, ratios, dates, label share."""
     @classmethod
     def setUpClass(cls):
         cls.panel = mp.make_panel()          # default size: 400 companies, fiscal years 2009-2025

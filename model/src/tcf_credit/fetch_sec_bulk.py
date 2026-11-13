@@ -2,7 +2,8 @@
 
 Goes in:  nothing but a folder name. Needs TCF_SEC_CONTACT set (see sec_http.py): the SEC asks every automated
           client to say who it is.
-Comes out: companyfacts.zip, submissions.zip and company_tickers_exchange.json in OUT_DIR (files already there are kept).
+Comes out: companyfacts.zip, submissions.zip and company_tickers_exchange.json in OUT_DIR (files already there are
+          kept).
 Data:     public SEC data (network needed; the zip files are large).
 
 Usage: python -m tcf_credit.fetch_sec_bulk OUT_DIR

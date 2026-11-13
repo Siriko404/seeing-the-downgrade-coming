@@ -108,10 +108,12 @@ LABEL_NOISE_SD = 0.8
 
 
 def sigmoid(x):
+    """The logistic function: turns a score into a probability between 0 and 1."""
     return 1.0 / (1.0 + np.exp(-x))
 
 
 def sector_of(sic):
+    """The sector name for an industry code (SIC), from SECTOR_BOUNDS; "other" if no range fits."""
     for lo, hi, name in SECTOR_BOUNDS:
         if lo <= sic <= hi:
             return name
@@ -127,6 +129,7 @@ def make_economy(rng, first_year, last_year):
         cycle[i] = 0.97 * cycle[i - 1] + rng.normal(0, 0.22)
 
     def ar(sd, rho=0.8):
+        """A made-up series of length n that depends on its previous value (weight `rho`) plus random noise."""
         x = np.zeros(n)
         for i in range(1, n):
             x[i] = rho * x[i - 1] + rng.normal(0, sd)
@@ -147,6 +150,7 @@ def make_economy(rng, first_year, last_year):
 
 
 def month_end(year, month):
+    """The last day of the given month, for columns of years and months."""
     return pd.to_datetime(pd.DataFrame({"year": year, "month": month, "day": 1})) + pd.offsets.MonthEnd(0)
 
 
@@ -274,7 +278,8 @@ def make_panel(n_firms=400, first_year=2009, last_year=2025, seed=1, target_rate
     df["dividend_payer"] = (rng.random(m) < sigmoid(-0.5 + 0.8 * health + 0.3 * (log_a - 22.3))).astype(int)
     df["float_debt"] = 0.8 * mcap * np.exp(rng.normal(0, 0.15, m)) / debt
     neg = ebitda < 0
-    df["debt_ebitda"] = np.where(neg, 0.0, np.clip(debt / np.where(neg, 1.0, ebitda), 0, 100))   # zeroed when EBITDA < 0
+    # debt_ebitda is zeroed when EBITDA < 0.
+    df["debt_ebitda"] = np.where(neg, 0.0, np.clip(debt / np.where(neg, 1.0, ebitda), 0, 100))
     df["neg_ebitda"] = neg.astype(float)
     df["shares"] = np.rint(mcap / np.exp(rng.normal(3.2, 0.8, m)))
 
@@ -299,7 +304,7 @@ def make_panel(n_firms=400, first_year=2009, last_year=2025, seed=1, target_rate
     for k in ["unemp", "unemp_chg_12m", "ip_growth_12m", "gdp_growth", "baa10y", "t10y3m", "vix_20d"]:
         df[k] = e[k].to_numpy()
 
-    # ---- censoring, then random gaps, then changes between reports ----------------------------------------------------
+    # ---- censoring, then random gaps, then changes between reports --------------------------------------------------
     keep = (t + pd.Timedelta(days=365)) <= pd.Timestamp(coverage_end)          # label window finished
     df = df[keep.to_numpy()].copy()
     for col, share in MISSING.items():
@@ -353,6 +358,7 @@ def write_csv(df, path):
 
 
 def main():
+    """Read the command-line options, make the example panel and write it to a file."""
     here = Path(__file__).resolve().parent
     p = argparse.ArgumentParser(description="Write an example (made-up) firm-year panel for the credit model.")
     p.add_argument("--out", default=str(here / "out" / "example_panel.csv"), help="output file (.csv or .csv.gz)")

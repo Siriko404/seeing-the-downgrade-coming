@@ -1,3 +1,8 @@
+"""Tests for audit_returns.py (pipeline step 9b: the audit of extreme 12-month stock winners).
+
+Each test builds a small made-up price history in memory and runs the audit checks on it.
+It needs no data and no internet.
+"""
 import unittest
 from types import SimpleNamespace
 
@@ -25,6 +30,7 @@ def snapshot(g, t_index=5, delisted=0):
 
 
 class AuditTests(unittest.TestCase):
+    """Checks of `audit_one`: which price histories pass or fail each audit check."""
     def test_consistent_prices_pass_every_check(self):
         g = stock()
         r = audit_one(snapshot(g), g, NAMES)

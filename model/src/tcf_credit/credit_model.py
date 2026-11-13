@@ -57,7 +57,8 @@ def opt(args, name, default=None):
 
 
 def configure(args: list) -> None:
-    """Set the data locations from --build / TCF_BUILD and --events / TCF_EVENTS; stop with a clear message if missing."""
+    """Set the data locations from --build / TCF_BUILD and --events / TCF_EVENTS;
+    stop with a clear message if missing."""
     global BUILD, EVENTS, PANEL, LINKS, CF, YAHOO, FRED, SCORE_LINKS, TICKERS
     build, events = opt(args, "--build", os.environ.get("TCF_BUILD")), opt(args, "--events", os.environ.get("TCF_EVENTS"))
     if not build or not events:
@@ -66,9 +67,9 @@ def configure(args: list) -> None:
     BUILD, EVENTS = Path(build), Path(events)
     PANEL = BUILD / "colab_v2/data/panel_v2.csv.gz"
     LINKS, CF, YAHOO, FRED = BUILD / "sp_cik_links.csv", BUILD / "companyfacts", BUILD / "yahoo", BUILD / "fred"
-    # Scoring list: the training list plus names that matched several SEC filers, linked to the one that filed 10-Ks under
-    # that name while S&P rated it (link_obligors --by-dates; Walt Disney is the example described there). Training
-    # never reads it.
+    # Scoring list: the training list plus names that matched several SEC filers, linked to the one that filed 10-Ks
+    # under that name while S&P rated it (link_obligors --by-dates; Walt Disney is the example described there).
+    # Training never reads it.
     SCORE_LINKS = BUILD / "sp_cik_links_scoring.csv" if (BUILD / "sp_cik_links_scoring.csv").exists() else LINKS
     TICKERS = BUILD / "company_tickers_exchange.json"
 

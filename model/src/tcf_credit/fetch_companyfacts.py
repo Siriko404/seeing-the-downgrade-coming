@@ -4,10 +4,9 @@ tag).
 
 Goes in:  the links CSV (link_obligors output) and a folder name. Needs TCF_SEC_CONTACT set (see sec_http.py).
 Comes out: one CSV per company number (CIK) in OUT_DIR, holding only values from 10-K forms (a form starting with
-10-K, so amendments such as 10-K/A are included; build_panel keeps the original 10-K only) of the tags in TAGS: cik,
-taxonomy, tag,
-          unit, start, end, val, form, fy, fp, filed, accn. A company without XBRL data gets a file saying "no_xbrl".
-          Companies already done are skipped. build_panel reads this folder.
+          10-K, so amendments such as 10-K/A are included; build_panel keeps the original 10-K only) of the tags in
+          TAGS: cik, taxonomy, tag, unit, start, end, val, form, fy, fp, filed, accn. A company without XBRL data gets
+          a file saying "no_xbrl". Companies already done are skipped. build_panel reads this folder.
 Data:     public SEC data (network needed).
 Usage: python -m tcf_credit.fetch_companyfacts LINKS_CSV OUT_DIR [--us-only]
 """
@@ -44,7 +43,8 @@ _lock, _last = threading.Lock(), [0.0]
 
 
 def fetch(cik: str) -> dict:
-    """Download one company's full facts file from the SEC, waiting so that all threads together stay below the SEC's rate limit."""
+    """Download one company's full facts file from the SEC, waiting so that all threads together stay below the SEC's
+    rate limit."""
     url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{int(cik):010d}.json"
     from tcf_credit.sec_http import request
 

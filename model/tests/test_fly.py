@@ -31,6 +31,7 @@ def toy_data(n=600, width=8, seed=0):
 
 
 class FetchTests(unittest.TestCase):
+    """Check that a downloaded file is accepted only if its hash is the pinned one."""
     def test_fetch_checks_the_pinned_hash(self):
         with tempfile.TemporaryDirectory() as d:
             fly.FILES["toy.bin"] = ("https://example.invalid/toy.bin", hashlib.sha256(b"ok").hexdigest())
@@ -44,6 +45,7 @@ class FetchTests(unittest.TestCase):
 
 
 class MushroomBodyTests(unittest.TestCase):
+    """Checks of the mushroom-body model (fly.py) and its readout (readout.py) on small made-up wiring."""
     def test_only_projection_to_kenyon_connections(self):
         con = pd.DataFrame({"pre": [1, 1, 2, 3, 9], "post": [10, 11, 10, 10, 11], "weight": [5, 7, -3, 4, 8]})
         ann = pd.DataFrame({"root_id": [1, 2, 3, 9, 10, 11],
@@ -87,6 +89,7 @@ class MushroomBodyTests(unittest.TestCase):
 
 
 class WholeBrainTests(unittest.TestCase):
+    """Checks of the whole-brain model (brain.py) on a small made-up network."""
     def toy_graph(self, n=120, seed=0):
         rng = np.random.default_rng(seed)
         m = sp.random(n, n, density=0.05, random_state=seed, format="csr", dtype=np.float32)

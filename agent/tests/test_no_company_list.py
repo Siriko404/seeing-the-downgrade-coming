@@ -1,5 +1,9 @@
-"""The package keeps no list of companies. Firms come from SEC's own list (live) or from the saved copies in cache/
-(--offline). Standard library only: python3 -m unittest discover -s tests"""
+"""The package keeps no list of companies. Firms come from the SEC's own list (live) or from the saved copies in
+cache/ (--offline).
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_no_company_list.py
+Standard library only.
+"""
 import io
 import json
 import os
@@ -23,6 +27,7 @@ LABELS = ("TCF holding", "TCF TSX", "TCF S&P", "TCF watchlist", "TCF analyst")
 
 
 class NoCompanyListTests(unittest.TestCase):
+    """No company list exists; firms resolve from the saved copies offline and from the SEC list live."""
     def test_company_list_file_does_not_exist_and_no_code_opens_it(self):
         self.assertFalse((SKILL / "data" / "companies.csv").exists())
         self.assertFalse(hasattr(C, "companies"))
@@ -81,13 +86,14 @@ class NoCompanyListTests(unittest.TestCase):
         self.assertEqual((co["ticker"], co["cik"]), ("SJ", ""))
 
     def test_sec_number_with_no_filings_stops_with_the_file_route(self):
-        """Live run 2026-11-12: "Stella-Jones" matched SEC's Stella-Jones Inc./ADR (CIK 2077242), which has no
+        """A live run: "Stella-Jones" matched SEC's Stella-Jones Inc./ADR (CIK 2077242), which has no
         filings; the tool must say so in a block, so the AI does not guess other names."""
         d, cwd = tempfile.mkdtemp(), os.getcwd()
         saved = (F.company, F.fetch_ticker, F.run_model, F.Sec, C.CACHE, os.environ.get("SEC_CONTACT"))
         co = {"ticker": "STJNY", "cik": "2077242", "name": "Stella-Jones Inc./ADR", "scope": "", "matched": "test"}
 
         class NoSec:
+            """A stand-in for the SEC client that makes no request."""
             requests = 0
 
             def __init__(self, *a):
@@ -134,6 +140,7 @@ class NoCompanyListTests(unittest.TestCase):
         saved = (F.company, F.fetch_ticker, F.run_model, F.Sec, C.CACHE, os.environ.get("SEC_CONTACT"))
 
         class NoSec:
+            """A stand-in for the SEC client that makes no request."""
             requests = 0
 
             def __init__(self, *a):

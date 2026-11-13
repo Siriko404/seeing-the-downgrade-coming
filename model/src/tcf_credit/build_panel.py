@@ -3,8 +3,7 @@
 Goes in:  the rating-event table (ratings_parser), the company links (link_obligors) and the folder of SEC company
           facts (fetch_companyfacts), one CSV per company.
 Comes out: a CSV panel with the 10-K ratios, the S&P rating state and the label. In training mode, financial and
-utility companies are
-          left out: the model does not cover them.
+          utility companies are left out: the model does not cover them.
 Data:     public data only (SEC filings and the agencies' public rating files).
 
 The rules that keep out look-ahead:
@@ -77,7 +76,8 @@ def load_events(path: str) -> dict:
 
 
 def rating_state(events: list, t: dt.date) -> dict:
-    """The rating, outlook, CreditWatch status and recent actions as they stood on day t (only events before t count)."""
+    """The rating, outlook, CreditWatch status and recent actions as they stood on day t
+    (only events before t count)."""
     past = [e for e in events if e[0] < t]
     if not past:
         return {}
@@ -107,7 +107,8 @@ def label(events: list, t: dt.date, end: dt.date):
 
 
 def first(vals: dict, *tags):
-    """The first of several alternative XBRL tags that the company reported (companies label the same item differently)."""
+    """The first of several alternative XBRL tags that the company reported
+    (companies label the same item differently)."""
     for tg in tags:
         if vals.get(tg) is not None:
             return vals[tg], tg
@@ -140,7 +141,8 @@ def snapshots(cf_csv: Path):
         float_vals = [float(f["val"]) for f in facts if f["tag"] == "EntityPublicFloat" and f["unit"] == "USD"]
         vals["EntityPublicFloat"] = float_vals[0] if float_vals else None
         share_vals = [float(f["val"]) for f in facts if f["tag"] == "EntityCommonStockSharesOutstanding" and f["unit"] == "shares"]
-        vals["EntityCommonStockSharesOutstanding"] = sum(share_vals) if share_vals else None   # classes are listed separately
+        # Share classes are listed separately, so their counts are added up.
+        vals["EntityCommonStockSharesOutstanding"] = sum(share_vals) if share_vals else None
         yield accn, filed, pe, vals
 
 

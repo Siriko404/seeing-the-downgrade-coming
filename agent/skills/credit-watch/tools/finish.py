@@ -4,7 +4,7 @@ The four steps are FETCH (fetch.py) -> READ (the AI) -> CHECK (check.py) -> FINI
 note: every rating line is built from a checked row (R1, R2, ...), so each grade, date and day count can be traced to a
 quote in a filing. That is why the same rows always give the same note, apart from the 'Made <date>' line.
 
-In: credit-watch/run/ratings.json (from step 3). Out: note_<TICKER>.md (one screen per firm), portfolio.md (with
+In: credit-watch/run/ratings.json (from step 3). Out: note_<TICKER>.md (one note per firm), portfolio.md (with
 --holdings), and a dated copy of the whole run in credit-watch/runs/. The model score line is added when a score
 file exists; in this package the trained model and its scores are not included, so the note says no score is available.
 
@@ -44,6 +44,7 @@ VERB = {"upgrade": "upgraded", "downgrade": "downgraded", "outlook change": "cha
 
 
 def score_files() -> list:
+    """The scores files that exist (this device's own file, then data/scores.csv) as (path, rows) pairs."""
     out = []
     for f in (LOCAL_SCORES, C.DATA / "scores.csv"):
         if f.exists():
@@ -131,10 +132,12 @@ def model_lines(t: str, tk: dict, as_of: str, model: str = "") -> list:
 
 
 def when(r: dict) -> str:
+    """The date a row is about: its rating date, or the filing date when it has none."""
     return r["rating_date"] or r["filed"]
 
 
 def tag(r: dict) -> str:
+    """An empty string for a row read from a table cell, otherwise ' (AI-read text: verify quote)'."""
     return "" if r.get("read", "table cell") == "table cell" else " (AI-read text: verify quote)"
 
 
@@ -384,6 +387,7 @@ def portfolio(res: dict) -> str:
 
 
 def cell(s) -> str:
+    """A value made safe for a markdown table cell: '|' becomes '/' and a line break becomes a space."""
     return str(s).replace("|", "/").replace("\n", " ")
 
 

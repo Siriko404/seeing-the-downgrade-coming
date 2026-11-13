@@ -50,31 +50,40 @@ RATIOS = ["debt_assets", "ebit_assets", "wc_assets", "ebit_interest", "cfo_debt"
 RATING = ["notch", "ig", "outlook_neg", "outlook_pos", "watch_neg", "watch_pos", "dg_prev_year", "up_prev_year"]
 BINARY = ["dividend_payer"]
 MARKET = ["ret_12m", "ret_6m", "vol_12m", "mcap_debt", "dd_naive"]
-TEXT = ["lm_neg_chg", "lm_unc_chg"]   # change in Loughran-McDonald negative / uncertainty word shares since the previous 10-K (--text)
+# Change in Loughran-McDonald negative / uncertainty word shares since the previous 10-K (used with --text).
+TEXT = ["lm_neg_chg", "lm_unc_chg"]
 EXTRA = []   # filled in main: V2_COLUMNS (the features_v2 inputs) and MARKET always, TEXT with --text
 
 
 class Prep:
     """Prepare inputs for a model. Everything is learned from the training rows only (no look-ahead): clip extreme
-    values at the 1st/99th percentile, fill gaps with the median plus a "was missing" flag, scale, add sector dummies."""
+    values at the 1st/99th percentile, fill gaps with the median plus a "was missing" flag, scale, add sector
+    dummies."""
 
     def __init__(self, numeric, sectors=True, scale=True):
-        # numeric: input names; sectors: add sector dummies; scale: standardise (the logit needs it, trees do not)
+        """`numeric`: the input names. `sectors`: add sector dummies. `scale`: standardise the filled inputs (the
+        logit needs it, trees do not)."""
         self.numeric, self.sectors, self.scale = numeric, sectors, scale
 
     def fit(self, df):
-        # Learn clipping limits, medians, means and spreads from the training rows only.
+        """Learn clipping limits, medians, means, spreads, the empty columns and the sector list from the training
+        rows `df` only. Returns self."""
         x = df[self.numeric].astype(float)
         self.lo, self.hi = x.quantile(0.01), x.quantile(0.99)
         x = x.clip(self.lo, self.hi, axis=1)
-        self.empty = x.columns[x.isna().all()]   # empty in this training window (a change column needs two reports, so early years have none)
-        self.med = x.median().fillna(0.0)          # gaps are filled with the training median (the logit also gets a missing flag)
+        # Columns that are empty in this training window (a change column needs two reports, so early years have none).
+        self.empty = x.columns[x.isna().all()]
+        # Gaps are filled with the training median (the logit also gets a missing flag).
+        self.med = x.median().fillna(0.0)
         self.mu, self.sd = x.fillna(self.med).mean(), x.fillna(self.med).std().replace(0, 1)
         self.cats = sorted(df["sector"].unique()) if self.sectors else []
         return self
 
     def transform(self, df, impute=True):
-        # Apply what fit learned to any rows (training or test). impute=False keeps gaps as gaps, for tree models.
+        """Apply what fit learned to any rows (training or test) and return a numpy array. With impute=True the columns
+        are the clipped inputs with gaps filled by the training median (standardised when scale=True), then one
+        "_missing" flag per input, then the sector dummies (when sectors=True). With impute=False gaps stay gaps (for
+        tree models), there are no flags, and a column empty in training is set to 0."""
         x = df[self.numeric].astype(float).clip(self.lo, self.hi, axis=1)
         if not impute and len(self.empty):   # boosting cannot bin a column with no training values: make it constant
             x[self.empty] = 0.0
@@ -111,7 +120,8 @@ def features():
 
 
 def specs():
-    """name -> dict(grid, make(params, cols), cols, impute, sectors[, same_as]). `same_as` reuses another model's choice."""
+    """name -> dict(grid, make(params, cols), cols, impute, sectors[, same_as]).
+    `same_as` reuses another model's choice."""
     feats = features()
     s = {
         "logit": dict(grid=LOGIT_GRID, make=lambda p, c: LogisticRegression(C=p["C"], max_iter=5000),
@@ -147,7 +157,8 @@ def averages(names):
 
 
 def models(params):
-    """name -> (make, cols, impute, sectors) with the settings chosen by tune(); used by the rolling loop and score_holdings."""
+    """name -> (make, cols, impute, sectors) with the settings chosen by tune();
+    used by the rolling loop and score_holdings."""
     out = {}
     for name, sp in specs().items():
         p = params["chosen"][sp.get("same_as", name)]
@@ -156,7 +167,8 @@ def models(params):
 
 
 def fit_predict(make, cols_, impute, sectors, train, test):
-    """Fit on `train` and return (scores on train, scores on test): each score is the model's probability of a downgrade."""
+    """Fit on `train` and return (scores on train, scores on test):
+    each score is the model's probability of a downgrade."""
     prep = Prep(cols_, sectors=sectors).fit(train)
     m = make().fit(prep.transform(train, impute), train["label"].to_numpy())
     return m.predict_proba(prep.transform(train, impute))[:, 1], m.predict_proba(prep.transform(test, impute))[:, 1]
@@ -190,7 +202,8 @@ def tune(df, first, end=None):
 
 
 def confusion(f, y):
-    """Count the four outcomes of a flag rule: flagged downgrade (TP), false alarm (FP), missed downgrade (FN), quiet non-downgrade (TN)."""
+    """Count the four outcomes of a flag rule: flagged downgrade (TP), false alarm (FP), missed downgrade (FN),
+    quiet non-downgrade (TN)."""
     return dict(flagged=int(f.sum()), TP=int((f & (y == 1)).sum()), FP=int((f & (y == 0)).sum()),
                 FN=int((~f & (y == 1)).sum()), TN=int((~f & (y == 0)).sum()))
 
@@ -209,13 +222,15 @@ def main():
         DROP.extend(args[args.index("--drop") + 1].split(","))
     if "--text" in args:
         EXTRA.extend(TEXT)
-    from tcf_credit.features_v2 import V2_COLUMNS   # the panel must come from features_v2 (debt_ebitda is already zeroed when EBITDA < 0)
+    # The panel must come from features_v2 (debt_ebitda is already zeroed when EBITDA < 0).
+    from tcf_credit.features_v2 import V2_COLUMNS
     EXTRA.extend(V2_COLUMNS)
     ZOO = "--zoo" in args
     if "--only" in args:
         ONLY.extend(args[args.index("--only") + 1].split(","))
     EXTRA.extend(MARKET)
-    df = df[df.has_prices == 1].copy()          # the market inputs are part of the model, so reports without prices are left out
+    # The market inputs are part of the model, so reports without prices are left out.
+    df = df[df.has_prices == 1].copy()
     df["year"] = pd.to_datetime(df["t"]).dt.year
     df["ebit_interest"] = df["ebit_interest"].clip(-50, 100)     # a tiny interest bill makes this ratio explode
     params = tune(df, first, tune_end)

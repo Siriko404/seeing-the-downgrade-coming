@@ -3,8 +3,8 @@
 Goes in:  a folder of Yahoo price files (fetch_yahoo output), a CSV of cik,ticker pairs and the panel from
           build_panel (it gives each company's shares outstanding).
 Comes out: a folder in the layout that market_features and features_v2 read, so the rest of the pipeline is unchanged.
-Data:     public Yahoo prices. They miss companies that stopped trading (survivorship bias), so results differ from CRSP.
-Also used when a report is newer than the CRSP files the lecture had.
+Data:     public Yahoo prices. They miss companies that stopped trading (survivorship bias), so results differ from
+          CRSP. Also used when a report is newer than the CRSP files the lecture had.
 
 market_features and features_v2 read a CRSP-format folder; this script writes the same four files for the listed
 companies:
@@ -12,8 +12,7 @@ companies:
   crsp_daily.parquet  permno, date, prc (close), ret (daily change in adjusted close, dividends included),
                       shrout (thousands; shares outstanding from the company's latest 10-K cover page, held constant;
                       empty when the cover page gives none (a company with several share classes has them added up by
-                      build_panel): then market value, mcap_debt
-                      and dd_naive stay empty and the model imputes them)
+                      build_panel): then market value, mcap_debt and dd_naive stay empty and the model imputes them)
   crsp_sp500.csv      date, sprtrn  } both from SPY's adjusted close: SPY's total return stands in for the S&P 500
   crsp_vwretd.csv     date, vwretd  } return and for the value-weighted market return that the model was trained on
 Usage: python -m tcf_credit.yahoo_market YAHOO_DIR TICKERS_CSV PANEL_CSV OUT_DIR

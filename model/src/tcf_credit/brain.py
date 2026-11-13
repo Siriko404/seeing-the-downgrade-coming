@@ -1,5 +1,10 @@
 """The fruit fly's whole brain as a fixed network with a trained readout.
 
+Role:     a model for `evaluate.py --zoo` (see zoo.py), not a numbered pipeline step.
+Goes in:  as for fly.py: the logit's prepared inputs and the 0/1 label.
+Comes out: the probability of a downgrade for each row.
+Data:     the same two public connectome files as fly.py (see model/FLY-DATA.md).
+
 fly.py uses only the mushroom body: inputs go straight onto the Kenyon cells. Here the inputs first travel through
 the rest of the brain, as a smell does in the animal: about 139,000 neurons and 15 million connections. The idea is
 the same: the wiring is fixed (a connectome is a wiring diagram, and ours is never adjusted to the data), and only
@@ -45,6 +50,8 @@ class Graph:
 
 @lru_cache(maxsize=None)
 def real_graph() -> Graph:
+    """The real wiring of all neurons as a sparse matrix, with the input neurons (the projection neurons that connect
+    onto a Kenyon cell, as in fly.py) and the Kenyon cells. Built once from the downloaded files."""
     con, ann = fly.connectome()
     pre, post = con.pre.to_numpy(), con.post.to_numpy()
     ids = np.unique(np.concatenate([pre, post]))
@@ -58,6 +65,8 @@ def real_graph() -> Graph:
 
 @lru_cache(maxsize=None)
 def shuffled_graph(seed: int) -> Graph:
+    """The control wiring: every neuron keeps its outgoing connections and their strengths, but each target neuron is
+    drawn at random among all neurons (seeded). The input neurons and the Kenyon cells stay the same."""
     g = real_graph()
     rng = np.random.default_rng(seed)
     source = np.repeat(np.arange(g.wiring.shape[0]), np.diff(g.wiring.indptr))
@@ -66,6 +75,7 @@ def shuffled_graph(seed: int) -> Graph:
 
 
 def _mask(size, members):
+    """A True/False array of length `size` that is True at the positions in `members`."""
     m = np.zeros(size, dtype=bool)
     m[members] = True
     return m
@@ -131,6 +141,8 @@ def whole_network_drive(graph, activity, steps, scales) -> np.ndarray:
 
 @lru_cache(maxsize=None)
 def _device_layers(graph: Graph, steps: int, device: str) -> tuple:
+    """The sparse layers of `layers()` as torch tensors on `device`. Each layer also carries the positions of the
+    input neurons that are held at the company's values at that step."""
     sets = layer_sets(graph, steps)
     out = []
     for matrix, receiving in zip(layers(graph, steps), sets[1:]):
@@ -150,6 +162,9 @@ class WholeBrain(fly.MushroomBody):
 
     def __init__(self, graph, seed: int, C: float, steps: int = STEPS, active_share: float = fly.ACTIVE_SHARE,
                  batch_rows: int = 2048):
+        """Choose the wiring ("real", "shuffled" with this seed, or a Graph), find the per-step divisors with
+        `calibrate`, and set the layers up on the device. `active` is the number of Kenyon cells kept on
+        (`active_share` of them, rounded up)."""
         self.graph = real_graph() if graph == "real" else shuffled_graph(seed) if graph == "shuffled" else graph
         self.steps, self.seed, self.C = steps, seed, C
         self.scales = calibrate(self.graph, steps)

@@ -3,14 +3,15 @@
 Goes in:  the panel from build_panel and a market folder: crsp_links.csv, crsp_daily.parquet, crsp_sp500.csv. The folder
           comes from fetch_crsp (licensed CRSP data) or from yahoo_market (free Yahoo prices, the stand-in).
 Comes out: the same panel with has_prices, permno (the stock identifier of the market folder), ret_12m, ret_6m,
-vol_12m, mcap_debt and dd_naive added.
+          vol_12m, mcap_debt and dd_naive added.
 Data:     CRSP (licensed) or the Yahoo stand-in. Yahoo prices miss companies that stopped trading, which biases results.
 
 Why "before t": the 10-K is public on t - 1 day, so only prices up to then could be used on the day.
 Link at t: the panel CIK's CRSP stock identifiers ("permno" in the CRSP database; CIK -> gvkey -> permno, from
 fetch_crsp) whose link is active on t - 1 day; when several are active, the one with the largest market value on its
 last day before t is used.
-A row gets market inputs only if the stock has at least 253 trading days before t and traded within 10 days before t.
+A row gets market inputs only if the stock has at least 253 trading days before t and has a daily record dated within
+the 10 calendar days before t.
 ret_12m, ret_6m: compounded CRSP total return (ret) over the last 252 / 126 trading days before t, minus the
   compounded S&P 500 return (CRSP sprtrn) over the same dates.
 vol_12m: annualised standard deviation of daily log returns over the last 252 trading days.

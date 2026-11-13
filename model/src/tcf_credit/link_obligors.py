@@ -10,8 +10,8 @@ Why a name match: the rating files carry a company name but no CIK. Obligors are
 (legal entity identifier), else name.
 Names are matched exactly after normalisation (capital letters, no "Inc"/"Corp" endings), against each CIK's current
 and former names. A second, lower-confidence pass also drops the words HOLDINGS, HOLDING, GROUP, INTERNATIONAL and
-INTL. A normalised name that maps to
-more than one CIK is ambiguous and not linked: a wrong link would attach another company's ratios to a rating.
+INTL. A normalised name that maps to more than one CIK is ambiguous and not linked: a wrong link would attach another
+company's ratios to a rating.
 Usage: python -m tcf_credit.link_obligors EVENTS_CSV_GZ LM_HEADERS_CSV OUT_CSV [--by-dates]
 --by-dates (scoring list only, never the training panel): a name that maps to several CIKs is linked when exactly one
 of them filed a 10-K under that name while S&P rated the obligor (for example Walt Disney, where two SEC filers have
@@ -51,7 +51,8 @@ def main() -> None:
     events, headers, out = sys.argv[1:4]
     by_dates = "--by-dates" in sys.argv[4:]
     sec = collections.defaultdict(lambda: {"names": set(), "filings": 0, "first": "9", "last": "0", "sic": "", "state": "", "name": ""})
-    named = collections.defaultdict(list)          # cik -> (10-K filing date, name it filed under, normalised both ways)
+    # cik -> (10-K filing date, name it filed under, normalised both ways)
+    named = collections.defaultdict(list)
     for r in csv.DictReader(open(headers)):
         c = sec[r["cik"]]
         if r["form"] != "10-K/A":
@@ -98,7 +99,7 @@ def main() -> None:
                     sl, sf = o["last"].replace("-", ""), o["first"].replace("-", "")   # 10-K dates are YYYYMMDD
                     keys = {norm(n, loose) for n in names}   # filed a 10-K under this very name while S&P rated it:
                     live = [c for c in hits if any(sf <= d <= sl and (k2 if loose else k1) in keys   # a former name
-                                                   for d, k1, k2 in named[c])]                     # now used by another firm fails
+                                                   for d, k1, k2 in named[c])]   # now used by another firm fails
                     if by_dates and len(live) == 1:      # only one of them filed 10-Ks while S&P rated this obligor
                         cik, how = live[0], "dated"
                     break

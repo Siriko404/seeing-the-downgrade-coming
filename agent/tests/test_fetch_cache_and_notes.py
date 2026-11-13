@@ -1,5 +1,10 @@
-"""Regression tests for fixes made after a review of the tools (fetching, caching, notes). Each test fails on the
-code before its fix. Standard library only: python3 -m unittest discover -s tests
+"""Tests of fetch.py (network errors, saved copies, long passages, firm lookup) and of the checks and notes that
+depend on what it finds (action dates, actions that name no agency, bank scale maps).
+
+Each test checks one fix or behaviour; the name of the test says which.
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_fetch_cache_and_notes.py
+Standard library only.
 """
 import gzip
 import hashlib
@@ -28,6 +33,9 @@ BODY = b"<html><body><p>S&amp;P rates us A.</p></body></html>"
 
 
 class Resp:
+    """A fake web response. The mode decides what read() does: 'plain' returns the page as it is, any other mode that
+    does not fail (the tests use 'ok') returns it gzip-compressed, 'incomplete' and 'ssl' raise an error, and
+    'badgzip' returns bytes that are not gzip."""
     def __init__(self, mode):
         self.mode = mode
         self.headers = {"Content-Encoding": "gzip"} if mode != "plain" else {}
@@ -51,6 +59,7 @@ class Resp:
 
 
 class Opener:
+    """A fake web opener that counts calls and returns a Resp of the given mode."""
     def __init__(self, mode):
         self.mode, self.calls = mode, 0
 
@@ -60,7 +69,8 @@ class Opener:
 
 
 class NetworkTests(unittest.TestCase):
-    """D10 and D11: a broken response or a damaged saved copy never ends the run in a traceback."""
+    """A broken response ends as a ConnectionError and nothing is saved; a damaged saved copy is downloaded again; a
+    good saved copy is used without a request."""
     def setUp(self):
         self.d = Path(tempfile.mkdtemp())
         self.sleep, F.time.sleep = F.time.sleep, lambda *_: None
@@ -126,7 +136,7 @@ def passage(text):
 
 
 class TextDateTests(unittest.TestCase):
-    """D9: a text row's action date must be the date of its own sentence, not any date in the passage."""
+    """A text row's action date must be the date of its own sentence, not any date in the passage."""
     def why(self, row, text, tk=TK):
         return K.check_row(row, passage(text), tk, text)[0]
 
@@ -187,7 +197,7 @@ def outlook_row(agency, quote, date="2019-03-08", entity="Ford"):
 
 
 class CaptionActionTests(unittest.TestCase):
-    """D1, D2: a dated action written above a rating table binds to the agency and date of its own sentence."""
+    """A dated action written above a rating table binds to the agency and date of its own sentence."""
     def setUp(self):
         self.p = caption_table()
         self.line = lambda ag: next(x for x in self.p["text"].split("\n") if x.startswith("Row: NRSRO: " + ag))
@@ -243,7 +253,7 @@ BOEING = ("The major credit rating agencies downgraded our short term and long t
 
 
 class UnnamedAgencyTests(unittest.TestCase):
-    """D3: a filing that reports a rating action without naming the agency gets a gap, and the note says so."""
+    """A filing that reports a rating action without naming the agency gets a gap, and the note says so."""
     def test_sentences_found_and_left_out(self):
         blocks = lambda t: [{"kind": "p", "text": t}]
         self.assertEqual(len(F.unnamed_actions(blocks(BOEING), {})), 1)
@@ -268,6 +278,7 @@ class UnnamedAgencyTests(unittest.TestCase):
             "primaryDocument": ["a.htm"]}}}
 
         class Sec:
+            """A stand-in for the SEC client: a filing index with a main document and an exhibit."""
             def get(self, url, keep):
                 if "submissions" in url:
                     return json.dumps(sub).encode()
@@ -308,7 +319,7 @@ relative rankings of our 22-grade internal risk ratings with the external rating
 
 
 class ScaleMapTests(unittest.TestCase):
-    """D5: a bank's map of its internal risk grades to agency scales is not the bank's own rating."""
+    """A bank's map of its internal risk grades to agency scales is not the bank's own rating."""
     def test_internal_ratings_map_gives_no_unread_cells(self):
         stamp = {"ticker": "RY", "company": "ROYAL BANK OF CANADA", "form": "6-K", "doc_type": "EX-99.1",
                  "filed": "2020-05-27", "url": "https://www.sec.gov/Archives/edgar/data/1000275/r.htm"}
@@ -319,7 +330,7 @@ class ScaleMapTests(unittest.TestCase):
 
 
 class StageTests(unittest.TestCase):
-    """D13: a mistyped firm stops before the last run's note is removed."""
+    """A mistyped firm stops before the last run's note is removed."""
     def setUp(self):
         self.d = Path(tempfile.mkdtemp())
 
@@ -353,7 +364,7 @@ class StageTests(unittest.TestCase):
 
 
 class LongPassageTests(unittest.TestCase):
-    """D12: a long run of rating paragraphs is split, not cut; what is still cut is said once, for kept text only."""
+    """A long run of rating paragraphs is split, not cut; what is still cut is said once, for kept text only."""
     stamp = {"ticker": "X", "company": "X CORP", "form": "10-K", "doc_type": "10-K", "filed": "2026-02-01",
              "url": "https://www.sec.gov/Archives/edgar/data/1/x.htm"}
 
@@ -394,6 +405,7 @@ class LongPassageTests(unittest.TestCase):
             "filingDate": ["2026-04-23", "2026-07-23"], "form": ["10-Q", "10-Q"], "primaryDocument": ["a.htm", "b.htm"]}}}
 
         class Sec:
+            """A stand-in for the SEC client: two 10-Q filings, each with its own index page."""
             def get(self, url, keep):
                 if "submissions" in url:
                     return json.dumps(sub).encode()
@@ -413,7 +425,7 @@ class LongPassageTests(unittest.TestCase):
         self.assertTrue(any(x["rule"] == "G-c read in part" for x in g))
 
 class AffirmedTests(unittest.TestCase):
-    """D6: 'revised the outlook ... and affirmed their ratings' keeps the affirmation beside the outlook change."""
+    """'revised the outlook ... and affirmed their ratings' keeps the affirmation beside the outlook change."""
     def test_affirmation_beside_an_outlook_change_is_kept(self):
         d = Path(tempfile.mkdtemp())
         try:
@@ -441,12 +453,13 @@ class AffirmedTests(unittest.TestCase):
 
 
 class GivenCikTests(unittest.TestCase):
-    """D7: a firm given as TICKER=CIK gets a firm line with SEC's own name for that number, to check."""
+    """A firm given as TICKER=CIK gets a firm line with SEC's own name for that number, to check."""
     def test_sec_name_printed_for_a_given_cik(self):
         sub = {"name": "TWITTER, INC.", "sicDescription": "", "filings": {"files": [], "recent": {
             "accessionNumber": [], "filingDate": [], "form": [], "primaryDocument": []}}}
 
         class Sec:
+            """A stand-in for the SEC client that returns an empty list of filings."""
             def get(self, url, keep):
                 return json.dumps(sub).encode()
         import datetime as dt

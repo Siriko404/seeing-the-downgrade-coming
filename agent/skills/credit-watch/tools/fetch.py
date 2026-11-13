@@ -95,7 +95,9 @@ def contact() -> str | None:
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
+    """A redirect handler that follows no redirect: the request then fails with the redirect's HTTP error."""
     def redirect_request(self, *a, **k):
+        """Return None, so no redirect is followed."""
         return None
 
 
@@ -104,6 +106,8 @@ class Sec:
     gzip copy of the documents it is told to keep, so a rerun does not ask again."""
 
     def __init__(self, who: str, store: Path):
+        """Remember who we are (the contact), the folder for saved copies and the time of the last request; no request
+        made yet."""
         self.who, self.store, self.last = who, store, 0.0
         self.opener = urllib.request.build_opener(NoRedirect)
         self.requests = 0
@@ -160,17 +164,21 @@ class Blocks(HTMLParser):
     """HTML to a list of blocks: {'kind': 'p', 'text'} or {'kind': 'table', 'rows': [[cell, ...], ...]}."""
 
     def __init__(self):
+        """Start with an empty parser: nothing to skip, no table open and no text collected."""
         super().__init__(convert_charrefs=True)
         self.out, self.buf, self.skip = [], [], 0
         self.tables = []                       # stack of {'rows': [...], 'row': [...] or None, 'cell': [...] or None}
 
     def flush(self):
+        """Turn the text collected so far into one paragraph block; nothing is added if the text is blank."""
         t = C.norm_space("".join(self.buf))
         self.buf = []
         if t:
             self.out.append({"kind": "p", "text": t})
 
     def handle_starttag(self, tag, attrs):
+        """Track elements to skip (script, style, hidden), the start of tables, rows and cells (with colspan) and
+        paragraph breaks."""
         tag = tag.lower()
         if tag in ("script", "style", "ix:header") or (tag == "div" and "display:none" in
                                                          (dict(attrs).get("style") or "").replace(" ", "").lower()):
@@ -202,6 +210,8 @@ class Blocks(HTMLParser):
             self.flush()
 
     def handle_endtag(self, tag):
+        """End cells, rows and tables (a finished table becomes a block) and paragraphs, and stop skipping hidden
+        elements."""
         tag = tag.lower()
         if tag in ("script", "style", "ix:header"):
             self.skip = max(0, self.skip - 1)
@@ -235,6 +245,7 @@ class Blocks(HTMLParser):
             self.emit_table(t["rows"])
 
     def handle_data(self, data):
+        """Add text to the current table cell or paragraph; text between table cells is dropped."""
         if self.skip:
             return
         if self.tables and self.tables[-1]["cell"] is not None:
@@ -245,6 +256,8 @@ class Blocks(HTMLParser):
             self.buf.append(data)
 
     def emit_table(self, rows):
+        """Add a finished table as a block: empty cells and lone symbols are dropped, a table with a cell over 1,500
+        characters becomes paragraphs, a one-row table becomes one line of text."""
         placed = []                             # each cell with the columns it covers (colspan), empty cells left out
         for r in rows:
             at, row = 0, []
@@ -269,6 +282,7 @@ class Blocks(HTMLParser):
         self.out.append({"kind": "table", "rows": rows, "pos": [[(a, b) for _, a, b in r] for r in placed]})
 
     def close(self):
+        """Finish parsing: add any table still open and the last paragraph."""
         super().close()
         while self.tables:
             t = self.tables.pop()
@@ -433,6 +447,7 @@ def signal(text: str, table: bool) -> bool:
 
 
 def is_rating(text: str) -> bool:
+    """True if the text names an agency and also holds a rating word."""
     return C.any_agency(text) and bool(RATING_WORDS.search(text))
 
 
@@ -511,6 +526,7 @@ def passages_of(blocks: list, stamp: dict, set_aside: list) -> list:
 # ---------- filings ----------
 
 def norm_name(s: str) -> str:
+    """A name for comparing: lower case, apostrophes removed, other punctuation turned into single spaces."""
     s = re.sub(r"['\u2019]", "", s.lower())                 # "McDonald's" = SEC's "MCDONALDS CORP"
     return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", s)).strip()
 
@@ -585,6 +601,7 @@ def canadian_file(co: dict) -> str:
 
 
 def date_needed(t: str, why: str) -> str:
+    """The stop block that asks the user for the filing date of a downloaded file, plus the rerun line for the AI."""
     return user_block([why, "Give me its filing date (YYYY-MM-DD), as SEDAR+ or the document shows it."],
                       f"run again as {t}=manual --file <same path> --filed <YYYY-MM-DD>.")
 
@@ -751,6 +768,7 @@ def documents(sec: Sec, cik: str, f: dict) -> list:
 
 
 def read_source(s: Path) -> dict:
+    """The 'key: value' lines of a source.txt as a dict with lower-case keys; empty if the file does not exist."""
     src = {}
     if s.exists():
         for line in s.read_text().splitlines():
@@ -919,6 +937,7 @@ def terms_only(p: dict) -> bool:
 
 
 def drop_terms(res: dict) -> dict:
+    """Remove credit-agreement passages (see terms_only) from res['passages'] and count them in res['terms_skipped']."""
     keep = [p for p in res["passages"] if not terms_only(p)]
     res["terms_skipped"] = len(res["passages"]) - len(keep)
     res["passages"] = keep

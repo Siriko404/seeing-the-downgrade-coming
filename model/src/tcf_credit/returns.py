@@ -7,21 +7,21 @@ Data:     needs CRSP (licensed). The Yahoo stand-in has no delisting returns, so
 
 A flag is a reason to look, not a reason to sell: this step measures whether flagged stocks did worse than the market.
 
-For every test snapshot of an evaluate.py run (default model: the main model, the logit), the stock's
-compounded CRSP return over the trading days after t (t itself excluded, since the 10-K was filed the day before) up to
-3, 6 and 12 months later, minus the CRSP value-weighted market return (vwretd) over the same days.
+For every test snapshot of an evaluate.py run (default model: the main model, the logit), the stock's compounded CRSP
+return over the trading days after t (t itself excluded, since the 10-K was filed the day before) up to 3, 6 and 12
+months later, minus the CRSP value-weighted market return (vwretd) over the same days.
 Delisting: the delisting return is added on the delisting day; if it is missing for a performance-related delisting
 (codes 500-599, as this code reads them) it is set to -30% (this code's default; --missing-delist changes it, e.g.
--0.55 for Nasdaq stocks as in
-Shumway and Warther 1999); after delisting the position earns nothing.
+-0.55 for Nasdaq stocks as in Shumway and Warther 1999); after delisting the position earns nothing.
 Reported:
   1. mean and median excess return of flagged and unflagged snapshots, and the difference;
   2. the difference within each test year, averaged (removes common year effects);
   3. a regression of the 12-month excess return on the flag with controls known at t (past 12-month return, volatility,
      log market value) and year effects;
   each as raw excess returns, winsorised at 1%/99%, and medians;
-  4. mean excess return by score decile;
-  5. the same for snapshots that were, and were not, downgraded within 12 months (hindsight, for context only).
+  4. mean (winsorised) and median 12-month excess return by score decile, with the deciles drawn within each test year;
+  5. median 12-month excess return of the snapshots that were, and were not, downgraded within 12 months (hindsight, for
+     context only).
 Intervals: firm-clustered bootstrap (companies resampled; a firm's years move together) and, as a second view,
 a year-block bootstrap (test years resampled; all snapshots of a year move together, so a market-wide year counts once).
 Usage: python -m tcf_credit.returns RUN_DIR PANEL_CSV CRSP_DIR OUT_DIR [--model logit] [--boot 2000]

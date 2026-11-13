@@ -1,10 +1,16 @@
 """The fruit fly's learning centre (the mushroom body) as a fixed network with a trained readout.
 
-What is a connectome? It is a complete wiring diagram of a brain: for every neuron (nerve cell), which other neurons
-it connects to and how strongly. Researchers have
-mapped the whole brain of one adult fruit fly this way (FlyWire, version 783). Shiu et al. 2024 turned the map into
-signed connections: a positive number means the sending neuron excites the receiving one, a negative number means it
-inhibits it.
+Role:     a model for `evaluate.py --zoo` (see zoo.py), not a numbered pipeline step.
+Goes in:  `fit(X, y)` takes the logit's prepared inputs (one row per annual report) and the 0/1 label; the wiring comes
+          from two public files that are downloaded once.
+Comes out: `predict_proba(X)` gives, for each row, the probability of a downgrade.
+Data:     the two public connectome files (about 133 MB, see model/FLY-DATA.md); the internet is needed only for the
+          first download.
+
+What is a connectome? It is a complete wiring diagram of a brain: for every neuron (nerve cell), which other neurons it
+connects to and how strongly. Researchers have mapped the whole brain of one adult fruit fly this way (FlyWire, version
+783). Shiu et al. 2024 turned the map into signed connections: a positive number means the sending neuron excites the
+receiving one, a negative number means it inhibits it.
 
 The mushroom body is the part of the fly brain that learns to link smells with good or bad outcomes. Its wiring is
 simple to describe: 319 input neurons (antennal-lobe projection neurons, cell class "ALPN" in the annotations of
@@ -67,6 +73,7 @@ BATCH_ROWS = 4096                                # companies processed at once, 
 
 
 def fly_dir() -> Path:
+    """Folder that holds the downloaded files: TCF_FLY_DIR if it is set, else ~/.cache/tcf_credit/fly."""
     return Path(os.environ.get("TCF_FLY_DIR", Path.home() / ".cache" / "tcf_credit" / "fly"))
 
 
@@ -94,10 +101,9 @@ def fetch(name: str, folder: Path | None = None, opener=urllib.request.urlopen) 
 def connectome():
     """(connections with columns pre, post, weight; neuron annotations with root_id, cell_class).
 
-    `pre` and `post` are neuron identifiers (root_id). `weight` is the signed connection strength (Shiu et al.'s
-    column 'Excitatory x Connectivity', a whole
-    number), positive when the sending
-    neuron excites and negative when it inhibits. Cached, because reading 15 million connections takes seconds."""
+    `pre` and `post` are neuron identifiers (root_id). `weight` is the signed connection strength (Shiu et al.'s column
+    'Excitatory x Connectivity', a whole number), positive when the sending neuron excites and negative when it
+    inhibits. Cached, because reading 15 million connections takes seconds."""
     con = pd.read_parquet(fetch("Connectivity_783.parquet"),
                           columns=["Presynaptic_ID", "Postsynaptic_ID", "Excitatory x Connectivity"])
     con.columns = ["pre", "post", "weight"]
@@ -128,10 +134,9 @@ def shuffled_wiring(wiring: sp.csr_matrix, seed: int) -> sp.csr_matrix:
     Kenyon cells it connects to are drawn at random (without repeats, so no neuron connects twice to one cell).
 
     What stays is each input neuron's number of connections and their strengths; who it connects to is destroyed, and
-    with it the number of inputs each Kenyon cell receives. A difference in results between
-    real and shuffled wiring that holds across seeds would therefore point to the pattern of the fly's wiring,
-    including how
-    the inputs are spread over the Kenyon cells (one model's AUC moved by 0.025 to 0.036 across seeds alone)."""
+    with it the number of inputs each Kenyon cell receives. A difference in results between real and shuffled wiring
+    that holds across seeds would therefore point to the pattern of the fly's wiring, including how the inputs are
+    spread over the Kenyon cells (one model's AUC moved by 0.025 to 0.036 across seeds alone)."""
     rng = np.random.default_rng(seed)
     indices = np.empty_like(wiring.indices)
     for r in range(wiring.shape[0]):
@@ -142,6 +147,8 @@ def shuffled_wiring(wiring: sp.csr_matrix, seed: int) -> sp.csr_matrix:
 
 @lru_cache(maxsize=None)
 def wiring_for(kind: str, seed: int) -> sp.csr_matrix:
+    """The input-neuron by Kenyon-cell wiring matrix: the real one if `kind` is "real", else its shuffled control for
+    `seed` (see shuffled_wiring). Cached."""
     real = wiring_matrix(mushroom_body_edges(*connectome()))
     return real if kind == "real" else shuffled_wiring(real, seed)
 
@@ -154,6 +161,8 @@ class MushroomBody:
     shuffle."""
 
     def __init__(self, wiring, seed: int, C: float, active_share: float = ACTIVE_SHARE):
+        """Set the wiring (looked up by name if `wiring` is a string), copy it to the device as a dense matrix, and
+        set how many Kenyon cells stay on: `active_share` of them, rounded up."""
         self.wiring = wiring_for(wiring, seed) if isinstance(wiring, str) else wiring
         self.seed, self.C = seed, C
         self.device = readout.device()
@@ -192,6 +201,8 @@ class MushroomBody:
         return torch.cat(parts)
 
     def fit(self, x, y):
+        """Fix the input assignment, turn each row of `x` into its active cells and train the readout on the labels
+        `y`. Returns self."""
         # Only the readout is trained; the wiring and the input assignment are fixed before the outcomes are seen.
         self.assign_inputs(x.shape[1])
         self.readout = readout.ActiveCellReadout(self.n_cells, self.C).fit(self.active_cells(x), np.asarray(y))
@@ -199,8 +210,10 @@ class MushroomBody:
 
     @property
     def n_cells(self) -> int:
+        """The number of Kenyon cells (the columns of the wiring)."""
         return self.wiring.shape[1]
 
     def predict_proba(self, x):
+        """Two columns, as scikit-learn models give: 1 - p and p, where p is the readout's downgrade probability."""
         p = self.readout.predict(self.active_cells(x))
         return np.column_stack([1 - p, p])

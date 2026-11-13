@@ -13,7 +13,7 @@ the CRSP rows behind it. Pass/fail checks:
   big_days    every day with |ret| > 50% matches its own adjusted price change within 10%;
   coverage    at most 5% of the window's trading days have a missing return (missing days count as 0%);
   identity    on t the security's CRSP share code is 10 or 11 (our reading: ordinary common shares) in the CRSP name
-  history;
+              history;
   unique      no duplicated (permno, date) rows in the window.
 Described, not judged: start price under $1 and under $5, the largest single-day return, the share of the 12-month
 log return made on that one day, flagged or not, downgraded or not, test year.

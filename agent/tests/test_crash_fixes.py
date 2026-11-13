@@ -1,5 +1,11 @@
-"""Two crash fixes (S1 and S2). Each test fails on the code before them.
-Standard library only: python3 -m unittest discover -s tests
+"""Tests of three crash fixes in the credit-watch tools.
+
+Three cases: no network when a firm or a holdings file is looked up (one plain line, no traceback), an empty or
+non-text quote on a table row (the row is rejected, no crash), and a check.py error, which must not use up one of the
+two check rounds.
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_crash_fixes.py
+Standard library only.
 """
 import io
 import json
@@ -41,6 +47,7 @@ def row(quote):
 
 
 class DeadSec:
+    """A stand-in for the SEC client whose every request fails as if there were no network."""
     def __init__(self, *a):
         self.requests = 0
 
@@ -50,7 +57,7 @@ class DeadSec:
 
 
 class LookupWithoutNetworkTests(unittest.TestCase):
-    """S1: no network at lookup ends in one plain line, for a firm and for a holdings file."""
+    """No network at lookup: a firm stops with one plain message, and a holdings file does not crash."""
     def setUp(self):
         self.d, self.cwd = tempfile.mkdtemp(), os.getcwd()
         os.chdir(self.d)
@@ -79,7 +86,7 @@ class LookupWithoutNetworkTests(unittest.TestCase):
 
 
 class EmptyQuoteTests(unittest.TestCase):
-    """S2: an empty or non-text quote on a table row is rejected in words, not a crash."""
+    """An empty or non-text quote on a table row is rejected in words, not a crash."""
     def test_empty_and_non_text_quotes_are_rejected(self):
         p = table_passage()
         for q in ("", " ", "\n", None, 0, [], {}):
@@ -92,7 +99,7 @@ class EmptyQuoteTests(unittest.TestCase):
 
 
 class RoundCounterTests(unittest.TestCase):
-    """S2: a checker that stops with an error does not use up a round."""
+    """A checker that stops with an error does not use up a round."""
     def setUp(self):
         self.d, self.cwd = tempfile.mkdtemp(), os.getcwd()
         os.chdir(self.d)

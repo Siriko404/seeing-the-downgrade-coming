@@ -15,7 +15,7 @@ import sys
 import pandas as pd
 
 ORIGINAL_10K = {"10-K", "10-K405", "10-KSB", "10-KSB40", "10-KT"}     # amendments (10-K/A ...) are left out
-PREV_MIN_DAYS, PREV_MAX_DAYS = 300, 550                               # the previous annual report must be about a year older
+PREV_MIN_DAYS, PREV_MAX_DAYS = 300, 550      # the previous annual report must be about a year older
 
 
 def add_changes(s: pd.DataFrame) -> pd.DataFrame:
@@ -31,7 +31,8 @@ def add_changes(s: pd.DataFrame) -> pd.DataFrame:
 
 
 def main():
-    """Match each panel row to its 10-K's word counts (by accession number, else CIK and filing date), add tone changes."""
+    """Match each panel row to its 10-K's word counts (by accession number, else CIK and filing date), add tone
+    changes."""
     panel_csv, summ_csv, out = sys.argv[1:4]
     panel = pd.read_csv(panel_csv)
     s = pd.read_csv(summ_csv, usecols=["CIK", "FILING_DATE", "ACC_NUM", "FORM_TYPE", "N_Words", "N_Negative",

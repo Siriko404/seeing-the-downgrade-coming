@@ -1,3 +1,7 @@
+"""Tests for lm_tone.py (the optional text-tone step after step 6): the change in tone since the previous 10-K.
+
+The tests use small made-up tables. They need no data and no internet.
+"""
 import unittest
 
 import pandas as pd
@@ -12,6 +16,7 @@ def frame(rows):
 
 
 class ToneChangeTests(unittest.TestCase):
+    """Checks of `add_changes`: which earlier 10-K a tone change is measured against."""
     def test_change_uses_previous_filing_only(self):
         s = add_changes(frame([("1", "2020-03-01", 0.02, 0.01), ("1", "2021-03-01", 0.03, 0.01),
                                ("1", "2022-03-01", 0.01, 0.02)])).set_index("filed")

@@ -1,3 +1,7 @@
+"""Tests for build_panel.py (pipeline step 4: the label, the S&P rating state and the exclusion of some industries).
+
+The tests use short lists of made-up rating events. They need no data and no internet.
+"""
 import datetime as dt
 import unittest
 
@@ -7,6 +11,7 @@ D = dt.date
 
 
 class LabelTests(unittest.TestCase):
+    """Checks of `label`: 1, 0 or dropped (None) for the 365 days after the snapshot date."""
     END = D(2025, 12, 5)
 
     def test_downgrade_inside_window_is_one(self):
@@ -30,6 +35,7 @@ class LabelTests(unittest.TestCase):
 
 
 class StateTests(unittest.TestCase):
+    """Checks of `rating_state` (only events before t count) and of `excluded` (financials, utilities)."""
     def test_state_uses_only_events_before_t(self):
         ev = [(D(2019, 1, 1), "BB", "NW", "Stable", ""), (D(2020, 6, 1), "B+", "DG", "Negative", "WatchNeg")]
         s = rating_state(ev, D(2020, 1, 1))

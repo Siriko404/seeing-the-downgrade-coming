@@ -5,22 +5,30 @@ fetches or reads it, and what you must do to use it fairly.
 
 ## No licensed data and no model scores are included
 
-This package contains **no licensed data and no model scores**, and no data files for the model: no ratings table, no prices, no economic series. The agent's offline demo keeps saved copies of public SEC filings (`agent/skills/credit-watch/cache/`), and its tests keep small saved runs built from public filings.
-The lecture's numbers use licensed stock prices from CRSP, through WRDS. To match each company to its CRSP stock, the code uses two identifier tables available through WRDS: the Compustat company file (only its gvkey and CIK columns) and the CRSP/Compustat Merged link table.
-No Compustat financial data is used: all accounting numbers come from the SEC filings as first filed. The public sources below are
-free, but each has terms of use. You download them yourself.
+This package contains **no licensed data and no model scores**, and no data files for the model: no ratings table, no
+prices, no economic series. The agent's offline demo keeps saved rating passages from public SEC filings in
+`agent/skills/credit-watch/cache/`. A rating passage is a paragraph or table that mentions ratings, not a whole filing.
+There are passages for HON, RY and CMP; the file for SJ holds only a firm name and no text. The agent's tests keep small
+saved runs built from public filings.
+The lecture's numbers use licensed stock prices from CRSP, through WRDS. To match each company to its CRSP stock, the
+code uses two identifier tables available through WRDS: the Compustat company file (only its gvkey and CIK columns) and
+the CRSP/Compustat Merged link table. No Compustat financial data is used: all accounting numbers come from the SEC
+filings as first filed. The public sources below are free, but each has terms of use. You download them yourself.
 
-**Because of that, the lecture's numbers cannot be reproduced exactly from free data.** One possible difference is survivorship
-bias: free price histories tend to leave out companies that stopped trading (bankrupt, bought, delisted), and some of these may be
-companies that were downgraded. This was not tested here: the public route has not been run.
+**Because of that, the lecture's numbers cannot be reproduced exactly from free data.** One possible difference is
+survivorship bias: free price histories tend to leave out companies that stopped trading (bankrupt, bought, delisted),
+and some of these may be companies that were downgraded. This was not tested here: the public route has not been run.
 
 ## Three ways to study
 
 1. **Example data (anyone).** `model/synthetic/make_panel.py` writes a made-up table with the real column names. The
-   test step (`evaluate.py`) and the four model notebooks run on it; the download and licensed-data steps do not. The numbers mean nothing.
-2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories, FRED and Philadelphia Fed economy files, the Loughran-McDonald
-   10-K header file (and, for the side test, their 10-X summaries file of word counts) and free Yahoo prices in place of CRSP. Results will differ from the lecture. This route has not been run
-   from start to end, and one script is missing (the one that converts the Philadelphia Fed economy files; see the outline below), so expect to debug.
+   test step (`evaluate.py`) and the four model notebooks run on it; the download and licensed-data steps do not. The
+   numbers mean nothing.
+2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories, FRED and Philadelphia
+   Fed economy files, the Loughran-McDonald 10-K header file (and, for the side test, their 10-X summaries file of word
+   counts) and free Yahoo prices in place of CRSP. Results will differ from the lecture. This route has not been run
+   from start to end, and one script is missing (the one that converts the Philadelphia Fed economy files; see the
+   outline below), so expect to debug.
 3. **Licensed data (if your library gives you WRDS).** The lecture's route. See the last section.
 
 ## The inputs, in groups
@@ -28,8 +36,8 @@ companies that were downgraded. This was not tested here: the public route has n
 The main model uses **four groups** of inputs: 10-K ratios, the S&P rating state, market inputs and the economy. A fifth
 group, text tone from word lists, is used only in a side test.
 
-All code is in `model/src/tcf_credit/`. The model's unit is one row per company per 10-K. The snapshot date *t* is the day
-after the 10-K was filed, and only information public on *t* may be used (see "look-ahead bias" in the
+All code is in `model/src/tcf_credit/`. The model's unit is one row per company per 10-K. The snapshot date *t* is the
+day after the 10-K was filed, and only information public on *t* may be used (see "look-ahead bias" in the
 [glossary](GLOSSARY.md)).
 
 | Group | What it holds | Source | Public or licensed |
@@ -47,55 +55,60 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
 - **Where.** The SEC publishes the numbers in each company's filings in a standard computer-readable form (XBRL),
   collected as "company facts" on EDGAR. Values are taken as first filed in that 10-K, not as later restated.
 - **Code.** `fetch_sec_bulk.py` downloads the SEC's bulk files (company facts, submissions, the ticker list).
-  `fetch_companyfacts.py` fetches the facts of chosen companies and keeps the tags listed in its TAGS table (the model reads all of them except four).
-  `build_panel.py` builds the table (the panel) from them.
+  `fetch_companyfacts.py` fetches the facts of chosen companies and keeps the tags listed in its TAGS table (the model
+  reads all of them except four). `build_panel.py` builds the table (the panel) from them.
 - **Terms.** The SEC asks every program to declare a contact (your name and e-mail address) in its requests, and allows
   at most 10 requests per second. `sec_http.py` waits 0.15 seconds between requests and reads your contact from the
-  environment variable `TCF_SEC_CONTACT`, or from `[sec] contact` in a settings file under your home folder. Use your own
-  contact. Never save it in a file you publish.
+  environment variable `TCF_SEC_CONTACT`, or from `[sec] contact` in a settings file under your home folder. Use your
+  own contact. Never save it in a file you publish.
 
 ### 2. S&P rating state, from the agencies' public 17g-7 histories
 
-- **Where.** SEC Rule 17g-7 makes each rating agency post its rating actions as computer-readable files on its own website
-  (ZIP archives of XBRL files). The model uses S&P's long-term issuer credit rating in foreign currency. The label comes
-  from the same history: it is 1 if a downgrade occurs in the 365 days after *t* (a downgrade to default counts as a downgrade: the SEC's code DG includes classifying the company as in default), and 0 if none does. A report is dropped
-  if the rating is withdrawn (code WD, WE or WO) before any downgrade, or if the 12 months are not fully observed.
+- **Where.** SEC Rule 17g-7 makes each rating agency post its rating actions as computer-readable files on its own
+  website (ZIP archives of XBRL files). The model uses S&P's long-term issuer credit rating in foreign currency. The
+  label comes from the same history: it is 1 if a downgrade occurs in the 365 days after *t* (a downgrade to default
+  counts as a downgrade: the SEC's code DG includes classifying the company as in default), and 0 if none does. A report
+  is dropped if the rating is withdrawn (code WD, WE or WO) before any downgrade, or if the 12 months are not fully
+  observed.
 - **Code.** `ratings_parser.py` reads the ZIP archives and writes one table of company-level rating events. It skips
-  instrument-level events (single bonds) and writes no column of bond identifiers, because those are licensed. `link_obligors.py` links S&P's
-  rated companies to SEC filers (by CIK) through the matching of their names. It needs the Loughran-McDonald 10-K header
-  file, reduced by `lm_headers.py`.
-- **Terms.** Download the archives yourself from each agency's site. Their reuse terms were not checked here, so read them. Do not publish
-  the files.
+  instrument-level events (single bonds) and writes no column of bond identifiers, because those are licensed.
+  `link_obligors.py` links S&P's rated companies to SEC filers (by CIK) through the matching of their names. It needs
+  the Loughran-McDonald 10-K header file, reduced by `lm_headers.py`.
+- **Terms.** Download the archives yourself from each agency's site. Their reuse terms were not checked here, so read
+  them. Do not publish the files.
 - **Care.** Name matching is imperfect. A name that fits more than one CIK is left unlinked, which drops some companies.
 
 ### 3. Market inputs, from CRSP or free Yahoo prices
 
 - **Where.** In the lecture: CRSP daily prices and returns (licensed). Free stand-in: Yahoo's daily price history.
-- **Code.** `fetch_yahoo.py` downloads daily prices, one request per ticker, by default one per second. `yahoo_market.py`
-  writes them in the same folder layout the CRSP route uses. The SPY exchange-traded fund stands in for the S&P 500 and
-  for the value-weighted market return. Shares outstanding come from the latest 10-K cover page and are held constant, so
-  market value is approximate. `market_features.py` then builds the inputs from the folder: returns beyond the market,
-  volatility, market value to debt, and a distance-to-default measure. `features_v2.py` adds beta and idiosyncratic
-  volatility.
-- **Terms.** Yahoo's service is not guaranteed and its data come with Yahoo's terms of use. Read them, keep the polite pace,
-  download for your own study only, and do not redistribute. A row gets market inputs only if the stock has at least 253
-  trading days of history before *t*.
+- **Code.** `fetch_yahoo.py` downloads daily prices, one request per ticker, by default one per second.
+  `yahoo_market.py` writes them in the same folder layout the CRSP route uses. The SPY exchange-traded fund stands in
+  for the S&P 500 and for the value-weighted market return. Shares outstanding come from the latest 10-K cover page and
+  are held constant, so market value is approximate. `market_features.py` then builds the inputs from the folder:
+  returns beyond the market, volatility, market value to debt, and a distance-to-default measure. `features_v2.py` adds
+  beta and idiosyncratic volatility.
+- **Terms.** Yahoo's service is not guaranteed and its data come with Yahoo's terms of use. Read them, keep the polite
+  pace, download for your own study only, and do not redistribute. A row gets market inputs only if the stock has at
+  least 253 trading days of history before *t*.
 - **Care.** This is where survivorship bias enters (see above). Prices of stocks that were delisted are often missing.
 
 ### 4. The economy, from FRED and the Philadelphia Fed
 
 - **Where.** FRED (the St. Louis Fed's free database) for the daily series (corporate bond spread over the 10-year
-  Treasury, yield-curve slope, VIX). Unemployment and GDP growth are used **as first released**; industrial production growth is computed inside the latest monthly vintage published before *t*. All three
-  come from the Philadelphia Fed's Real-Time Data Set, so that later revisions do not leak in. Its spreadsheets were converted to CSV files by a script that is NOT in this package.
-- **Code.** `features_v2.py` reads a folder of these files and picks the latest figure that was public by *t*. Its module
-  description explains the date rules.
+  Treasury, yield-curve slope, VIX). Unemployment and GDP growth are used **as first released**; industrial production
+  growth is computed inside the latest monthly vintage published before *t*. All three come from the Philadelphia Fed's
+  Real-Time Data Set, so that later revisions do not leak in. Its spreadsheets were converted to CSV files by a script
+  that is NOT in this package.
+- **Code.** `features_v2.py` reads a folder of these files and picks the latest figure that was public by *t*. Its
+  module description explains the date rules.
 - **Terms.** Free to download. Some series have another owner (VIX belongs to Cboe), and FRED shows a notice on each
   series page. Read it. Do not redistribute.
 
 ### Side test: Loughran-McDonald word lists, for the text test
 
-- **Where.** The Loughran-McDonald 10-X summaries file (word counts per filing) from the Notre Dame Software Repository for
-  Accounting and Finance (sraf.nd.edu). It counts, for each filing, how many words are on the negative and uncertain lists.
+- **Where.** The Loughran-McDonald 10-X summaries file (word counts per filing) from the Notre Dame Software Repository
+  for Accounting and Finance (sraf.nd.edu). It counts, for each filing, how many words are on the negative and uncertain
+  lists.
 - **Code.** `lm_tone.py` adds the *change* since the previous report in the shares of negative and uncertain words
   (`lm_neg_chg`, `lm_unc_chg`). `evaluate.py` uses them only with `--text`, so they are not part of the main model.
 - **Terms.** Download from the site yourself and read its terms of use.
@@ -112,28 +125,33 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
 
 ## A rough outline of the public route (way 2)
 
-This is an outline, not a recipe. It has not been run from start to end, and one script it needs (the one that converts the Philadelphia Fed spreadsheets to CSV files) is missing from this package.
+This is an outline, not a recipe. It has not been run from start to end, and one script it needs (the one that converts
+the Philadelphia Fed spreadsheets to CSV files) is missing from this package.
 
 1. SEC: `fetch_sec_bulk.py`.
-2. Ratings: download the 17g-7 archives, run `ratings_parser.py`, then `link_obligors.py`, then `fetch_companyfacts.py` on the links file it writes (for the companies you want).
+2. Ratings: download the 17g-7 archives, run `ratings_parser.py`, then `link_obligors.py`, then `fetch_companyfacts.py`
+   on the links file it writes (for the companies you want).
 3. `build_panel.py` makes the panel.
 4. Prices: `fetch_yahoo.py`, then `yahoo_market.py`, then `market_features.py`.
-5. Economy: download the FRED series and the Philadelphia Fed files; convert the Philadelphia Fed spreadsheets to the CSV names that `features_v2.py` reads (no conversion script is included, see `model/README.md`); put them in `DATA/fred` and `DATA/fred/realtime`; then run `features_v2.py`.
+5. Economy: download the FRED series and the Philadelphia Fed files; convert the Philadelphia Fed spreadsheets to the
+   CSV names that `features_v2.py` reads (no conversion script is included, see `model/README.md`); put them in
+   `DATA/fred` and `DATA/fred/realtime`; then run `features_v2.py`.
 6. `evaluate.py` runs the rolling-origin test.
 
 Each program's first lines (its docstring) tell you its arguments.
 
 ## If your library gives you WRDS
 
-This route is the lecture's. It is open only to students whose library subscribes to WRDS with CRSP and Compustat.
-Read your library's terms first; keep the files on your own machine and out of any public place.
+This route is the lecture's. It is open only to students whose library subscribes to WRDS with CRSP and Compustat. Read
+your library's terms first; keep the files on your own machine and out of any public place.
 
 - `fetch_crsp.py` links SEC CIK to Compustat gvkey (the `comp_company.cik` column), then to CRSP permno through the CCM
   link table (link types LU and LC, primary links P and C). It copies each file of your library's local copy of the data
   to a temporary folder, keeps only the linked companies, and deletes the copy. It writes `crsp_links.csv`,
   `crsp_daily.parquet` (permno, date, prc, ret, shrout, cfacpr) and `crsp_sp500.csv` (date, sprtrn).
-- `fetch_crsp_delist.py` adds delisting returns (used only by the stock-return analysis, `returns.py`) and the value-weighted market return
-  (also needed by `features_v2.py` for beta and idiosyncratic volatility).
-- `market_features.py` and `features_v2.py` read the same folder layout that
-  `yahoo_market.py` writes, so both routes end in the same code (`evaluate.py` then reads the panel they write).
-- Anything these programs write holds vendor data. Keep it out of any shared folder, and do not send it to an online tool.
+- `fetch_crsp_delist.py` adds delisting returns (used only by the stock-return analysis, `returns.py`) and the
+  value-weighted market return (also needed by `features_v2.py` for beta and idiosyncratic volatility).
+- `market_features.py` and `features_v2.py` read the same folder layout that `yahoo_market.py` writes, so both routes
+  end in the same code (`evaluate.py` then reads the panel they write).
+- Anything these programs write holds vendor data. Keep it out of any shared folder, and do not send it to an online
+  tool.

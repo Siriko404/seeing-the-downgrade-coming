@@ -10,8 +10,7 @@ which settings to try). Data: none; evaluate.py calls this module only when --zo
 - neural_net: a small fully connected network (scikit-learn MLP) on the simple model's prepared inputs.
 - fly_mb_*, fly_brain_*: the fruit fly networks of fly.py and brain.py, real wiring and shuffled wiring, three input
   assignments each.
-Their settings are chosen only on validation years before
-the first test year, like the others.
+Their settings are chosen only on validation years before the first test year, like the others.
 """
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
@@ -42,6 +41,8 @@ def mono_hgb(p, cols):
     """Gradient boosting that may only raise risk with the inputs in RISK_RISES_WITH and lower it with RISK_FALLS_WITH.
     Columns are laid out as Prep.transform(impute=False) does: the numeric inputs, then sector indicators (no rule)."""
     def make(n_sectors):
+        """Build the boosting model with a direction rule (may only raise risk, may only lower risk, or none) for each
+        input column and none for the sector columns."""
         return HistGradientBoostingClassifier(early_stopping=True, validation_fraction=0.15, n_iter_no_change=20,
                                               max_iter=500, random_state=0,
                                               monotonic_cst=[DIRECTION.get(c, 0) for c in cols] + [0] * n_sectors, **p)
@@ -52,13 +53,16 @@ class _Deferred:
     """Builds the estimator at fit time, when the number of sector columns is known from the matrix width."""
 
     def __init__(self, make, n_numeric):
+        """`make(n_sectors)` builds the model; `n_numeric` is the number of input columns before the sector columns."""
         self.make, self.n_numeric = make, n_numeric
 
     def fit(self, x, y):
+        """Count the sector columns from the width of `x`, build the model and fit it. Returns self."""
         self.model = self.make(x.shape[1] - self.n_numeric).fit(x, y)
         return self
 
     def predict_proba(self, x):
+        """The fitted model's class probabilities for `x`."""
         return self.model.predict_proba(x)
 
 

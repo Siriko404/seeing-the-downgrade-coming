@@ -21,6 +21,7 @@ def run(d, *extra):
 
 
 class ByDatesTests(unittest.TestCase):
+    """Checks of link_obligors with and without `--by-dates` on a few made-up rating events and filers."""
     def setUp(self):
         self.d = tempfile.mkdtemp()
         with gzip.open(Path(self.d) / "ev.csv.gz", "wt", newline="") as f:

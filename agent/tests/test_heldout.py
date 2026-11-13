@@ -1,9 +1,11 @@
-"""Held-out filings (never used to tune the checker): JPMorgan Chase and NextEra Energy.
+"""Held-out tests of check.py on JPMorgan Chase and NextEra Energy filings that were not used to tune the checker.
 
-Fixture tests/fixtures/jpm-nee-2026-11-07: JPM's 10-Q table of 2025-06-30 and NEE's 10-K table, rendered by the
-current fetch.py from the SEC documents (column-group and group headings give each cell its entity), plus three
+The fixture tests/fixtures/jpm-nee-2026-11-07 holds JPM's 10-Q table of 2025-06-30 and NEE's 10-K table, rendered by
+the current fetch.py from the SEC documents (column-group and group headings give each cell its entity), plus three
 text passages as fetched on 2026-11-07. The alias list is emptied: the entity rule must work without it.
-Cases H-01 to H-12 come from an outside review of the checker, plus the NEE/JPM gold rows.
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_heldout.py
+Standard library only.
 """
 import json
 import sys
@@ -18,6 +20,7 @@ FIX = Path(__file__).resolve().parent / "fixtures" / "jpm-nee-2026-11-07" / "pas
 
 
 class HeldOut(unittest.TestCase):
+    """Checks of check.py on the JPM and NEE fixture passages."""
     @classmethod
     def setUpClass(cls):
         d = json.loads(FIX.read_text())
@@ -41,11 +44,11 @@ class HeldOut(unittest.TestCase):
         q = self.line("P1", "Row: June 30, 2025: Moody's")
         return self.why("P1", rating_date="2025-06-30", date_kind="as_of", quote=q, **kw)[0]
 
-    def test_h01_short_term_issuer_kept(self):
+    def test_short_term_issuer_kept(self):
         self.assertEqual(self.jpm(rated_entity="JPMorgan Chase & Co.", what_is_rated="Short-term issuer", grade="P-1"), [])
         self.assertEqual(self.jpm(rated_entity="JPMorgan Chase & Co.", what_is_rated="Long-term issuer", grade="A1"), [])
 
-    def test_h02_cell_entity_bound(self):
+    def test_cell_entity_bound(self):
         self.assertEqual(self.jpm(rated_entity="JPMorgan Chase Bank, N.A.", what_is_rated="Long-term issuer",
                                   grade="Aa2"), [])
         self.assertTrue(self.jpm(rated_entity="JPMorgan Chase & Co.", what_is_rated="Long-term issuer", grade="Aa2"))
@@ -57,7 +60,7 @@ class HeldOut(unittest.TestCase):
         q = self.line("P4", start)
         return self.why("P4", rating_date="2026-02-13", date_kind="as_of", quote=q, **kw)[0]
 
-    def test_h07_h08_h09_nee_groups_items_vmig(self):
+    def test_nee_groups_items_vmig(self):
         self.assertEqual(self.nee("Row: [FPL:(b)] First mortgage", rated_entity="FPL", what_is_rated="First mortgage bonds",
                                   grade="Aa2"), [])
         self.assertEqual(self.nee("Row: [NEECH:(b)] Debentures", rated_entity="NEECH", what_is_rated="Debentures",
@@ -77,7 +80,7 @@ class HeldOut(unittest.TestCase):
         self.assertEqual(why, [])
         self.assertIn("several agencies", n["read"])
 
-    def test_h04_jp_initials_do_not_split(self):
+    def test_jp_initials_do_not_split(self):
         q = ("On November 3, 2025, Moody's revised the outlook for the Parent Company, J.P. Morgan Securities LLC, "
              "J.P. Morgan Securities plc and J.P. Morgan SE to stable from positive, and revised J.P. Morgan SE's "
              "long-term issuer rating to Aa2 from Aa3.")
@@ -91,7 +94,7 @@ class HeldOut(unittest.TestCase):
         self.assertTrue(self.why("P3", **{**up, "action": "downgrade"})[0])
         self.assertTrue(self.why("P3", **{**up, "grade": "Aa3"})[0])                         # old grade
 
-    def test_h12_loan_pricing_is_not_a_rating(self):
+    def test_loan_pricing_is_not_a_rating(self):
         p = {**self.ps["P2"], "text": "The spreads applicable to Base Rate and Term SOFR loans depend on our senior "
                                       "public debt rating assigned by Moody's and S&P."}
         row = {"passage_id": "P2", "agency": "Moody's", "rated_entity": "our", "what_is_rated": "senior public debt",
@@ -99,7 +102,7 @@ class HeldOut(unittest.TestCase):
                "quote": p["text"]}
         self.assertTrue(K.check_row(row, p, self.tk["JPM"])[0])
 
-    def test_a04_removed_from_creditwatch(self):
+    def test_removed_from_creditwatch(self):
         p = {**self.ps["P2"], "text": "On March 6, 2025, S&P removed our ratings from CreditWatch with negative "
                                       "implications and assigned a negative outlook."}
         row = {"passage_id": "P2", "agency": "S&P", "rated_entity": "our", "what_is_rated": "outlook", "grade": "",

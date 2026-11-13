@@ -59,6 +59,7 @@ def canada() -> dict:
 
 
 def scales() -> dict:
+    """The rating scales from data/scales.json: for each agency its long-term and short-term grades and aliases."""
     return json.loads((DATA / "scales.json").read_text())
 
 
@@ -72,6 +73,8 @@ def agency(name: str) -> str | None:
 
 
 def agency_in(text: str, canon: str) -> bool:
+    """True if the text names this agency under any of its spellings (phrases that only look like agency names are
+    ignored)."""
     t = NOT_AGENCY.sub(" ", text)
     return any(re.search(r"(?<![A-Za-z])" + re.escape(s) + r"(?![A-Za-z])", t, re.I) for s in AGENCIES[canon])
 
@@ -84,6 +87,7 @@ def strip_agency(text: str) -> str:
 
 
 def any_agency(text: str) -> bool:
+    """True if the text names any of the known agencies."""
     return any(agency_in(text, a) for a in AGENCIES)
 
 
@@ -111,6 +115,7 @@ def grade(canon: str, g: str) -> str | None:
 
 
 def all_grades() -> set:
+    """Every grade, and every alias of a grade, on any agency's scales."""
     out = set()
     for sc in scales().values():
         out.update(sc["long"]); out.update(sc["short"]); out.update(sc.get("aliases", {}))
@@ -195,14 +200,18 @@ HYPHENS = str.maketrans({"\u2010": "-", "\u2011": "-", "\u2012": "-", "\u2212": 
 
 
 def norm_space(s: str) -> str:
+    """The text with each run of white space made one space, special hyphens and curly quotes made plain, and the ends
+    trimmed."""
     return re.sub(r"\s+", " ", (s or "").translate(HYPHENS).replace(" ", " ").replace("’", "'").replace("‘", "'")
                   .replace("“", '"').replace("”", '"')).strip()
 
 
 def read_json(p: Path):
+    """The content of a JSON file."""
     return json.loads(Path(p).read_text())
 
 
 def write_json(p: Path, obj) -> None:
+    """Write obj to a JSON file (indent 1, non-ASCII kept) and make its folder first if needed."""
     Path(p).parent.mkdir(parents=True, exist_ok=True)
     Path(p).write_text(json.dumps(obj, indent=1, ensure_ascii=False))

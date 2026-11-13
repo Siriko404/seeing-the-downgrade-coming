@@ -1,6 +1,11 @@
-"""Fixes found in a live trial run: Ford's false 'no dated action' gaps, the SEDAR+ manual-file route
-(TICKER=manual, --offline, a PDF without pypdf) and the SKILL line against confirming the firm. Each fails before.
-Standard library only: python3 -m unittest discover -s tests
+"""Tests for problems found in live runs: false 'no dated action' gaps (Ford), the manual-file route for
+Canada-only firms (TICKER=manual, --offline, a PDF without pypdf), the SKILL.md line against confirming the firm,
+a table row that names no item, and run folders.
+
+Each test checks one fix or behaviour; the name of the test says which.
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_live_run_fixes.py
+Standard library only.
 """
 import io
 import os
@@ -50,6 +55,8 @@ class GenericActionGapTests(unittest.TestCase):
 
 
 class ManualRouteTests(unittest.TestCase):
+    """TICKER=manual reads only the saved manual files; --offline also reads the manual files beside a saved copy; a
+    PDF without pypdf says why it was not read."""
     def setUp(self):
         self.d, self.cwd = tempfile.mkdtemp(), os.getcwd()
         os.chdir(self.d)
@@ -89,6 +96,7 @@ class ManualRouteTests(unittest.TestCase):
 
 
 class SkillTextTests(unittest.TestCase):
+    """SKILL.md says the AI never confirms the firm and knows the manual route."""
     def test_agent_never_confirms_the_firm_and_knows_the_manual_route(self):
         s = (SKILL / "SKILL.md").read_text()
         self.assertIn("Never tell user it is the firm they meant", s)

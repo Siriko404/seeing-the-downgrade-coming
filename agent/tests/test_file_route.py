@@ -1,7 +1,10 @@
-"""SEDAR+ by hand: no code downloads Canadian filings (you download them yourself). A firm with no SEC number
-and no saved file stops with the SEDAR+ link and the rerun command; --file copies the user's download into
-credit-watch/manual/<TICKER>/ and reads it.
-Standard library only: python3 -m unittest discover -s tests
+"""Tests of the file route for Canada-only firms: no code downloads from SEDAR+, you download the file yourself.
+
+A firm with no SEC number and no saved file stops with the SEDAR+ link and the rerun command; --file copies your
+download into credit-watch/manual/<TICKER>/ and reads it. Also the filing date read from the file and canada.csv.
+From the agent/ folder, run all tests with: python3 -m unittest discover -s tests
+One file only: python3 -m unittest discover -s tests -p test_file_route.py
+Standard library only.
 """
 import io
 import os
@@ -23,6 +26,7 @@ AIF = b"Annual Information Form. DBRS Morningstar rates our senior unsecured not
 
 
 class FileRouteTests(unittest.TestCase):
+    """--file with TICKER=manual: copy the user's download, read it, or stop with a plain message."""
     def setUp(self):
         self.d, self.cwd = tempfile.mkdtemp(), os.getcwd()
         os.chdir(self.d)
@@ -197,6 +201,8 @@ class CanadaListTests(unittest.TestCase):
 
 
 class SameFileDateTests(unittest.TestCase):
+    """A file that someone already put in the manual folder by hand gets the filing date given with --filed when the
+    same file is given with --file."""
     def test_a_file_put_there_by_hand_gets_its_date_from_file(self):
         d, cwd = tempfile.mkdtemp(), os.getcwd()
         os.chdir(d)
@@ -247,7 +253,8 @@ class PageDateTests(unittest.TestCase):
         self.assertTrue(ps and all(p["filed"] == "2026-03-12" and "first page" in p["form"] for p in ps))
 
     def test_unreadable_pdf_without_a_date_says_why_not_no_date(self):
-        """Live run 2026-11-12: with pypdf missing, a PDF gave "no date found"; the real reason must come first."""
+        """A PDF that cannot be read and was given without --filed stops with the reason it could not be read, not with
+        'no date found'."""
         f = Path(self.d) / "aif.pdf"
         f.write_bytes(b"not a pdf")
         with self.assertRaises(SystemExit) as e:
@@ -285,6 +292,7 @@ class PageDateTests(unittest.TestCase):
             self.assertNotIn("YYYY-MM-DD", block)
 
 class SkillTextFileTests(unittest.TestCase):
+    """SKILL.md tells the AI about the file route and never to download Canadian filings."""
     def test_skill_tells_the_ai_the_file_route_and_never_to_download(self):
         s = (SKILL / "SKILL.md").read_text()
         self.assertIn("--file", s)

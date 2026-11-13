@@ -3,8 +3,9 @@ line.
 
 Goes in:  the training panel (features_v2 output) and the holdings panel (made by build_panel --score, yahoo_market,
 market_features and features_v2, as listed below).
-Comes out: a CSV with each holding's probability of a downgrade within 12 months, the flag line and whether it is flagged,
-          or the reason the holding was not scored. Data: whatever produced the two panels (CRSP or Yahoo prices).
+Comes out: a CSV with each holding's probability of a downgrade within 12 months, the flag line and whether it is
+          flagged, or the reason the holding was not scored.
+Data:     whatever produced the two panels (CRSP or Yahoo prices).
 
 For a holding whose latest 10-K snapshot falls in year Y, the rule of the evaluation is applied unchanged:
   probability: the logit trained on labelled snapshots dated in years <= Y-2;
@@ -42,7 +43,8 @@ def prepare(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def main():
-    """Fit the logit twice (for the score and for the flag line) in the way evaluate.py does, then score each holding."""
+    """Fit the logit twice (for the score and for the flag line) in the way evaluate.py does, then score each
+    holding."""
     args = sys.argv[1:]
     panel_csv, hold_csv, out = args[:3]
     flag = float(args[args.index("--flag") + 1]) if "--flag" in args else 0.10
