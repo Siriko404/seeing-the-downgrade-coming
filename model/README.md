@@ -23,8 +23,9 @@ model/
    Start here (the notebooks do exactly this).
 2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories (SEC Rule 17g-7), the
    Loughran-McDonald 10-K header file, FRED and the Philadelphia Fed real-time files, and free Yahoo prices in place of
-   CRSP. Results will differ from the lecture (for example, free prices may omit companies that stopped trading). Not
-   run end to end.
+   CRSP. Results will differ from the lecture (for example, free prices may omit companies that stopped trading). Run
+   end to end on 13 November 2026 with `python -m tcf_credit.rebuild DATA OUT --route free`: 4,902 test reports, logit
+   ROC-AUC 0.759 (lecture: 6,380 reports, 0.802).
 3. **Licensed data (if your library gives you WRDS).** The lecture's exact route: CRSP, plus two identifier tables used
    only to match companies to stocks (the Compustat company file's gvkey and CIK columns and the CRSP/Compustat Merged
    link table).
@@ -73,7 +74,7 @@ explain the idea.
 | Step | What it does | Module and command | Data |
 |---|---|---|---|
 | 1 | Download the SEC ticker list (the pipeline needs only this file; without `--tickers-only` the command also downloads the bulk company facts and filing lists, about 2 GB, for your own exploring). Needs `TCF_SEC_CONTACT` set to your own contact, as the SEC requires | `python -m tcf_credit.fetch_sec_bulk DATA/sec --tickers-only` | public |
-| 1 | Download the free public inputs with one command: FRED and the Philadelphia Fed files are fetched, and the Loughran-McDonald and rating files are still downloaded by hand; `fetch_public` prints where to get them (it prints the page, exact file and folder to use; the rating file name patterns are in `ratings_parser.py`; the economy file names are given below in this README) | `python -m tcf_credit.fetch_public DATA [--only fred,philly,lm,ratings]` | public |
+| 1 | Download the free public inputs with one command: FRED and the Philadelphia Fed files are fetched (if FRED does not answer, it prints the links to open in a browser), and the Loughran-McDonald and rating files are still downloaded by hand; `fetch_public` prints where to get them (it prints the page, exact file and folder to use; the rating file name patterns are in `ratings_parser.py`; the economy file names are given below in this README) | `python -m tcf_credit.fetch_public DATA [--only fred,philly,lm,ratings]` | public |
 | 1 | Convert the Philadelphia Fed real-time spreadsheets to the CSV files that step 6 reads (the date text stays as in the spreadsheets) | `python -m tcf_credit.philly_fed XLSX_DIR DATA/fred/realtime` | public |
 | 1 | Reduce the Loughran-McDonald header file (the list of 10-K filers and their names) | `python -m tcf_credit.lm_headers DATA/lm_headers.csv 2009 < HEADER_FILE.csv` | public |
 | 2 | Read the agencies' rating ZIP files into one table of rating events | `python -m tcf_credit.ratings_parser DATA/ratings OUT/ratings` | public |

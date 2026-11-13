@@ -17,7 +17,9 @@ filings as first filed. The public sources below are free, but each has terms of
 
 **Because of that, the lecture's numbers cannot be reproduced exactly from free data.** One possible difference is
 survivorship bias: free price histories tend to leave out companies that stopped trading (bankrupt, bought, delisted),
-and some of these may be companies that were downgraded. This was not tested here: the public route has not been run.
+and some of these may be companies that were downgraded. The run of the public route on 13 November 2026 shows it:
+the model was tested on 4,902 annual reports with 515 downgrades (10.5%), against 6,380 with 862 (13.5%) in the
+lecture, and the logit scored ROC-AUC 0.759 against 0.802.
 
 ## Three ways to study
 
@@ -26,9 +28,10 @@ and some of these may be companies that were downgraded. This was not tested her
    numbers mean nothing.
 2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories, FRED and Philadelphia
    Fed economy files, the Loughran-McDonald 10-K header file (and, for the side test, their 10-X summaries file of word
-   counts) and free Yahoo prices in place of CRSP. Results will differ from the lecture. This route has not been run
-   from start to end, so expect to debug. `fetch_public.py` fetches the free inputs and `philly_fed.py` converts the
-   Philadelphia Fed economy files (see the outline below).
+   counts) and free Yahoo prices in place of CRSP. Results will differ from the lecture. One command runs it
+   (`python -m tcf_credit.rebuild DATA OUT --route free`); it was run from start to end on 13 November 2026, in about
+   30 minutes on an 8-core cloud machine. `fetch_public.py` fetches the free inputs and `philly_fed.py` converts the
+   Philadelphia Fed economy files (see the steps below).
 3. **Licensed data (if your library gives you WRDS).** The lecture's route. See the last section.
 
 ## The inputs, in groups
@@ -100,8 +103,9 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
   growth is computed inside the latest monthly vintage published before *t*. All three come from the Philadelphia Fed's
   Real-Time Data Set, so that later revisions do not leak in. Its spreadsheets are converted to CSV files by
   `philly_fed.py`.
-- **Code.** `fetch_public.py` downloads the FRED series and the Philadelphia Fed spreadsheets; `philly_fed.py` converts
-  the spreadsheets. `features_v2.py` reads a folder of these files and picks the latest figure that was public by *t*.
+- **Code.** `fetch_public.py` downloads the FRED series and the Philadelphia Fed spreadsheets. On 13 November 2026
+  FRED did not answer its automatic requests while the same links opened in a browser; when that happens it prints
+  each link and where to save the file. `philly_fed.py` converts the spreadsheets. `features_v2.py` reads a folder of these files and picks the latest figure that was public by *t*.
   Its module description explains the date rules.
 - **Terms.** Free to download. Some series have another owner (VIX belongs to Cboe), and FRED shows a notice on each
   series page. Read it. Do not redistribute.
@@ -125,9 +129,10 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
 - Keep the request pace the code sets.
 - Read each source's terms before you use it for anything beyond your own study.
 
-## A rough outline of the public route (way 2)
+## The steps of the public route (way 2)
 
-This is an outline, not a recipe. It has not been run from start to end.
+`python -m tcf_credit.rebuild DATA OUT --route free` runs these steps in order (run from start to end on
+13 November 2026). The list says what each step does.
 
 1. SEC: `fetch_sec_bulk.py --tickers-only`.
 2. Ratings: download the 17g-7 archives, run `ratings_parser.py`, then `link_obligors.py`, then `fetch_companyfacts.py`

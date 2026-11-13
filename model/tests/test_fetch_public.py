@@ -135,3 +135,21 @@ class ManualFiles(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FredBrowserLink(unittest.TestCase):
+    """When FRED does not answer, the command prints each link to open in a browser and where to save the file."""
+    def test_failed_fred_download_prints_link_and_place(self):
+        def timeout_opener(url: str, headers: dict | None = None):
+            raise TimeoutError("The read operation timed out")
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            out = io.StringIO()
+            with redirect_stdout(out):
+                missing = run(d, ["fred"], opener=timeout_opener, pause=0)
+            text = out.getvalue()
+            self.assertEqual(len(missing), len(FRED))
+            self.assertIn("Open each link in your browser", text)
+            for series, url in FRED.items():
+                self.assertIn(f"  Link: {url}", text)
+                self.assertIn(f"  Save: {d / 'fred' / f'{series}.csv'}", text)

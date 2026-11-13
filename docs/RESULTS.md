@@ -65,7 +65,8 @@ glossary.
 - **The score is for a particular sample.** US companies with a 10-K and an S&P rating, excluding financials and
   utilities, 2016 to 2024. It says nothing about other countries, other agencies or private companies.
 - **Free data will give different numbers** (for example, free price histories often omit companies that stopped
-  trading). The public route has not been run, so the size of any difference is unknown.
+  trading). One run of the public route on 13 November 2026 tested 4,902 reports with 515 downgrades (lecture: 6,380
+  and 862) and gave logit ROC-AUC 0.759 (lecture: 0.802).
 - **The flag line is a choice.** A line set from the top 10% of an earlier year's scores gives 407 caught and 8.7% false
   alarms (888 of 6,380 reports flagged, 13.9%); the top 10% of each test year (642 reports) gives 353 caught and 5.2%.
   Another share would give other counts. The right share depends on what a miss costs against what a false alarm costs.

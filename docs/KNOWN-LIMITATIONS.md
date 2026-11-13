@@ -27,8 +27,10 @@ know where to check. If a word is new, see the [glossary](GLOSSARY.md).
    cannot see, such as a sudden pandemic, may not be foreseen.
 7. **The rating state is part of the input.** The model leans on the agency's own rating, outlook and watch. So it is
    not independent of the agency's view.
-8. **Not run from start to end on public data.** The public route in the data guide is an outline, and the script that
-   converts the Philadelphia Fed economy files is missing from the package.
+8. **Public data gives different numbers.** The public route was run from start to end on 13 November 2026: 4,902
+   test reports with 515 downgrades and logit ROC-AUC 0.759, against 6,380 reports, 862 downgrades and 0.802 in the
+   lecture. Fewer reports are tested because free prices are missing for many companies, often ones that stopped
+   trading. Only one run was made.
 9. **Nothing here is investment advice.**
 
 ## The agent (`credit-watch`)

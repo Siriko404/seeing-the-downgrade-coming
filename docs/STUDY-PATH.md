@@ -187,8 +187,8 @@ The agent alone is written for Python 3.10 or newer; it was run only on Python 3
 
 ## Go further
 
-- **Rebuild on public data.** Follow [DATA-GUIDE.md](DATA-GUIDE.md), way 2. That route has not been run from start to
-  end, and the script that converts the Philadelphia Fed economy files is missing. Expect results to differ from the
+- **Rebuild on public data.** Follow [DATA-GUIDE.md](DATA-GUIDE.md), way 2, or notebook 5. One command runs it
+  (`python -m tcf_credit.rebuild DATA OUT --route free`); it was run from start to end on 13 November 2026. Expect results to differ from the
   lecture and think about why (for example, free price histories often omit companies that stopped trading; this was not
   tested).
 - **Add an input.** Pick one idea (for example, a change in interest coverage over two years). Add it as a column,

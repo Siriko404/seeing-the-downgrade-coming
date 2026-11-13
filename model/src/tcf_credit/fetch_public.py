@@ -15,7 +15,10 @@ Sources, what their terms and robots.txt say, checked 2026-11-13:
 FRED
   Page: https://fred.stlouisfed.org/graph/fredgraph.csv?id=SERIES
   robots.txt and the legal page gave no reply from this machine (the connection timed out). The graph CSV is the
-  public download named in ref/fred/README.md, with no account. Automated download: yes, one request at a time.
+  public download named in ref/fred/README.md, with no account. Automated download: tried first, one request at a
+  time. On 13 November 2026 FRED did not answer this command's requests (timeout) from a laptop or from Colab, while
+  the same link opened at once in a browser. So when a download fails, the command prints the link: open it in your
+  browser, which saves the CSV file, and save it under the name shown.
 
 Philadelphia Fed Real-Time Data Set for Macroeconomists
   Page: https://www.philadelphiafed.org/surveys-and-data/real-time-data-research
@@ -196,13 +199,23 @@ def download(url: str, dest: Path, min_bytes: int, check: Callable[[Path], bool]
 
 
 def fetch_fred(data_dir: Path, opener: Callable | None = None, pause: float = PAUSE) -> list[str]:
-    """Download the three daily FRED series. Return the destinations that failed."""
+    """Download the three daily FRED series. Return the destinations that failed.
+
+    For each failed series it prints the link to open in a browser and where to save the file.
+    """
     failed = []
     for series, url in FRED.items():
         dest = data_dir / "fred" / f"{series}.csv"
         if download(url, dest, 100, _fred_ok, opener, pause) == "failed":
-            failed.append(str(dest))
-    return failed
+            failed.append((url, dest))
+    if failed:
+        print("FRED did not answer the automatic download. Open each link in your browser (it saves a CSV file),")
+        print("then move the file to the place shown and run the command again:")
+        for url, dest in failed:
+            print(f"  Link: {url}")
+            print(f"  Save: {dest}")
+            print()
+    return [str(dest) for _, dest in failed]
 
 
 def fetch_philly(data_dir: Path, opener: Callable | None = None, pause: float = PAUSE) -> list[str]:
