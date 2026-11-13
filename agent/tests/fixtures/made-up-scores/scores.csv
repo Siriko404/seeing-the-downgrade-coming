@@ -1,0 +1,4 @@
+ticker,cik,report_filed,snapshot_date,report_url,p,cut,flagged,trained_to,cut_from,status,outcome
+TSTA,9990001,2026-02-10,2026-02-11,https://example.test/filing-a,0.111,0.222,False,2024,model on years <= 2022 scoring 2024,scored,
+TSTB,9990002,2025-07-30,2025-07-31,https://example.test/filing-b,0.033,0.222,False,2024,model on years <= 2022 scoring 2024,scored,
+TSTC,9990003,2023-11-29,2023-11-30,https://example.test/filing-c,0.777,0.333,True,2021,model on years <= 2019 scoring 2021,scored,

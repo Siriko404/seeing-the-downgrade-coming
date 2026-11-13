@@ -1,0 +1,1374 @@
+{
+ "made": "2026-11-07T17:44:50",
+ "as_of": "2026-11-07",
+ "window_start": "2025-05-08",
+ "tickers": {
+  "HON": {
+   "ticker": "HON",
+   "name": "Honeywell International Inc.",
+   "cik": "773840",
+   "scope": "scored",
+   "aliases": "Honeywell;HONEYWELL INTERNATIONAL INC;ALLIEDSIGNAL INC;ALLIED SIGNAL INC",
+   "filings": 39,
+   "documents": 75,
+   "unreadable": [],
+   "manual": 0,
+   "skipped": 4,
+   "source": "SEC live"
+  },
+  "RY": {
+   "ticker": "RY",
+   "name": "Royal Bank of Canada",
+   "cik": "1000275",
+   "scope": "financial",
+   "aliases": "RBC;Royal Bank;the Bank;ROYAL BANK OF CANADA",
+   "filings": 30,
+   "documents": 61,
+   "unreadable": [
+    {
+     "ticker": "RY",
+     "company": "Royal Bank of Canada",
+     "form": "6-K",
+     "doc_type": "EX-99.1",
+     "filed": "2025-12-03",
+     "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312525305934/d73208dex991.pdf",
+     "why": "document could not be read"
+    }
+   ],
+   "manual": 0,
+   "skipped": 5,
+   "source": "SEC live"
+  },
+  "SJ": {
+   "ticker": "SJ",
+   "name": "Stella-Jones Inc.",
+   "cik": "",
+   "scope": "no SEC reports",
+   "aliases": "Stella-Jones",
+   "filings": 0,
+   "documents": 0,
+   "unreadable": [],
+   "manual": 0,
+   "skipped": 0,
+   "source": "SEC live"
+  }
+ },
+ "passages": [
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2025-07-24",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384025000064/hon-20250630.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of June 30, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of June 30, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Watch Negative",
+       "Watch Negative",
+       "Stable"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   },
+   "id": "P1"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2025-10-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384025000105/hon-20250930.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of September 30, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of September 30, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Watch Negative",
+       "Watch Negative",
+       "Stable"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   },
+   "id": "P2"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-K",
+   "doc_type": "10-K",
+   "filed": "2026-02-17",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000013/hon-20251231.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of December 31, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of December 31, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Watch Negative",
+       "Watch Negative",
+       "Stable"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   },
+   "also_in": 1,
+   "id": "P3"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.3",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex993.htm",
+   "kind": "table",
+   "text": "Table caption: Honeywell Aerospace 364-Day Credit Agreement (2026) 2\nColumns: Public Debt Rating S&P/Moody's | Applicable Margin\nRow: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Margin: 0.75%\nRow: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Margin: 0.875%\nRow: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Margin: 1.00%\nRow: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Margin: 1.125%\nRow: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Margin: 1.25%",
+   "table": {
+    "caption": "Honeywell Aerospace 364-Day Credit Agreement (2026) 2",
+    "header": [
+     "Public Debt Rating S&P/Moody's",
+     "Applicable Margin"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Level 1 A or A2 or above",
+       "0.75%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Margin: 0.75%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 2 Lower than Level 1 but at least A- or A3",
+       "0.875%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Margin: 0.875%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 3 Lower than Level 2 but at least BBB+ or Baa1",
+       "1.00%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Margin: 1.00%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 4 Lower than Level 3 but at least BBB or Baa2",
+       "1.125%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Margin: 1.125%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 5 Lower than Level 4",
+       "1.25%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Margin: 1.25%"
+     }
+    ]
+   },
+   "id": "P4"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.3",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex993.htm",
+   "kind": "table",
+   "text": "Table caption: \"Applicable Percentage\" means, as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below.\nColumns: Public Debt Rating S&P/Moody's | Applicable Percentage\nRow: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Percentage: 0.04%\nRow: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Percentage: 0.05%\nRow: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Percentage: 0.075%\nRow: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Percentage: 0.10%\nRow: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Percentage: 0.125%",
+   "table": {
+    "caption": "\"Applicable Percentage\" means, as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below.",
+    "header": [
+     "Public Debt Rating S&P/Moody's",
+     "Applicable Percentage"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Level 1 A or A2 or above",
+       "0.04%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Percentage: 0.04%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 2 Lower than Level 1 but at least A- or A3",
+       "0.05%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Percentage: 0.05%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 3 Lower than Level 2 but at least BBB+ or Baa1",
+       "0.075%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Percentage: 0.075%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 4 Lower than Level 3 but at least BBB or Baa2",
+       "0.10%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Percentage: 0.10%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 5 Lower than Level 4",
+       "0.125%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Percentage: 0.125%"
+     }
+    ]
+   },
+   "id": "P5"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.3",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex993.htm",
+   "kind": "text",
+   "text": "Lender hereunder (including, but not limited to, any increased costs or other amounts owing under Section 2.11 and any indemnification for Taxes under Section 2.14); and upon such payments, the obligations of such Lender hereunder shall, by the provisions hereof, be released and discharged; provided, however, that such Lender's rights under Sections 2.11, 2.14 and 9.04, and its obligations under Section 8.05 shall survive such release and discharge as to matters occurring prior to such date. The aggregate amount of the Commitments of the Lenders once reduced pursuant to this Section 2.06(c) may not be reinstated.\n\n(ii) For purposes of this Section 2.06(c) only, the term \"Rating Condition\" shall mean a period commencing with notice (a \"Rating Condition Notice\") by the Administrative Agent to the Company and the Lenders to the effect that the Administrative Agent has been informed that the rating of the senior public Debt of the Company is unsatisfactory under the standard set forth in the next sentence, and ending with notice by the Administrative Agent to the Company and the Lenders to the effect that such condition no longer exists. The Administrative Agent shall give a Rating Condition Notice promptly upon receipt from the Company or any Lender of notice stating, in effect, that both of S&P and Moody's, respectively, then rate the senior public Debt of the Company lower than BBB- and Baa3. The Company agrees to give notice to the Administrative Agent forthwith upon any change in a rating by either such organization of the senior public Debt of the Company; the Administrative Agent shall have no duty whatsoever to verify the accuracy of any such notice from the Company or any Lender or to monitor independently the ratings of the senior public Debt of the Company and no Lender shall have any duty to give any such notice. The Administrative Agent shall give notice to the Lenders and the Company as to the termination of a Rating Condition promptly upon receiving a notice from the Company to the Administrative Agent (which notice the Administrative Agent shall promptly notify to the Lenders) stating that the rating of the senior public Debt of the Company does not meet the standard set forth in the second sentence of this clause (ii), and requesting that the Administrative Agent notify the Lenders of the termination of the Rating Condition. The Rating Condition shall terminate upon the giving of such notice by the Administrative Agent.\n\n(d) Termination by a Lender. In the event that a Change of Control occurs, each Lender may, by notice to the Company and the Administrative Agent given not later than 50 calendar days after such Change of Control, terminate its Commitment, which Commitment shall be terminated effective as of the later of (i) the date that is 60 calendar days after such Change of Control or (ii) the end of the Interest Period for any Term Rate Advance outstanding at the time of such Change of Control or for any Term Rate Advance made pursuant to the next sentence of this Section 2.06(d). Upon the occurrence of a Change of Control, the Company's right to make a Borrowing under this Agreement shall be suspended for a period of 60 calendar days, except for Base Rate Advances and Term Rate Advances having an Interest Period ending not later than 90 calendar days after such Change of Control. A notice of termination pursuant to this Section 2.06(d) shall not have the effect of accelerating any outstanding Advance of such Lender and the Notes of such Lender.",
+   "id": "P6"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.4",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex994.htm",
+   "kind": "table",
+   "text": "Table caption: \"Applicable Margin\" means (a) for Alternative Currency Daily Rate Advances, Term Rate Advances and Swing Line Advances as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below and (b) for Base Rate Advances as of any date, a rate per annum that is 100 basis points lower than the rate determined in accordance with clause (a) above; provided that in no event shall the Applicable Margin for Base Rate Advances be lower than 0.00%. 3\nColumns: Public Debt Rating S&P/Moody's | Applicable Margin\nRow: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Margin: 0.75\nRow: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Margin: 0.875\nRow: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Margin: 1.00\nRow: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Margin: 1.125\nRow: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Margin: 1.25",
+   "table": {
+    "caption": "\"Applicable Margin\" means (a) for Alternative Currency Daily Rate Advances, Term Rate Advances and Swing Line Advances as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below and (b) for Base Rate Advances as of any date, a rate per annum that is 100 basis points lower than the rate determined in accordance with clause (a) above; provided that in no event shall the Applicable Margin for Base Rate Advances be lower than 0.00%. 3",
+    "header": [
+     "Public Debt Rating S&P/Moody's",
+     "Applicable Margin"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Level 1 A or A2 or above",
+       "0.75"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Margin: 0.75"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 2 Lower than Level 1 but at least A- or A3",
+       "0.875"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Margin: 0.875"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 3 Lower than Level 2 but at least BBB+ or Baa1",
+       "1.00"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Margin: 1.00"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 4 Lower than Level 3 but at least BBB or Baa2",
+       "1.125"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Margin: 1.125"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 5 Lower than Level 4",
+       "1.25"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Margin: 1.25"
+     }
+    ]
+   },
+   "id": "P7"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.4",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex994.htm",
+   "kind": "table",
+   "text": "Table caption: \"Applicable Percentage\" means, as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below.\nColumns: Public Debt Rating S&P/Moody's | Applicable Percentage\nRow: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Percentage: 0.065\nRow: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Percentage: 0.080\nRow: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Percentage: 0.10\nRow: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Percentage: 0.110\nRow: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Percentage: 0.125",
+   "table": {
+    "caption": "\"Applicable Percentage\" means, as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below.",
+    "header": [
+     "Public Debt Rating S&P/Moody's",
+     "Applicable Percentage"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Level 1 A or A2 or above",
+       "0.065"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Percentage: 0.065"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 2 Lower than Level 1 but at least A- or A3",
+       "0.080"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Percentage: 0.080"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 3 Lower than Level 2 but at least BBB+ or Baa1",
+       "0.10"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Percentage: 0.10"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 4 Lower than Level 3 but at least BBB or Baa2",
+       "0.110"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Percentage: 0.110"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 5 Lower than Level 4",
+       "0.125"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Percentage: 0.125"
+     }
+    ]
+   },
+   "id": "P8"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.4",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex994.htm",
+   "kind": "text",
+   "text": "36\n\n(ii) For purposes of this Section 2.06(c) only, the term \"Rating Condition\" shall mean a period commencing with notice (a \"Rating Condition Notice\") by the Administrative Agent to the Company and the Lenders to the effect that the Administrative Agent has been informed that the rating of the senior public Debt of the Company is unsatisfactory under the standard set forth in the next sentence, and ending with notice by the Administrative Agent to the Company and the Lenders to the effect that such condition no longer exists. The Administrative Agent shall give a Rating Condition Notice promptly upon receipt from the Company or any Lender of notice stating, in effect, that both of S&P and Moody's, respectively, then rate the senior public Debt of the Company lower than BBB- and Baa3. The Company agrees to give notice to the Administrative Agent forthwith upon any change in a rating by either such organization of the senior public Debt of the Company; the Administrative Agent shall have no duty whatsoever to verify the accuracy of any such notice from the Company or any Lender or to monitor independently the ratings of the senior public Debt of the Company and no Lender shall have any duty to give any such notice. The Administrative Agent shall give notice to the Lenders and the Company as to the termination of a Rating Condition promptly upon receiving a notice from the Company to the Administrative Agent (which notice the Administrative Agent shall promptly notify to the Lenders) stating that the rating of the senior public Debt of the Company does not meet the standard set forth in the second sentence of this clause (ii), and requesting that the Administrative Agent notify the Lenders of the termination of the Rating Condition. The Rating Condition shall terminate upon the giving of such notice by the Administrative Agent.\n\n(d) Termination by a Lender. In the event that a Change of Control occurs, each Lender may, by notice to the Company and the Administrative Agent given not later than 50 calendar days after such Change of Control, terminate its Revolving Credit Commitment, its Unissued Letter of Credit Commitment and its or its affiliate's Swing Line Commitment, if any, which Commitments shall be terminated effective as of the later of (i) the date that is 60 calendar days after such Change of Control or (ii) the end of the Interest Period for any Term Rate Advance outstanding at the time of such Change of Control or for any Term Rate Advance made pursuant to the next sentence of this Section 2.06(d). Upon the occurrence of a Change of Control, each Borrower's right to make a Borrowing or request the issuance of a Letter of Credit under this Agreement shall be suspended for a period of 60 calendar days, except for Base Rate Advances, Alternative Currency Daily Rate Advances and Term Rate Advances having an Interest Period ending not later than 90 calendar days after such Change of Control. A notice of termination pursuant to this Section 2.06(d) shall not have the effect of accelerating any outstanding Advance of such Lender and the Notes of such Lender.",
+   "id": "P9"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-04-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000057/hon-20260331.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of March 31, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Negative | Fitch: Stable | Moody's: Review for Downgrade\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of March 31, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Negative",
+       "Stable",
+       "Review for Downgrade"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Negative | Fitch: Stable | Moody's: Review for Downgrade"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   },
+   "id": "P10"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-04-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000057/hon-20260331.htm",
+   "kind": "text",
+   "text": "On February 2, 2026, Moody's revised their credit rating outlook from stable to review for downgrade. On March 6, 2026, S&P revised their credit rating outlook from watch negative to negative. On March 6, 2026, Fitch revised their credit rating outlook from watch negative to stable.\n\nOTHER MATTERS",
+   "id": "P11"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-07-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000124/hon-20260630.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of June 30, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Negative | Fitch: Stable | Moody's: Negative\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of June 30, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Negative",
+       "Stable",
+       "Negative"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Negative | Fitch: Stable | Moody's: Negative"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   },
+   "id": "P12"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-07-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000124/hon-20260630.htm",
+   "kind": "text",
+   "text": "On June 25, 2026, Moody's revised their credit rating outlook from review for downgrade to negative.\n\nOTHER MATTERS",
+   "id": "P13"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-10-22",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000143/hon-20260930.htm",
+   "kind": "table",
+   "text": "Table caption: Credit Ratings Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of September 30, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Negative | Fitch: Stable | Moody's: Negative\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "Credit Ratings Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of September 30, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Negative",
+       "Stable",
+       "Negative"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Negative | Fitch: Stable | Moody's: Negative"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   },
+   "id": "P14"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2025-05-29",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312525129927/d926881dex992.htm",
+   "kind": "table",
+   "text": "Table caption: Credit ratings (1)\nHeader: As at May 28, 2025\nColumns: Short-term debt | Legacy senior long-term debt (2) | Senior long-term debt (3) | Outlook\nRow: Moody's ‡ (4) | Short-term debt: P-1 | Legacy senior long-term debt (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable\nRow: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Legacy senior long-term debt (2): AA- | Senior long-term debt (3): A | Outlook: stable\nRow: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Legacy senior long-term debt (2): AA | Senior long-term debt (3): AA- | Outlook: stable\nRow: DBRS ‡ (7) | Short-term debt: R-1 (high) | Legacy senior long-term debt (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable",
+   "table": {
+    "caption": "Credit ratings (1)",
+    "header": [
+     "Short-term debt",
+     "Legacy senior long-term debt (2)",
+     "Senior long-term debt (3)",
+     "Outlook"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Moody's ‡ (4)",
+       "P-1",
+       "Aa1",
+       "A1",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Moody's ‡ (4) | Short-term debt: P-1 | Legacy senior long-term debt (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Standard & Poor's ‡ (5)",
+       "A-1+",
+       "AA-",
+       "A",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Legacy senior long-term debt (2): AA- | Senior long-term debt (3): A | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Fitch Ratings ‡ (6)",
+       "F1+",
+       "AA",
+       "AA-",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Legacy senior long-term debt (2): AA | Senior long-term debt (3): AA- | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "DBRS ‡ (7)",
+       "R-1 (high)",
+       "AA (high)",
+       "AA",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: DBRS ‡ (7) | Short-term debt: R-1 (high) | Legacy senior long-term debt (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable"
+     }
+    ]
+   },
+   "id": "P15"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2025-05-29",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312525129927/d926881dex992.htm",
+   "kind": "text",
+   "text": "(3) Includes senior long-term debt issued on or after September 23, 2018 which is subject to conversion under the Bail-in regime.\n\n(4) On October 8, 2024, Moody's affirmed our ratings with stable outlook.\n\n(5) On June 25, 2024, Standard & Poor's affirmed our ratings with a stable outlook.\n\n(6) On June 11, 2024, Fitch Ratings affirmed our ratings with a stable outlook.\n\n(7) On May 9, 2025, DBRS affirmed our ratings with a stable outlook.\n\nAdditional contractual obligations for rating downgrades",
+   "id": "P16"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2025-08-27",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312525189077/d27056dex992.htm",
+   "kind": "table",
+   "text": "Table caption: Credit ratings (1)\nHeader: As at August 26, 2025\nColumns: Short-term debt | Legacy senior long-term debt (2) | Senior long-term debt (3) | Outlook\nRow: Moody's ‡ (4) | Short-term debt: P-1 | Legacy senior long-term debt (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable\nRow: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Legacy senior long-term debt (2): AA- | Senior long-term debt (3): A | Outlook: stable\nRow: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Legacy senior long-term debt (2): AA | Senior long-term debt (3): AA- | Outlook: stable\nRow: DBRS ‡ (7) | Short-term debt: R-1 (high) | Legacy senior long-term debt (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable",
+   "table": {
+    "caption": "Credit ratings (1)",
+    "header": [
+     "Short-term debt",
+     "Legacy senior long-term debt (2)",
+     "Senior long-term debt (3)",
+     "Outlook"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Moody's ‡ (4)",
+       "P-1",
+       "Aa1",
+       "A1",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Moody's ‡ (4) | Short-term debt: P-1 | Legacy senior long-term debt (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Standard & Poor's ‡ (5)",
+       "A-1+",
+       "AA-",
+       "A",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Legacy senior long-term debt (2): AA- | Senior long-term debt (3): A | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Fitch Ratings ‡ (6)",
+       "F1+",
+       "AA",
+       "AA-",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Legacy senior long-term debt (2): AA | Senior long-term debt (3): AA- | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "DBRS ‡ (7)",
+       "R-1 (high)",
+       "AA (high)",
+       "AA",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: DBRS ‡ (7) | Short-term debt: R-1 (high) | Legacy senior long-term debt (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable"
+     }
+    ]
+   },
+   "id": "P17"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2025-08-27",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312525189077/d27056dex992.htm",
+   "kind": "text",
+   "text": "(3) Includes senior long-term debt issued on or after September 23, 2018 which is subject to conversion under the Bail-in regime.\n\n(4) On October 8, 2024, Moody's affirmed our ratings with stable outlook.\n\n(5) On June 25, 2024, Standard & Poor's affirmed our ratings with a stable outlook.\n\n(6) On June 3, 2025, Fitch Ratings affirmed our ratings with a stable outlook.\n\n(7) On May 9, 2025, DBRS affirmed our ratings with a stable outlook.\n\nAdditional contractual obligations for rating downgrades",
+   "id": "P18"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2026-02-26",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312526073265/d52068dex992.htm",
+   "kind": "table",
+   "text": "Table caption: Credit ratings (1)\nHeader: As at February 25, 2026\nColumns: Short-term debt | Legacy senior long-term debt (2) | Senior long-term debt (3) | Outlook\nRow: Moody's ‡ (4) | Short-term debt: P-1 | Legacy senior long-term debt (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable\nRow: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Legacy senior long-term debt (2): AA- | Senior long-term debt (3): A | Outlook: stable\nRow: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Legacy senior long-term debt (2): AA | Senior long-term debt (3): AA- | Outlook: stable\nRow: DBRS ‡ (7) | Short-term debt: R-1 (high) | Legacy senior long-term debt (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable",
+   "table": {
+    "caption": "Credit ratings (1)",
+    "header": [
+     "Short-term debt",
+     "Legacy senior long-term debt (2)",
+     "Senior long-term debt (3)",
+     "Outlook"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Moody's ‡ (4)",
+       "P-1",
+       "Aa1",
+       "A1",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Moody's ‡ (4) | Short-term debt: P-1 | Legacy senior long-term debt (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Standard & Poor's ‡ (5)",
+       "A-1+",
+       "AA-",
+       "A",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Legacy senior long-term debt (2): AA- | Senior long-term debt (3): A | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Fitch Ratings ‡ (6)",
+       "F1+",
+       "AA",
+       "AA-",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Legacy senior long-term debt (2): AA | Senior long-term debt (3): AA- | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "DBRS ‡ (7)",
+       "R-1 (high)",
+       "AA (high)",
+       "AA",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Legacy senior long-term debt (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: DBRS ‡ (7) | Short-term debt: R-1 (high) | Legacy senior long-term debt (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable"
+     }
+    ]
+   },
+   "id": "P19"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2026-02-26",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312526073265/d52068dex992.htm",
+   "kind": "text",
+   "text": "(3) Includes senior long-term debt issued on or after September 23, 2018 which is subject to conversion under the Bail-in regime.\n\n(4) On October 9, 2025, Moody's announced completion of a periodic review of our ratings. There were no changes to our ratings.\n\n(5) On December 10, 2025, Standard & Poor's performed an annual review of our ratings. There were no changes to our ratings.\n\n(6) On June 3, 2025, Fitch Ratings affirmed our ratings with a stable outlook.\n\n(7) On May 9, 2025, DBRS affirmed our ratings with a stable outlook.\n\nAdditional contractual obligations for rating downgrades",
+   "id": "P20"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "6-K",
+   "filed": "2026-05-19",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000121465926006568/p51526965.htm",
+   "kind": "text",
+   "text": "SUPPLEMENTAL DISCLOSURE\n\nThe disclosure under \"Management's Discussion and Analysis – Risk Management – Liquidity and funding risk – Credit ratings\" in the Registrant's First Quarter 2026 Report to Shareholders, part of which was incorporated by reference as Exhibit 99.2 to its Current Report on Form 6-K filed on February 26, 2026, is hereby updated by adding the following: \"On May 12, 2026, Fitch Ratings (i) upgraded our legacy senior long-term debt rating to AA+ from AA; (ii) affirmed our short-term debt rating as F1+ and (iii) confirmed our long-term issuer default rating applicable to our senior long-term debt remains at AA-.\"\n\nSignatures",
+   "id": "P21"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2026-05-28",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312526242928/d20518dex992.htm",
+   "kind": "table",
+   "text": "Table caption: Credit ratings (1)\nHeader: As at May 27, 2026\nColumns: Short-term debt | Issuer rating (2) | Senior long-term debt (3) | Outlook\nRow: Moody's ‡ (4) | Short-term debt: P-1 | Issuer rating (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable\nRow: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Issuer rating (2): AA- | Senior long-term debt (3): A | Outlook: stable\nRow: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Issuer rating (2): AA+ | Senior long-term debt (3): AA- | Outlook: stable\nRow: DBRS ‡ (7) | Short-term debt: R-1 (high) | Issuer rating (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable",
+   "table": {
+    "caption": "Credit ratings (1)",
+    "header": [
+     "Short-term debt",
+     "Issuer rating (2)",
+     "Senior long-term debt (3)",
+     "Outlook"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Moody's ‡ (4)",
+       "P-1",
+       "Aa1",
+       "A1",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Issuer rating (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Moody's ‡ (4) | Short-term debt: P-1 | Issuer rating (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Standard & Poor's ‡ (5)",
+       "A-1+",
+       "AA-",
+       "A",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Issuer rating (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Issuer rating (2): AA- | Senior long-term debt (3): A | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Fitch Ratings ‡ (6)",
+       "F1+",
+       "AA+",
+       "AA-",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Issuer rating (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Issuer rating (2): AA+ | Senior long-term debt (3): AA- | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "DBRS ‡ (7)",
+       "R-1 (high)",
+       "AA (high)",
+       "AA",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Issuer rating (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: DBRS ‡ (7) | Short-term debt: R-1 (high) | Issuer rating (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable"
+     }
+    ]
+   },
+   "id": "P22"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2026-05-28",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312526242928/d20518dex992.htm",
+   "kind": "text",
+   "text": "(3) Includes senior long-term debt which is subject to conversion under the Bail-in regime.\n\n(4) On May 6, 2026, Moody's affirmed our ratings with a stable outlook.\n\n(5) On December 10, 2025, Standard & Poor's performed an annual review of our ratings. There were no changes to our ratings.\n\n(6) On May 12, 2026, Fitch Ratings upgraded our issuer rating to AA+ from AA following the publication on May 8, 2026 of Fitch Ratings' updated bank rating criteria. Subsequent to this rating action, Fitch Ratings affirmed our ratings with a stable outlook on May 21, 2026.\n\n(7) On May 8, 2026, DBRS affirmed our ratings with a stable outlook.\n\nTable of Contents",
+   "also_in": 1,
+   "id": "P23"
+  },
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.2",
+   "filed": "2026-08-27",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312526369461/d91595dex992.htm",
+   "kind": "table",
+   "text": "Table caption: Credit ratings (1)\nHeader: As at August 26, 2026\nColumns: Short-term debt | Issuer rating (2) | Senior long-term debt (3) | Outlook\nRow: Moody's ‡ (4) | Short-term debt: P-1 | Issuer rating (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable\nRow: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Issuer rating (2): AA- | Senior long-term debt (3): A | Outlook: stable\nRow: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Issuer rating (2): AA+ | Senior long-term debt (3): AA- | Outlook: stable\nRow: DBRS ‡ (7) | Short-term debt: R-1 (high) | Issuer rating (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable",
+   "table": {
+    "caption": "Credit ratings (1)",
+    "header": [
+     "Short-term debt",
+     "Issuer rating (2)",
+     "Senior long-term debt (3)",
+     "Outlook"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Moody's ‡ (4)",
+       "P-1",
+       "Aa1",
+       "A1",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Issuer rating (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Moody's ‡ (4) | Short-term debt: P-1 | Issuer rating (2): Aa1 | Senior long-term debt (3): A1 | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Standard & Poor's ‡ (5)",
+       "A-1+",
+       "AA-",
+       "A",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Issuer rating (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Standard & Poor's ‡ (5) | Short-term debt: A-1+ | Issuer rating (2): AA- | Senior long-term debt (3): A | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Fitch Ratings ‡ (6)",
+       "F1+",
+       "AA+",
+       "AA-",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Issuer rating (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: Fitch Ratings ‡ (6) | Short-term debt: F1+ | Issuer rating (2): AA+ | Senior long-term debt (3): AA- | Outlook: stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "DBRS ‡ (7)",
+       "R-1 (high)",
+       "AA (high)",
+       "AA",
+       "stable"
+      ],
+      "columns": [
+       "",
+       "Short-term debt",
+       "Issuer rating (2)",
+       "Senior long-term debt (3)",
+       "Outlook"
+      ],
+      "line": "Row: DBRS ‡ (7) | Short-term debt: R-1 (high) | Issuer rating (2): AA (high) | Senior long-term debt (3): AA | Outlook: stable"
+     }
+    ]
+   },
+   "id": "P24"
+  }
+ ],
+ "set_aside": [
+  {
+   "ticker": "RY",
+   "company": "Royal Bank of Canada",
+   "form": "6-K",
+   "doc_type": "EX-99.1",
+   "filed": "2025-12-03",
+   "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312525305934/d73208dex991.pdf",
+   "why": "document could not be read"
+  }
+ ]
+}

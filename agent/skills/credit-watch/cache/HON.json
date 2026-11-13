@@ -1,0 +1,902 @@
+{
+ "ticker": "HON",
+ "name": "Honeywell International Inc.",
+ "cik": "773840",
+ "scope": "scored",
+ "aliases": "Honeywell;HONEYWELL INTERNATIONAL INC;ALLIEDSIGNAL INC;ALLIED SIGNAL INC",
+ "filings": 39,
+ "documents": 75,
+ "unreadable": [],
+ "manual": 0,
+ "passages": [
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2025-07-24",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384025000064/hon-20250630.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of June 30, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of June 30, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Watch Negative",
+       "Watch Negative",
+       "Stable"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   }
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2025-10-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384025000105/hon-20250930.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of September 30, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of September 30, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Watch Negative",
+       "Watch Negative",
+       "Stable"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   }
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-K",
+   "doc_type": "10-K",
+   "filed": "2026-02-17",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000013/hon-20251231.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of December 31, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of December 31, 2025, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Watch Negative",
+       "Watch Negative",
+       "Stable"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Watch Negative | Fitch: Watch Negative | Moody's: Stable"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   },
+   "also_in": 1
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.3",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex993.htm",
+   "kind": "table",
+   "text": "Table caption: Honeywell Aerospace 364-Day Credit Agreement (2026) 2\nColumns: Public Debt Rating S&P/Moody's | Applicable Margin\nRow: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Margin: 0.75%\nRow: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Margin: 0.875%\nRow: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Margin: 1.00%\nRow: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Margin: 1.125%\nRow: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Margin: 1.25%",
+   "table": {
+    "caption": "Honeywell Aerospace 364-Day Credit Agreement (2026) 2",
+    "header": [
+     "Public Debt Rating S&P/Moody's",
+     "Applicable Margin"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Level 1 A or A2 or above",
+       "0.75%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Margin: 0.75%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 2 Lower than Level 1 but at least A- or A3",
+       "0.875%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Margin: 0.875%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 3 Lower than Level 2 but at least BBB+ or Baa1",
+       "1.00%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Margin: 1.00%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 4 Lower than Level 3 but at least BBB or Baa2",
+       "1.125%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Margin: 1.125%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 5 Lower than Level 4",
+       "1.25%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Margin: 1.25%"
+     }
+    ]
+   }
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.3",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex993.htm",
+   "kind": "table",
+   "text": "Table caption: \"Applicable Percentage\" means, as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below.\nColumns: Public Debt Rating S&P/Moody's | Applicable Percentage\nRow: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Percentage: 0.04%\nRow: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Percentage: 0.05%\nRow: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Percentage: 0.075%\nRow: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Percentage: 0.10%\nRow: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Percentage: 0.125%",
+   "table": {
+    "caption": "\"Applicable Percentage\" means, as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below.",
+    "header": [
+     "Public Debt Rating S&P/Moody's",
+     "Applicable Percentage"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Level 1 A or A2 or above",
+       "0.04%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Percentage: 0.04%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 2 Lower than Level 1 but at least A- or A3",
+       "0.05%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Percentage: 0.05%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 3 Lower than Level 2 but at least BBB+ or Baa1",
+       "0.075%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Percentage: 0.075%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 4 Lower than Level 3 but at least BBB or Baa2",
+       "0.10%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Percentage: 0.10%"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 5 Lower than Level 4",
+       "0.125%"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Percentage: 0.125%"
+     }
+    ]
+   }
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.3",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex993.htm",
+   "kind": "text",
+   "text": "Lender hereunder (including, but not limited to, any increased costs or other amounts owing under Section 2.11 and any indemnification for Taxes under Section 2.14); and upon such payments, the obligations of such Lender hereunder shall, by the provisions hereof, be released and discharged; provided, however, that such Lender's rights under Sections 2.11, 2.14 and 9.04, and its obligations under Section 8.05 shall survive such release and discharge as to matters occurring prior to such date. The aggregate amount of the Commitments of the Lenders once reduced pursuant to this Section 2.06(c) may not be reinstated.\n\n(ii) For purposes of this Section 2.06(c) only, the term \"Rating Condition\" shall mean a period commencing with notice (a \"Rating Condition Notice\") by the Administrative Agent to the Company and the Lenders to the effect that the Administrative Agent has been informed that the rating of the senior public Debt of the Company is unsatisfactory under the standard set forth in the next sentence, and ending with notice by the Administrative Agent to the Company and the Lenders to the effect that such condition no longer exists. The Administrative Agent shall give a Rating Condition Notice promptly upon receipt from the Company or any Lender of notice stating, in effect, that both of S&P and Moody's, respectively, then rate the senior public Debt of the Company lower than BBB- and Baa3. The Company agrees to give notice to the Administrative Agent forthwith upon any change in a rating by either such organization of the senior public Debt of the Company; the Administrative Agent shall have no duty whatsoever to verify the accuracy of any such notice from the Company or any Lender or to monitor independently the ratings of the senior public Debt of the Company and no Lender shall have any duty to give any such notice. The Administrative Agent shall give notice to the Lenders and the Company as to the termination of a Rating Condition promptly upon receiving a notice from the Company to the Administrative Agent (which notice the Administrative Agent shall promptly notify to the Lenders) stating that the rating of the senior public Debt of the Company does not meet the standard set forth in the second sentence of this clause (ii), and requesting that the Administrative Agent notify the Lenders of the termination of the Rating Condition. The Rating Condition shall terminate upon the giving of such notice by the Administrative Agent.\n\n(d) Termination by a Lender. In the event that a Change of Control occurs, each Lender may, by notice to the Company and the Administrative Agent given not later than 50 calendar days after such Change of Control, terminate its Commitment, which Commitment shall be terminated effective as of the later of (i) the date that is 60 calendar days after such Change of Control or (ii) the end of the Interest Period for any Term Rate Advance outstanding at the time of such Change of Control or for any Term Rate Advance made pursuant to the next sentence of this Section 2.06(d). Upon the occurrence of a Change of Control, the Company's right to make a Borrowing under this Agreement shall be suspended for a period of 60 calendar days, except for Base Rate Advances and Term Rate Advances having an Interest Period ending not later than 90 calendar days after such Change of Control. A notice of termination pursuant to this Section 2.06(d) shall not have the effect of accelerating any outstanding Advance of such Lender and the Notes of such Lender."
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.4",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex994.htm",
+   "kind": "table",
+   "text": "Table caption: \"Applicable Margin\" means (a) for Alternative Currency Daily Rate Advances, Term Rate Advances and Swing Line Advances as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below and (b) for Base Rate Advances as of any date, a rate per annum that is 100 basis points lower than the rate determined in accordance with clause (a) above; provided that in no event shall the Applicable Margin for Base Rate Advances be lower than 0.00%. 3\nColumns: Public Debt Rating S&P/Moody's | Applicable Margin\nRow: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Margin: 0.75\nRow: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Margin: 0.875\nRow: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Margin: 1.00\nRow: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Margin: 1.125\nRow: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Margin: 1.25",
+   "table": {
+    "caption": "\"Applicable Margin\" means (a) for Alternative Currency Daily Rate Advances, Term Rate Advances and Swing Line Advances as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below and (b) for Base Rate Advances as of any date, a rate per annum that is 100 basis points lower than the rate determined in accordance with clause (a) above; provided that in no event shall the Applicable Margin for Base Rate Advances be lower than 0.00%. 3",
+    "header": [
+     "Public Debt Rating S&P/Moody's",
+     "Applicable Margin"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Level 1 A or A2 or above",
+       "0.75"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Margin: 0.75"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 2 Lower than Level 1 but at least A- or A3",
+       "0.875"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Margin: 0.875"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 3 Lower than Level 2 but at least BBB+ or Baa1",
+       "1.00"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Margin: 1.00"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 4 Lower than Level 3 but at least BBB or Baa2",
+       "1.125"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Margin: 1.125"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 5 Lower than Level 4",
+       "1.25"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Margin"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Margin: 1.25"
+     }
+    ]
+   }
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.4",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex994.htm",
+   "kind": "table",
+   "text": "Table caption: \"Applicable Percentage\" means, as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below.\nColumns: Public Debt Rating S&P/Moody's | Applicable Percentage\nRow: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Percentage: 0.065\nRow: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Percentage: 0.080\nRow: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Percentage: 0.10\nRow: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Percentage: 0.110\nRow: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Percentage: 0.125",
+   "table": {
+    "caption": "\"Applicable Percentage\" means, as of any date, a percentage per annum determined by reference to the Public Debt Rating in effect on such date as set forth below.",
+    "header": [
+     "Public Debt Rating S&P/Moody's",
+     "Applicable Percentage"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Level 1 A or A2 or above",
+       "0.065"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 1 A or A2 or above | Applicable Percentage: 0.065"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 2 Lower than Level 1 but at least A- or A3",
+       "0.080"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 2 Lower than Level 1 but at least A- or A3 | Applicable Percentage: 0.080"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 3 Lower than Level 2 but at least BBB+ or Baa1",
+       "0.10"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 3 Lower than Level 2 but at least BBB+ or Baa1 | Applicable Percentage: 0.10"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 4 Lower than Level 3 but at least BBB or Baa2",
+       "0.110"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 4 Lower than Level 3 but at least BBB or Baa2 | Applicable Percentage: 0.110"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Level 5 Lower than Level 4",
+       "0.125"
+      ],
+      "columns": [
+       "Public Debt Rating S&P/Moody's",
+       "Applicable Percentage"
+      ],
+      "line": "Row: Public Debt Rating S&P/Moody's: Level 5 Lower than Level 4 | Applicable Percentage: 0.125"
+     }
+    ]
+   }
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "8-K",
+   "doc_type": "EX-99.4",
+   "filed": "2026-03-06",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526095179/d71810dex994.htm",
+   "kind": "text",
+   "text": "36\n\n(ii) For purposes of this Section 2.06(c) only, the term \"Rating Condition\" shall mean a period commencing with notice (a \"Rating Condition Notice\") by the Administrative Agent to the Company and the Lenders to the effect that the Administrative Agent has been informed that the rating of the senior public Debt of the Company is unsatisfactory under the standard set forth in the next sentence, and ending with notice by the Administrative Agent to the Company and the Lenders to the effect that such condition no longer exists. The Administrative Agent shall give a Rating Condition Notice promptly upon receipt from the Company or any Lender of notice stating, in effect, that both of S&P and Moody's, respectively, then rate the senior public Debt of the Company lower than BBB- and Baa3. The Company agrees to give notice to the Administrative Agent forthwith upon any change in a rating by either such organization of the senior public Debt of the Company; the Administrative Agent shall have no duty whatsoever to verify the accuracy of any such notice from the Company or any Lender or to monitor independently the ratings of the senior public Debt of the Company and no Lender shall have any duty to give any such notice. The Administrative Agent shall give notice to the Lenders and the Company as to the termination of a Rating Condition promptly upon receiving a notice from the Company to the Administrative Agent (which notice the Administrative Agent shall promptly notify to the Lenders) stating that the rating of the senior public Debt of the Company does not meet the standard set forth in the second sentence of this clause (ii), and requesting that the Administrative Agent notify the Lenders of the termination of the Rating Condition. The Rating Condition shall terminate upon the giving of such notice by the Administrative Agent.\n\n(d) Termination by a Lender. In the event that a Change of Control occurs, each Lender may, by notice to the Company and the Administrative Agent given not later than 50 calendar days after such Change of Control, terminate its Revolving Credit Commitment, its Unissued Letter of Credit Commitment and its or its affiliate's Swing Line Commitment, if any, which Commitments shall be terminated effective as of the later of (i) the date that is 60 calendar days after such Change of Control or (ii) the end of the Interest Period for any Term Rate Advance outstanding at the time of such Change of Control or for any Term Rate Advance made pursuant to the next sentence of this Section 2.06(d). Upon the occurrence of a Change of Control, each Borrower's right to make a Borrowing or request the issuance of a Letter of Credit under this Agreement shall be suspended for a period of 60 calendar days, except for Base Rate Advances, Alternative Currency Daily Rate Advances and Term Rate Advances having an Interest Period ending not later than 90 calendar days after such Change of Control. A notice of termination pursuant to this Section 2.06(d) shall not have the effect of accelerating any outstanding Advance of such Lender and the Notes of such Lender."
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-04-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000057/hon-20260331.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of March 31, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Negative | Fitch: Stable | Moody's: Review for Downgrade\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of March 31, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Negative",
+       "Stable",
+       "Review for Downgrade"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Negative | Fitch: Stable | Moody's: Review for Downgrade"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   }
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-04-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000057/hon-20260331.htm",
+   "kind": "text",
+   "text": "On February 2, 2026, Moody's revised their credit rating outlook from stable to review for downgrade. On March 6, 2026, S&P revised their credit rating outlook from watch negative to negative. On March 6, 2026, Fitch revised their credit rating outlook from watch negative to stable.\n\nOTHER MATTERS"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-07-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000124/hon-20260630.htm",
+   "kind": "table",
+   "text": "Table caption: CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of June 30, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Negative | Fitch: Stable | Moody's: Negative\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "CREDIT RATINGS Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of June 30, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Negative",
+       "Stable",
+       "Negative"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Negative | Fitch: Stable | Moody's: Negative"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   }
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-07-23",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000124/hon-20260630.htm",
+   "kind": "text",
+   "text": "On June 25, 2026, Moody's revised their credit rating outlook from review for downgrade to negative.\n\nOTHER MATTERS"
+  },
+  {
+   "ticker": "HON",
+   "company": "Honeywell International Inc.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2026-10-22",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000143/hon-20260930.htm",
+   "kind": "table",
+   "text": "Table caption: Credit Ratings Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of September 30, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:\nColumns: S&P | Fitch | Moody's\nRow: Outlook | S&P: Negative | Fitch: Stable | Moody's: Negative\nRow: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1\nRow: Long-term | S&P: A | Fitch: A | Moody's: A2",
+   "table": {
+    "caption": "Credit Ratings Our ability to access the global debt capital markets and the related cost of these borrowings is affected by the strength of our credit rating and market conditions. Our credit ratings are periodically reviewed by the major independent debt-rating agencies. As of September 30, 2026, S&P Global Inc. (S&P), Fitch Ratings Inc. (Fitch), and Moody's Investor Service (Moody's) have ratings on our debt set forth in the table below:",
+    "header": [
+     "S&P",
+     "Fitch",
+     "Moody's"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Outlook",
+       "Negative",
+       "Stable",
+       "Negative"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Outlook | S&P: Negative | Fitch: Stable | Moody's: Negative"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Short-term",
+       "A-1",
+       "F1",
+       "P1"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Short-term | S&P: A-1 | Fitch: F1 | Moody's: P1"
+     },
+     {
+      "group": "",
+      "cells": [
+       "Long-term",
+       "A",
+       "A",
+       "A2"
+      ],
+      "columns": [
+       "",
+       "S&P",
+       "Fitch",
+       "Moody's"
+      ],
+      "line": "Row: Long-term | S&P: A | Fitch: A | Moody's: A2"
+     }
+    ]
+   }
+  }
+ ],
+ "set_aside": [],
+ "skipped": 4,
+ "source": "SEC live",
+ "filing_dates": [
+  "2025-05-08",
+  "2025-05-23",
+  "2025-05-28",
+  "2025-06-24",
+  "2025-07-24",
+  "2025-07-24",
+  "2025-07-30",
+  "2025-08-21",
+  "2025-08-22",
+  "2025-10-01",
+  "2025-10-01",
+  "2025-10-16",
+  "2025-10-22",
+  "2025-10-23",
+  "2025-10-23",
+  "2025-10-30",
+  "2025-11-03",
+  "2025-12-10",
+  "2025-12-22",
+  "2026-01-29",
+  "2026-02-17",
+  "2026-02-17",
+  "2026-03-03",
+  "2026-03-06",
+  "2026-03-16",
+  "2026-03-23",
+  "2026-04-23",
+  "2026-04-23",
+  "2026-04-23",
+  "2026-05-27",
+  "2026-06-02",
+  "2026-06-05",
+  "2026-06-15",
+  "2026-06-29",
+  "2026-07-23",
+  "2026-07-23",
+  "2026-08-19",
+  "2026-10-22",
+  "2026-10-22"
+ ],
+ "doc_dates": [
+  "2025-05-08",
+  "2025-05-23",
+  "2025-05-28",
+  "2025-05-28",
+  "2025-06-24",
+  "2025-06-24",
+  "2025-07-24",
+  "2025-07-24",
+  "2025-07-24",
+  "2025-07-30",
+  "2025-08-21",
+  "2025-08-21",
+  "2025-08-21",
+  "2025-08-22",
+  "2025-10-01",
+  "2025-10-01",
+  "2025-10-01",
+  "2025-10-01",
+  "2025-10-16",
+  "2025-10-16",
+  "2025-10-22",
+  "2025-10-22",
+  "2025-10-23",
+  "2025-10-23",
+  "2025-10-23",
+  "2025-10-30",
+  "2025-10-30",
+  "2025-11-03",
+  "2025-11-03",
+  "2025-12-10",
+  "2025-12-10",
+  "2025-12-22",
+  "2025-12-22",
+  "2026-01-29",
+  "2026-01-29",
+  "2026-01-29",
+  "2026-02-17",
+  "2026-02-17",
+  "2026-02-17",
+  "2026-03-03",
+  "2026-03-03",
+  "2026-03-06",
+  "2026-03-06",
+  "2026-03-06",
+  "2026-03-06",
+  "2026-03-06",
+  "2026-03-16",
+  "2026-03-16",
+  "2026-03-23",
+  "2026-03-23",
+  "2026-03-23",
+  "2026-04-23",
+  "2026-04-23",
+  "2026-04-23",
+  "2026-04-23",
+  "2026-04-23",
+  "2026-05-27",
+  "2026-06-02",
+  "2026-06-02",
+  "2026-06-05",
+  "2026-06-05",
+  "2026-06-15",
+  "2026-06-15",
+  "2026-06-29",
+  "2026-06-29",
+  "2026-06-29",
+  "2026-06-29",
+  "2026-07-23",
+  "2026-07-23",
+  "2026-07-23",
+  "2026-08-19",
+  "2026-08-19",
+  "2026-10-22",
+  "2026-10-22",
+  "2026-10-22"
+ ],
+ "made": "2026-11-07T17:40:43",
+ "window_start": "2025-05-08",
+ "window_end": "2026-11-07"
+}

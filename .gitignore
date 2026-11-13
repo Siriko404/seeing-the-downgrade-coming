@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+_lead/
+# data the code downloads or builds: never commit it
+/data/
+model/synthetic/out/
+/credit-watch/
+*.parquet
+*.csv.gz

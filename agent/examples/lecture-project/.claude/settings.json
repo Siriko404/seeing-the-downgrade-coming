@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(credit-watch)",
+      "Bash(python3:*)",
+      "Read",
+      "Write(credit-watch/run/**)",
+      "Edit(credit-watch/run/**)"
+    ]
+  }
+}

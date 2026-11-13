@@ -1,0 +1,460 @@
+{
+ "made": "2026-11-07T21:00:00",
+ "as_of": "2026-11-07",
+ "window_start": "2025-05-08",
+ "tickers": {
+  "JPM": {
+   "ticker": "JPM",
+   "name": "JPMorgan Chase & Co.",
+   "cik": "19617",
+   "scope": "financial",
+   "aliases": "",
+   "filings": 42,
+   "documents": 72,
+   "unreadable": [],
+   "manual": 0,
+   "skipped": 12,
+   "source": "SEC live",
+   "terms_skipped": 0
+  },
+  "NEE": {
+   "ticker": "NEE",
+   "name": "NextEra Energy, Inc.",
+   "cik": "753308",
+   "scope": "utility",
+   "aliases": "",
+   "filings": 43,
+   "documents": 59,
+   "unreadable": [],
+   "manual": 0,
+   "skipped": 0,
+   "source": "SEC live",
+   "terms_skipped": 0
+  }
+ },
+ "passages": [
+  {
+   "ticker": "JPM",
+   "company": "JPMorgan Chase & Co.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2025-08-05",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000615/jpm-20250630.htm",
+   "kind": "table",
+   "text": "Table caption: Additionally, the Firm's funding requirements for VIEs and other third-party commitments may be adversely affected by a decline in credit ratings. Refer to Notes 4 and 13 for additional information. The credit ratings of the Parent Company and certain of its principal subsidiaries as of June 30, 2025 were as follows:\nHeader: JPMorgan Chase & Co. | JPMorgan Chase Bank, N.A. | J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE\nColumns: June 30, 2025 | Long-term issuer | Short-term issuer | Outlook | Long-term issuer | Short-term issuer | Outlook | Long-term issuer | Short-term issuer | Outlook\nRow: June 30, 2025: Moody's Investors Service | [JPMorgan Chase & Co.] Long-term issuer: A1 | [JPMorgan Chase & Co.] Short-term issuer: P-1 | [JPMorgan Chase & Co.] Outlook: Positive | [JPMorgan Chase Bank, N.A.] Long-term issuer: Aa2 | [JPMorgan Chase Bank, N.A.] Short-term issuer: P-1 | [JPMorgan Chase Bank, N.A.] Outlook: Stable(a) | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Long-term issuer: Aa3 | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Short-term issuer: P-1 | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Outlook: Positive(a)\nRow: June 30, 2025: Standard & Poor's | [JPMorgan Chase & Co.] Long-term issuer: A | [JPMorgan Chase & Co.] Short-term issuer: A-1 | [JPMorgan Chase & Co.] Outlook: Stable | [JPMorgan Chase Bank, N.A.] Long-term issuer: AA- | [JPMorgan Chase Bank, N.A.] Short-term issuer: A-1+ | [JPMorgan Chase Bank, N.A.] Outlook: Stable | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Long-term issuer: AA- | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Short-term issuer: A-1+ | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Outlook: Stable\nRow: June 30, 2025: Fitch Ratings | [JPMorgan Chase & Co.] Long-term issuer: AA- | [JPMorgan Chase & Co.] Short-term issuer: F1+ | [JPMorgan Chase & Co.] Outlook: Stable | [JPMorgan Chase Bank, N.A.] Long-term issuer: AA | [JPMorgan Chase Bank, N.A.] Short-term issuer: F1+ | [JPMorgan Chase Bank, N.A.] Outlook: Stable | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Long-term issuer: AA | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Short-term issuer: F1+ | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Outlook: Stable",
+   "table": {
+    "caption": "Additionally, the Firm's funding requirements for VIEs and other third-party commitments may be adversely affected by a decline in credit ratings. Refer to Notes 4 and 13 for additional information. The credit ratings of the Parent Company and certain of its principal subsidiaries as of June 30, 2025 were as follows:",
+    "header": [
+     "June 30, 2025",
+     "Long-term issuer",
+     "Short-term issuer",
+     "Outlook",
+     "Long-term issuer",
+     "Short-term issuer",
+     "Outlook",
+     "Long-term issuer",
+     "Short-term issuer",
+     "Outlook"
+    ],
+    "rows": [
+     {
+      "group": "",
+      "cells": [
+       "Moody's Investors Service",
+       "A1",
+       "P-1",
+       "Positive",
+       "Aa2",
+       "P-1",
+       "Stable(a)",
+       "Aa3",
+       "P-1",
+       "Positive(a)"
+      ],
+      "columns": [
+       "June 30, 2025",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook"
+      ],
+      "line": "Row: June 30, 2025: Moody's Investors Service | [JPMorgan Chase & Co.] Long-term issuer: A1 | [JPMorgan Chase & Co.] Short-term issuer: P-1 | [JPMorgan Chase & Co.] Outlook: Positive | [JPMorgan Chase Bank, N.A.] Long-term issuer: Aa2 | [JPMorgan Chase Bank, N.A.] Short-term issuer: P-1 | [JPMorgan Chase Bank, N.A.] Outlook: Stable(a) | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Long-term issuer: Aa3 | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Short-term issuer: P-1 | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Outlook: Positive(a)",
+      "entities": [
+       "",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase Bank, N.A.",
+       "JPMorgan Chase Bank, N.A.",
+       "JPMorgan Chase Bank, N.A.",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE"
+      ]
+     },
+     {
+      "group": "",
+      "cells": [
+       "Standard & Poor's",
+       "A",
+       "A-1",
+       "Stable",
+       "AA-",
+       "A-1+",
+       "Stable",
+       "AA-",
+       "A-1+",
+       "Stable"
+      ],
+      "columns": [
+       "June 30, 2025",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook"
+      ],
+      "line": "Row: June 30, 2025: Standard & Poor's | [JPMorgan Chase & Co.] Long-term issuer: A | [JPMorgan Chase & Co.] Short-term issuer: A-1 | [JPMorgan Chase & Co.] Outlook: Stable | [JPMorgan Chase Bank, N.A.] Long-term issuer: AA- | [JPMorgan Chase Bank, N.A.] Short-term issuer: A-1+ | [JPMorgan Chase Bank, N.A.] Outlook: Stable | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Long-term issuer: AA- | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Short-term issuer: A-1+ | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Outlook: Stable",
+      "entities": [
+       "",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase Bank, N.A.",
+       "JPMorgan Chase Bank, N.A.",
+       "JPMorgan Chase Bank, N.A.",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE"
+      ]
+     },
+     {
+      "group": "",
+      "cells": [
+       "Fitch Ratings",
+       "AA-",
+       "F1+",
+       "Stable",
+       "AA",
+       "F1+",
+       "Stable",
+       "AA",
+       "F1+",
+       "Stable"
+      ],
+      "columns": [
+       "June 30, 2025",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook",
+       "Long-term issuer",
+       "Short-term issuer",
+       "Outlook"
+      ],
+      "line": "Row: June 30, 2025: Fitch Ratings | [JPMorgan Chase & Co.] Long-term issuer: AA- | [JPMorgan Chase & Co.] Short-term issuer: F1+ | [JPMorgan Chase & Co.] Outlook: Stable | [JPMorgan Chase Bank, N.A.] Long-term issuer: AA | [JPMorgan Chase Bank, N.A.] Short-term issuer: F1+ | [JPMorgan Chase Bank, N.A.] Outlook: Stable | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Long-term issuer: AA | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Short-term issuer: F1+ | [J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE] Outlook: Stable",
+      "entities": [
+       "",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase & Co.",
+       "JPMorgan Chase Bank, N.A.",
+       "JPMorgan Chase Bank, N.A.",
+       "JPMorgan Chase Bank, N.A.",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE",
+       "J.P. Morgan Securities LLC J.P. Morgan Securities plc J.P. Morgan SE"
+      ]
+     }
+    ]
+   },
+   "id": "P1"
+  },
+  {
+   "ticker": "JPM",
+   "company": "JPMorgan Chase & Co.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2025-08-05",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000615/jpm-20250630.htm",
+   "kind": "text",
+   "text": "(a) On May 19, 2025, Moody's announced that it had revised JPMorgan Chase Bank, N.A.'s outlook to stable from developing, and that this change was related to Moody's one-notch downgrade of the long-term issuer rating of the U.S. Government announced on May 16, 2025. Moody's also affirmed JPMorgan Chase Bank, N.A.'s long-term issuer rating and revised J.P. Morgan SE's outlook to positive; the previous outlook was negative with an \"(m)\" modifier, reflecting a negative outlook for long-term bank deposits and a positive outlook for the long-term issuer rating.\n\nRefer to page 115 of JPMorganChase's 2024 Form 10-K for a discussion of the factors that could affect the credit ratings of the Parent Company and the above subsidiaries.",
+   "id": "P2"
+  },
+  {
+   "ticker": "JPM",
+   "company": "JPMorgan Chase & Co.",
+   "form": "10-Q",
+   "doc_type": "10-Q",
+   "filed": "2025-11-04",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+   "kind": "text",
+   "text": "(a)On November 3, 2025, Moody's revised the outlook for the Parent Company, J.P. Morgan Securities LLC, J.P. Morgan Securities plc and J.P. Morgan SE to stable from positive, and revised J.P. Morgan SE's long-term issuer rating to Aa2 from Aa3.\n\n(b)On May 19, 2025, Moody's revised JPMorgan Chase Bank, N.A.'s outlook to stable from developing, and this change was related to Moody's one-notch downgrade of the long-term issuer rating of the U.S. Government announced on May 16, 2025. Moody's also affirmed JPMorgan Chase Bank, N.A.'s long-term issuer rating.\n\nRefer to page 115 of JPMorganChase's 2024 Form 10-K for a discussion of the factors that could affect the credit ratings of the Parent Company and the above subsidiaries.",
+   "id": "P3"
+  },
+  {
+   "ticker": "NEE",
+   "company": "NextEra Energy, Inc.",
+   "form": "10-K",
+   "doc_type": "10-K",
+   "filed": "2026-02-13",
+   "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000015/nee-20251231.htm",
+   "kind": "table",
+   "text": "Table caption: Credit Ratings NEE's liquidity, ability to access credit and capital markets, cost of borrowings and collateral posting requirements under certain agreements is dependent on its and its subsidiaries credit ratings. As of February 13, 2026, Moody's Investors Service, Inc. (Moody's), S&P Global Ratings (S&P) and Fitch Ratings, Inc. (Fitch) had assigned the following credit ratings to NEE, FPL and NEECH:\nColumns: Moody's(a) | S&P(a) | Fitch(a)\nGroup: NEE:(b)\nRow: [NEE:(b)] Corporate credit rating | Moody's(a): Baa1 | S&P(a): A- | Fitch(a): A-\nGroup: FPL:(b)\nRow: [FPL:(b)] Corporate credit rating | Moody's(a): A1 | S&P(a): A | Fitch(a): A\nRow: [FPL:(b)] First mortgage bonds | Moody's(a): Aa2 | S&P(a): A+ | Fitch(a): AA-\nRow: [FPL:(b)] Senior unsecured notes | Moody's(a): A1 | S&P(a): A | Fitch(a): A+\nRow: [FPL:(b)] Pollution control, solid waste disposal and industrial development revenue bonds(c) | Moody's(a): VMIG-1/P-1 | S&P(a): A-1 | Fitch(a): F1\nRow: [FPL:(b)] Commercial paper | Moody's(a): P-1 | S&P(a): A-1 | Fitch(a): F1\nGroup: NEECH:(b)\nRow: [NEECH:(b)] Corporate credit rating | Moody's(a): Baa1 | S&P(a): A- | Fitch(a): A-\nRow: [NEECH:(b)] Debentures | Moody's(a): Baa1 | S&P(a): BBB+ | Fitch(a): A-\nRow: [NEECH:(b)] Junior subordinated debentures | Moody's(a): Baa2 | S&P(a): BBB | Fitch(a): BBB\nRow: [NEECH:(b)] Commercial paper | Moody's(a): P-2 | S&P(a): A-2 | Fitch(a): F2",
+   "table": {
+    "caption": "Credit Ratings NEE's liquidity, ability to access credit and capital markets, cost of borrowings and collateral posting requirements under certain agreements is dependent on its and its subsidiaries credit ratings. As of February 13, 2026, Moody's Investors Service, Inc. (Moody's), S&P Global Ratings (S&P) and Fitch Ratings, Inc. (Fitch) had assigned the following credit ratings to NEE, FPL and NEECH:",
+    "header": [
+     "Moody's(a)",
+     "S&P(a)",
+     "Fitch(a)"
+    ],
+    "rows": [
+     {
+      "group": "NEE:(b)",
+      "cells": [
+       "Corporate credit rating",
+       "Baa1",
+       "A-",
+       "A-"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [NEE:(b)] Corporate credit rating | Moody's(a): Baa1 | S&P(a): A- | Fitch(a): A-",
+      "entities": [
+       "NEE",
+       "NEE",
+       "NEE",
+       "NEE"
+      ]
+     },
+     {
+      "group": "FPL:(b)",
+      "cells": [
+       "Corporate credit rating",
+       "A1",
+       "A",
+       "A"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [FPL:(b)] Corporate credit rating | Moody's(a): A1 | S&P(a): A | Fitch(a): A",
+      "entities": [
+       "FPL",
+       "FPL",
+       "FPL",
+       "FPL"
+      ]
+     },
+     {
+      "group": "FPL:(b)",
+      "cells": [
+       "First mortgage bonds",
+       "Aa2",
+       "A+",
+       "AA-"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [FPL:(b)] First mortgage bonds | Moody's(a): Aa2 | S&P(a): A+ | Fitch(a): AA-",
+      "entities": [
+       "FPL",
+       "FPL",
+       "FPL",
+       "FPL"
+      ]
+     },
+     {
+      "group": "FPL:(b)",
+      "cells": [
+       "Senior unsecured notes",
+       "A1",
+       "A",
+       "A+"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [FPL:(b)] Senior unsecured notes | Moody's(a): A1 | S&P(a): A | Fitch(a): A+",
+      "entities": [
+       "FPL",
+       "FPL",
+       "FPL",
+       "FPL"
+      ]
+     },
+     {
+      "group": "FPL:(b)",
+      "cells": [
+       "Pollution control, solid waste disposal and industrial development revenue bonds(c)",
+       "VMIG-1/P-1",
+       "A-1",
+       "F1"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [FPL:(b)] Pollution control, solid waste disposal and industrial development revenue bonds(c) | Moody's(a): VMIG-1/P-1 | S&P(a): A-1 | Fitch(a): F1",
+      "entities": [
+       "FPL",
+       "FPL",
+       "FPL",
+       "FPL"
+      ]
+     },
+     {
+      "group": "FPL:(b)",
+      "cells": [
+       "Commercial paper",
+       "P-1",
+       "A-1",
+       "F1"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [FPL:(b)] Commercial paper | Moody's(a): P-1 | S&P(a): A-1 | Fitch(a): F1",
+      "entities": [
+       "FPL",
+       "FPL",
+       "FPL",
+       "FPL"
+      ]
+     },
+     {
+      "group": "NEECH:(b)",
+      "cells": [
+       "Corporate credit rating",
+       "Baa1",
+       "A-",
+       "A-"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [NEECH:(b)] Corporate credit rating | Moody's(a): Baa1 | S&P(a): A- | Fitch(a): A-",
+      "entities": [
+       "NEECH",
+       "NEECH",
+       "NEECH",
+       "NEECH"
+      ]
+     },
+     {
+      "group": "NEECH:(b)",
+      "cells": [
+       "Debentures",
+       "Baa1",
+       "BBB+",
+       "A-"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [NEECH:(b)] Debentures | Moody's(a): Baa1 | S&P(a): BBB+ | Fitch(a): A-",
+      "entities": [
+       "NEECH",
+       "NEECH",
+       "NEECH",
+       "NEECH"
+      ]
+     },
+     {
+      "group": "NEECH:(b)",
+      "cells": [
+       "Junior subordinated debentures",
+       "Baa2",
+       "BBB",
+       "BBB"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [NEECH:(b)] Junior subordinated debentures | Moody's(a): Baa2 | S&P(a): BBB | Fitch(a): BBB",
+      "entities": [
+       "NEECH",
+       "NEECH",
+       "NEECH",
+       "NEECH"
+      ]
+     },
+     {
+      "group": "NEECH:(b)",
+      "cells": [
+       "Commercial paper",
+       "P-2",
+       "A-2",
+       "F2"
+      ],
+      "columns": [
+       "",
+       "Moody's(a)",
+       "S&P(a)",
+       "Fitch(a)"
+      ],
+      "line": "Row: [NEECH:(b)] Commercial paper | Moody's(a): P-2 | S&P(a): A-2 | Fitch(a): F2",
+      "entities": [
+       "NEECH",
+       "NEECH",
+       "NEECH",
+       "NEECH"
+      ]
+     }
+    ]
+   },
+   "id": "P4"
+  },
+  {
+   "ticker": "NEE",
+   "company": "NextEra Energy, Inc.",
+   "form": "10-K",
+   "doc_type": "10-K",
+   "filed": "2026-02-13",
+   "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000015/nee-20251231.htm",
+   "kind": "text",
+   "text": "(a) A security rating is not a recommendation to buy, sell or hold securities and should be evaluated independently of any other rating. The rating is subject to revision or withdrawal at any time by the assigning rating organization.\n\n(b) The outlook indicated by each of Moody's, S&P and Fitch is stable.\n\n(c) Short-term ratings are presented as all bonds outstanding are currently paying a short-term interest rate. At FPL's election, a portion or all of the bonds may be adjusted to a long-term interest rate.",
+   "id": "P5"
+  }
+ ],
+ "set_aside": []
+}

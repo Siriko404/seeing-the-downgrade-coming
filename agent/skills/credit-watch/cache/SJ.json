@@ -1,0 +1,18 @@
+{
+ "ticker": "SJ",
+ "name": "Stella-Jones Inc.",
+ "cik": "",
+ "scope": "no SEC reports",
+ "aliases": "Stella-Jones",
+ "filings": 0,
+ "documents": 0,
+ "unreadable": [],
+ "manual": 0,
+ "passages": [],
+ "set_aside": [],
+ "skipped": 0,
+ "source": "SEC live",
+ "made": "2026-11-07T17:40:43",
+ "window_start": "2025-05-08",
+ "window_end": "2026-11-07"
+}
