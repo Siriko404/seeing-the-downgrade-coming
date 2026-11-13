@@ -1228,8 +1228,9 @@ def main(argv=None):
     if sec:
         print(f"SEC requests: {sec.requests}")
     print(f"wrote {(C.RUN / 'passages.md').resolve()} ({len(out['passages'])} passages to read) and passages.json")
-    for t, v in out["tickers"].items():           # an SEC number with nothing to read: the user decides, the AI does not guess
-        if v.get("cik") and not v["filings"] and not v["manual"] and not str(v.get("source", "")).startswith("SEC failed"):
+    if len(out["tickers"]) == 1 and not hold:       # one firm, SEC asked live, nothing to read: the user decides, the AI
+        (t, v), = out["tickers"].items()           # does not guess. With several firms the note's gap G-c says it instead.
+        if v.get("cik") and not v["filings"] and not v["manual"] and v.get("source") == "SEC live":
             print(f"{t}: no filings to read.\n" + no_filings(t, v, start, end))
 
 

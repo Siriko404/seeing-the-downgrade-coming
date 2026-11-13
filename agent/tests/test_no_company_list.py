@@ -119,6 +119,47 @@ class NoCompanyListTests(unittest.TestCase):
                 os.environ["SEC_CONTACT"] = old
             shutil.rmtree(d)
 
+    def test_no_filings_block_only_for_one_firm_asked_live(self):
+        """Offline (SEC never asked) and runs of several firms get no stop block; the note's gap G-c covers them."""
+        d, cwd = tempfile.mkdtemp(), os.getcwd()
+        os.chdir(d)
+        try:
+            with redirect_stdout(io.StringIO()) as out:
+                F.main(["XYZ=2077242", "--offline"])
+            self.assertNotIn(F.BLOCK_START, out.getvalue())
+        finally:
+            os.chdir(cwd)
+            shutil.rmtree(d)
+        d = tempfile.mkdtemp()
+        saved = (F.company, F.fetch_ticker, F.run_model, F.Sec, C.CACHE, os.environ.get("SEC_CONTACT"))
+
+        class NoSec:
+            requests = 0
+
+            def __init__(self, *a):
+                pass
+        F.company = lambda arg, sec: {"ticker": arg, "cik": "1", "name": arg, "scope": "", "matched": "test"}
+        F.fetch_ticker = lambda sec, c, start, end, say: {
+            "ticker": c["ticker"], "name": c["name"], "cik": c["cik"], "scope": "", "aliases": "", "filings": 0,
+            "documents": 0, "unreadable": [], "manual": 0, "passages": [], "set_aside": [], "skipped": 0,
+            "source": "SEC live", "unnamed": [], "cut": []}
+        F.run_model = lambda ciks, end: "model: not on this device"
+        F.Sec, C.CACHE = NoSec, Path(d) / "cache"
+        os.environ["SEC_CONTACT"] = "Test Person test@example.com"
+        os.chdir(d)
+        try:
+            with redirect_stdout(io.StringIO()) as out:
+                F.main(["AAA", "BBB"])
+            self.assertNotIn(F.BLOCK_START, out.getvalue())
+        finally:
+            os.chdir(cwd)
+            F.company, F.fetch_ticker, F.run_model, F.Sec, C.CACHE, old = saved
+            if old is None:
+                os.environ.pop("SEC_CONTACT", None)
+            else:
+                os.environ["SEC_CONTACT"] = old
+            shutil.rmtree(d)
+
 
 if __name__ == "__main__":
     unittest.main()
