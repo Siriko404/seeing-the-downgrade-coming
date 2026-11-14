@@ -27,6 +27,9 @@ notebook outputs before you share a notebook.
 
 **Goal.** Say in your own words what the model predicts and what goes into it.
 
+`python3 install.py` makes the environment for you (see [README](../README.md)); to change the skill later, read
+[agent/MODIFYING.md](../agent/MODIFYING.md).
+
 **Open.**
 - `deck/lecture-slides.pdf`: skim it first as the overview (its last page, and `docs/SLIDE-ERRATA.md`, list corrections
   to the slides)
@@ -177,6 +180,8 @@ notebook outputs before you share a notebook.
 **Goal.** Understand the division of work between the AI and the code, and see a note without using the internet.
 
 The agent alone is written for Python 3.10 or newer; it was run on Python 3.14 and 3.13.
+`python3 install.py` installs the skill for you (see [README](../README.md)); to change it, read
+[agent/MODIFYING.md](../agent/MODIFYING.md).
 
 **Open.**
 - `agent/README.md`

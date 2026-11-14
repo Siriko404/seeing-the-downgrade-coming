@@ -38,7 +38,46 @@ The agent is written for Python 3.10 or newer and was tested on Python 3.14 only
 `model/` need Python 3.12 or newer, so use 3.12 or newer if you use the whole package.) Reading PDF exhibits needs
 `pip install pypdf` (optional).
 
-Option 1, one command (it asks which agent you use):
+### Option 1: ask your AI agent, or run one command
+
+From the repository folder:
+
+```
+python3 install.py
+```
+
+`install.py` uses only the Python standard library and runs on Linux, macOS and Windows. It installs both parts.
+
+- **The model.** It makes `.venv` in the repository folder if it is missing, then runs
+  `pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu` and
+  `pip install -r model/requirements.txt`. With `--skip-model`, or with Python older than 3.12, it installs the skill
+  only; on an older Python it says so and goes on.
+- **The skill.** It copies `agent/skills/credit-watch/` (without `__pycache__`) into the skills folder of each chosen
+  agent as `credit-watch/`. `--agents` takes a comma list of `claude`, `opencode`, `codex` or `all`. The default is each
+  of those whose command is on `PATH`; if none is found, it uses `opencode`.
+  - User level: Claude Code `~/.claude/skills/`, opencode `~/.agents/skills/`, Codex `~/.codex/skills/`.
+  - With `--project DIR`: `DIR/.claude/skills/` and `DIR/.agents/skills/` (for Codex, see its documentation).
+  - Same files already there: it says "already installed". Different files: it moves the old folder to
+    `.install-backups/<agent>-<YYYYmmdd-HHMMSS>/` in the repository folder first.
+
+More flags:
+
+- `--contact "Name e-mail"` writes `~/.config/credit-watch/contact.txt` (the first line is the text) and
+  `~/.config/tcf_credit/settings.toml` (a `[sec]` line `contact = "..."`), keeping any other content. Without it nothing
+  is written, and the summary says the skill works offline only until a contact is set. The contact is never printed,
+  logged or invented.
+- `--check` runs the agent tests (`python -m unittest discover -s tests` in `agent/`), one offline run of the skill's
+  first step for HON in a temporary folder, and, if the model was installed, the model tests with the venv's Python. It
+  reports PASS or FAIL for each check.
+- `--uninstall` removes the installed skill folders (only folders named `credit-watch` that contain `SKILL.md`). It
+  leaves `.venv`, the contact files and your own `credit-watch/` run folders alone, and says so.
+
+The run ends with a block that starts `INSTALL SUMMARY`: each skill folder written, the venv, whether a contact is set
+(yes/no, never its value), each check result, and the next steps. Exit code 0 means every requested step worked.
+
+Then start a **new** agent session so it sees the skill, and in your project folder run `/credit-watch HON --offline`.
+
+Option 2, the `npx` installer (it asks which agent you use):
 
 ```
 npx skills add Siriko404/seeing-the-downgrade-coming
@@ -46,7 +85,7 @@ npx skills add Siriko404/seeing-the-downgrade-coming
 
 (the installer finds the skill inside this repository's `agent/` folder). Pick `credit-watch` when asked.
 
-Option 2, copy the folder `skills/credit-watch/` by hand:
+Option 3, copy the folder `skills/credit-watch/` by hand:
 
 | Agent | Copy it to | Tested |
 |---|---|---|
@@ -278,6 +317,7 @@ in `tests/fixtures/test-scores/`; the numbers are not model output.
 
 ```
 README.md                           this file
+MODIFYING.md                        how to work with and change the skill
 notebooks/agent_tutorial.ipynb      hands-on walk-through, offline (runs in seconds)
 examples/lecture-project/           optional Claude Code settings file
 skills/credit-watch/SKILL.md        the instructions the AI reads

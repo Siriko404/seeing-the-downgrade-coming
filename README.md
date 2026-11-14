@@ -6,6 +6,15 @@ It is teaching material, not investment advice. Nothing here tells you to buy, h
 You can work through it alone, at your own pace. A path of about six study sessions is in
 [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
 
+## Install with your AI agent
+
+Give your AI coding agent (Claude Code, opencode, Codex) this repository's link,
+https://github.com/Siriko404/seeing-the-downgrade-coming, and say "install everything". It follows
+[AGENTS.md](AGENTS.md), runs `python3 install.py --check`, asks only for your name and e-mail (the SEC contact), and
+then explains what it installed and how to use and change the skill.
+Without an agent, run `python3 install.py --check` yourself.
+If you are an AI agent, read [AGENTS.md](AGENTS.md) now.
+
 ## What is in it
 
 **Part 1, the model (`model/`).** A credit rating agency such as S&P sometimes lowers (downgrades) the rating of a
@@ -25,6 +34,9 @@ each rating line cites the rows it comes from. The AI reads; code checks and wri
 
 ```
 README.md                  this file
+install.py                 one-step install for the model and the skill
+AGENTS.md                  what an AI agent does in this repository
+CLAUDE.md                  pointer to AGENTS.md
 docs/
   STUDY-PATH.md            six sessions, in order
   GLOSSARY.md              the main terms, in plain words
@@ -47,6 +59,7 @@ model/
     05_real_data.ipynb
 agent/
   README.md                how to install and run credit-watch
+  MODIFYING.md             how to work with and change the skill
   skills/credit-watch/     the skill itself
   tests/                   automatic tests (they use small test inputs)
   notebooks/agent_tutorial.ipynb
@@ -58,7 +71,9 @@ deck/
 
 1. **Get the package, then install Python and a virtual environment** (a private folder of packages for this project).
    The model needs Python 3.12 or newer; the agent alone is written for Python 3.10 or newer. Everything was run only on
-   Linux, with Python 3.14 and 3.13; the Windows and macOS commands are untested. In a terminal:
+   Linux, with Python 3.14 and 3.13; the Windows and macOS commands are untested. From the repository folder,
+   `python3 install.py` does this step for you: it makes the same `.venv` and installs the same pinned packages.
+   In a terminal:
    ```
    git clone https://github.com/Siriko404/seeing-the-downgrade-coming.git
    cd seeing-the-downgrade-coming
