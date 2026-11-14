@@ -39,11 +39,24 @@ notebook outputs before you share a notebook.
 
 **Do.**
 1. Read the data guide's list of input groups. For each group, write one sentence on why it could warn of a downgrade.
-2. Build the real table once, from the repository folder:
+2. Set your own SEC contact first: the SEC asks every automated client for one, and the rebuild stops without it.
+   Use the environment variable `TCF_SEC_CONTACT` or the `[sec] contact` line in
+   `~/.config/tcf_credit/settings.toml`:
+
+   ```
+   export TCF_SEC_CONTACT="Your Name you@school.ca"
+   ```
+
+   On Windows PowerShell use `$env:TCF_SEC_CONTACT = "Your Name you@school.ca"` instead. Then build the real table
+   once, from the repository folder:
 
    ```
    PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route free
    ```
+
+   Two Loughran-McDonald files and five rating-history ZIP files (three S&P, one Fitch, one Moody's) must be
+   downloaded by hand; the message names each page and the place to save it. If FRED does not answer, download its
+   three files (BAA10Y, T10Y3M, VIXCLS) from the browser.
 
    The rebuild runs its nine steps in order. The free route downloads public files and can need several GB of disk and
    about 30 minutes on an 8-core cloud machine (13 November 2026); a home connection may be slower. If a step stops

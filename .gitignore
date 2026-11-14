@@ -3,6 +3,7 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 # data the code downloads or builds: never commit it
+/build/
 /data/
 /credit-watch/
 *.parquet

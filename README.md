@@ -73,14 +73,28 @@ deck/
    PYTHONPATH=model/src python -m unittest discover -s model/tests
    ```
    (Windows PowerShell: set `$env:PYTHONPATH="model/src"` first, then run the same `python -m unittest ...` line.)
-3. **Build the real table.** From the repository folder, with the environment active, run:
+3. **Build the real table.** First give the SEC your own contact, because the SEC asks every automated client to
+   declare one. Either set the environment variable `TCF_SEC_CONTACT`, or put `[sec] contact` in
+   `~/.config/tcf_credit/settings.toml`.
+   ```
+   export TCF_SEC_CONTACT="Your Name you@school.ca"      # Linux and macOS
+   ```
+   ```
+   $env:TCF_SEC_CONTACT="Your Name you@school.ca"       # Windows PowerShell
+   ```
+   From the repository folder, with the environment active, run (Windows PowerShell: set
+   `$env:PYTHONPATH="model/src"` first, then run the same `python -m tcf_credit.rebuild ...` line):
    ```
    PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route free
    ```
-   The rating files and the Loughran-McDonald file must be downloaded by hand; the command prints where. On 13
+   Five rating-history ZIP files and two Loughran-McDonald files must be downloaded by hand, and when FRED does not
+   answer the automatic download, three FRED files must be saved from your browser; the command prints the page and
+   where to save each. These hand downloads are not included in the 30 minutes below. The two Loughran-McDonald files
+   are about 540 MB and 188 MB, and the Yahoo price files about 250 MB in total (measured 13 November 2026). On 13
    November 2026 this route was run from start to end in about 30 minutes on an 8-core cloud machine. It writes the
    real table `build/panel_v2.csv` and the test results in `build/run/`, the rating events in
-   `build/ratings/ratings_obligor_events.csv.gz`, and other files. Notebook 5 explains it.
+   `build/ratings/ratings_obligor_events.csv.gz`, and other files. Notebook 5 explains it. `build/` and `data/` are
+   ignored by git; on the WRDS route never share them.
 4. **Open notebook 01:** `jupyter lab model/notebooks/01_data_and_inputs.ipynb`. It reads the table you built and
    walks through every input. Notebooks 1 to 5 read that table.
 
@@ -98,16 +112,19 @@ Then follow [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
 
 1. **Free public data (anyone, more work).** SEC company facts, the agencies' public rating histories, the
    Loughran-McDonald 10-K header file, FRED and Philadelphia Fed economy files, and free Yahoo prices in place of the
-   licensed ones. One command runs every step:
-   `PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route free` (the rating files and the
-   Loughran-McDonald file must be downloaded by hand; the command prints where). Free prices miss many
-   companies that stopped trading, so your results will differ from the lecture. On 13 November 2026 this route was run
-   from start to end in about 30 minutes on an 8-core cloud machine; the command downloaded the SEC ticker list and
-   company facts, the Philadelphia Fed files and the Yahoo prices fresh, while the rating-history ZIP files and the
-   Loughran-McDonald files were the lecture's hand-downloaded copies and the three FRED files were saved by hand. The
-   model was tested on 4,902 annual reports with 515 downgrades, against 6,380 with 862 in the lecture, and the logit
-   scored ROC-AUC 0.759 against the lecture's 0.802. FRED may not answer the automatic download; the command then
-   prints the links to open in your browser. See notebook 5 and [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
+   licensed ones. First give the SEC your own contact in `TCF_SEC_CONTACT` (see step 3). One command runs every step:
+   `PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route free` (five rating-history ZIP files and two
+   Loughran-McDonald files must be downloaded by hand, and three FRED files when FRED does not answer the automatic
+   download; the command prints the page and where to save each). Free prices miss many companies that stopped
+   trading, so your results will differ from the lecture. On 13 November 2026 this route was run from start to end in
+   about 30 minutes on an 8-core cloud machine; the hand downloads are not included in that time. The command
+   downloaded the SEC ticker list and company facts, the Philadelphia Fed files and the Yahoo prices fresh, while the
+   rating-history ZIP files and the Loughran-McDonald files were the lecture's hand-downloaded copies and the three
+   FRED files were saved by hand. The two Loughran-McDonald files are about 540 MB and 188 MB, and the Yahoo price
+   files about 250 MB in total (measured 13 November 2026). The model was tested on 4,902 annual reports with 515
+   downgrades, against 6,380 with 862 in the lecture, and the logit scored ROC-AUC 0.759 against the lecture's 0.802.
+   FRED may not answer the automatic download; the command then prints the links to open in your browser. See
+   notebook 5 and [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
 2. **Licensed data (only if your library gives you WRDS).** The lecture's own route, with your own WRDS account:
    `PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route wrds --wrds-user YOUR_NAME` (it asks for your
    WRDS password). On the lecture's saved data the package's code rebuilds the lecture's table and results exactly; the
