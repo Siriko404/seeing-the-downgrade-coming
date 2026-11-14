@@ -33,12 +33,12 @@ model/
 ## Install
 
 You need Python 3.12 or newer (the pinned numpy, scipy and xgboost need it). Everything was run only on Linux with
-Python 3.14; the Windows and macOS commands are untested.
+Python 3.14 and 3.13; the Windows and macOS commands are untested.
 
 ```
 python -m venv .venv
 source .venv/bin/activate            # Windows: .venv\Scripts\activate
-pip install torch --index-url https://download.pytorch.org/whl/cpu   # installs the CPU-only build of torch (Linux and Windows)
+pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu   # installs the CPU-only build of torch (Linux and Windows)
 pip install -r model/requirements.txt   # includes JupyterLab for the notebooks
 export PYTHONPATH=model/src          # Windows (PowerShell): $env:PYTHONPATH = "model/src"
 ```
@@ -152,6 +152,6 @@ end, and runs in under five minutes.
   353, with 5.2% false alarms.
 
 Your results will differ from these. The example data is made up; free price histories often omit delisted firms, which
-can bias the public route (not tested).
+can bias the public route. One run was made on 13 November 2026 and scored lower (0.759 against 0.802).
 
 A flag is a reason to look, not a reason to sell.

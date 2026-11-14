@@ -13,7 +13,8 @@ know where to check. If a word is new, see the [glossary](GLOSSARY.md).
    [DATA-GUIDE.md](DATA-GUIDE.md).
 2. **Free data may have survivorship bias.** Free price histories such as Yahoo's tend to omit companies that stopped
    trading. These may include companies that got into trouble, so a model built on free prices could look better than it
-   is. This was not tested here.
+   is. The one run of 13 November 2026 scored lower than the lecture (0.759 against 0.802; see item 8), and one run
+   cannot tell how much of that comes from the missing companies.
 3. **The yearly level can shift.** In 2020 about 29% of reports were followed by a downgrade, but the average predicted
    probability was about 14%. The model ranks companies well within a year and cannot tell you the level of the year.
    Read a probability as a ranking.

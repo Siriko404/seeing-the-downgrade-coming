@@ -131,7 +131,7 @@ Notebooks that run on the example data give made-up numbers. Do not compare them
 
 **Goal.** Understand the division of work between the AI and the code, and see a note without using the internet.
 
-The agent alone is written for Python 3.10 or newer; it was run only on Python 3.14.
+The agent alone is written for Python 3.10 or newer; it was run on Python 3.14 and 3.13.
 
 **Open.**
 - `agent/README.md`

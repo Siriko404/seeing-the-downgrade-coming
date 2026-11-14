@@ -30,7 +30,9 @@ lecture, and the logit scored ROC-AUC 0.759 against 0.802.
    Fed economy files, the Loughran-McDonald 10-K header file (and, for the side test, their 10-X summaries file of word
    counts) and free Yahoo prices in place of CRSP. Results will differ from the lecture. One command runs it
    (`python -m tcf_credit.rebuild DATA OUT --route free`); it was run from start to end on 13 November 2026, in about
-   30 minutes on an 8-core cloud machine. `fetch_public.py` fetches the free inputs and `philly_fed.py` converts the
+   30 minutes on an 8-core cloud machine. The rating-history ZIP files and the Loughran-McDonald files were the
+   lecture's hand-downloaded copies, and the 1993-2025 header file that the package names has not been run.
+   `fetch_public.py` fetches the free inputs and `philly_fed.py` converts the
    Philadelphia Fed economy files (see the steps below).
 3. **Licensed data (if your library gives you WRDS).** The lecture's route. See the last section.
 

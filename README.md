@@ -59,13 +59,13 @@ deck/
 
 1. **Get the package, then install Python and a virtual environment** (a private folder of packages for this project).
    The model needs Python 3.12 or newer; the agent alone is written for Python 3.10 or newer. Everything was run only on
-   Linux with Python 3.14; the Windows and macOS commands are untested. In a terminal:
+   Linux, with Python 3.14 and 3.13; the Windows and macOS commands are untested. In a terminal:
    ```
    git clone https://github.com/Siriko404/seeing-the-downgrade-coming.git
    cd seeing-the-downgrade-coming
    python3 -m venv .venv
    source .venv/bin/activate          # Windows PowerShell: .venv\Scripts\Activate.ps1
-   pip install torch --index-url https://download.pytorch.org/whl/cpu   # installs the CPU-only build of torch (Linux and Windows)
+   pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu   # installs the CPU-only build of torch (Linux and Windows)
    pip install -r model/requirements.txt
    ```
    The requirements include JupyterLab for the notebooks (`jupyter lab` opens them in your browser).
@@ -97,10 +97,12 @@ Then follow [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
    command runs every step: `python -m tcf_credit.rebuild DATA OUT --route free` (the rating files and the
    Loughran-McDonald file must be downloaded by hand; the command prints where). Free prices miss many companies that
    stopped trading, so your results will differ from the lecture. On 13 November 2026 this route was run from start
-   to end on fresh downloads (about 30 minutes on an 8-core cloud machine): the model was tested on 4,902 annual
-   reports with 515 downgrades, against 6,380 with 862 in the lecture, and the logit scored ROC-AUC 0.759 against the
-   lecture's 0.802. FRED may not answer the automatic download; the command then prints the links to open in your
-   browser. See notebook 5 and [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
+   to end in about 30 minutes on an 8-core cloud machine; the command downloaded the SEC ticker list and company
+   facts, the Philadelphia Fed files and the Yahoo prices fresh, while the rating-history ZIP files and the
+   Loughran-McDonald files were the lecture's hand-downloaded copies and the three FRED files were saved by hand.
+   The model was tested on 4,902 annual reports with 515 downgrades, against 6,380 with 862 in the lecture, and the
+   logit scored ROC-AUC 0.759 against the lecture's 0.802. FRED may not answer the automatic download; the command
+   then prints the links to open in your browser. See notebook 5 and [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
 3. **Licensed data (only if your library gives you WRDS).** The lecture's own route, with your own WRDS account:
    `python -m tcf_credit.rebuild DATA OUT --route wrds --wrds-user YOUR_NAME` (it asks for your WRDS password). On the
    lecture's saved data the package's code rebuilds the lecture's table and results exactly; the WRDS download itself
