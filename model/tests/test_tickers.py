@@ -1,6 +1,6 @@
 """Tests for tickers.py (pipeline step 5a helper: the ticker lists for the free price route).
 
-The small test writes a made-up panel and SEC file to a temporary folder and runs the command. The reference test
+The small test writes small test inputs (a panel and an SEC file) to a temporary folder and runs the command. The reference test
 runs it on the public reference files when they exist and is skipped otherwise. Neither test needs the internet.
 """
 import json

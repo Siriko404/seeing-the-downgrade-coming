@@ -1,7 +1,7 @@
 """Tests for fetch_wrds.py (pipeline step 5a, licensed route through WRDS).
 
 A fake connection with the same `raw_sql(sql, params=..., date_cols=...)` interface as wrds.Connection serves small
-made-up tables. No data, no internet and no WRDS account are needed.
+small test inputs. No data, no internet and no WRDS account are needed.
 """
 import sys
 import tempfile
@@ -47,7 +47,7 @@ TABLE_ORDER = ["crsp.ccmxpf_lnkhist", "comp.company", "crsp.stocknames_v2", "crs
 
 
 class FakeConnection:
-    """A stand-in for wrds.Connection that serves made-up tables and records every SQL call."""
+    """A stand-in for wrds.Connection that serves small test inputs and records every SQL call."""
 
     def __init__(self, tables: dict):
         self.tables = tables
@@ -154,7 +154,7 @@ def market_case():
 
 
 def fred_files(folder: Path):
-    """The six economy files that features_v2 reads, with small made-up numbers."""
+    """The six economy files that features_v2 reads, with small test inputs."""
     folder.mkdir(parents=True)
     (folder / "realtime").mkdir()
     pd.DataFrame({"date": ["2019:03", "2020:03"], "first_release": [3.8, 4.4],

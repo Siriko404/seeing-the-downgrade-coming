@@ -21,20 +21,19 @@ and some of these may be companies that were downgraded. The run of the public r
 the model was tested on 4,902 annual reports with 515 downgrades (10.5%), against 6,380 with 862 (13.5%) in the
 lecture, and the logit scored ROC-AUC 0.759 against 0.802.
 
-## Three ways to study
+## Two ways to study
 
-1. **Example data (anyone).** `model/synthetic/make_panel.py` writes a made-up table with the real column names. The
-   test step (`evaluate.py`) and the four model notebooks run on it; the download and licensed-data steps do not. The
-   numbers mean nothing.
-2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories, FRED and Philadelphia
+1. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories, FRED and Philadelphia
    Fed economy files, the Loughran-McDonald 10-K header file (and, for the side test, their 10-X summaries file of word
-   counts) and free Yahoo prices in place of CRSP. Results will differ from the lecture. One command runs it
-   (`python -m tcf_credit.rebuild DATA OUT --route free`); it was run from start to end on 13 November 2026, in about
-   30 minutes on an 8-core cloud machine. The rating-history ZIP files and the Loughran-McDonald files were the
-   lecture's hand-downloaded copies, and the 1993-2025 header file that the package names has not been run.
-   `fetch_public.py` fetches the free inputs and `philly_fed.py` converts the
+   counts) and free Yahoo prices in place of CRSP. Results will differ from the lecture. One command runs it from the
+   repository folder with `PYTHONPATH=model/src`: `python -m tcf_credit.rebuild data build --route free`. It was run
+   from start to end on 13 November 2026, in about 30 minutes on an 8-core cloud machine. The rating-history ZIP files
+   and the Loughran-McDonald files were the lecture's hand-downloaded copies, and the 1993-2025 header file that the
+   package names has not been run. `fetch_public.py` fetches the free inputs and `philly_fed.py` converts the
    Philadelphia Fed economy files (see the steps below).
-3. **Licensed data (if your library gives you WRDS).** The lecture's route. See the last section.
+2. **Licensed data (if your library gives you WRDS).** The lecture's route. It needs your own WRDS account with CRSP
+   and Compustat. Run the same command with `--route wrds --wrds-user YOUR_NAME`. See the last section. Everything it
+   writes holds licensed data: keep it on your own computer and out of any shared folder.
 
 ## The inputs, in groups
 
@@ -131,20 +130,23 @@ The exact column names are in notebook 01 (`model/notebooks/01_data_and_inputs.i
 - Keep the request pace the code sets.
 - Read each source's terms before you use it for anything beyond your own study.
 
-## The steps of the public route (way 2)
+## The steps of the public route (way 1)
 
-`python -m tcf_credit.rebuild DATA OUT --route free` runs these steps in order (run from start to end on
-13 November 2026). The list says what each step does.
+`python -m tcf_credit.rebuild data build --route free` runs these nine steps in order (run from start to end on
+13 November 2026). A step whose output files already exist is skipped, and the run stops at the first failure. The list
+says what each step does.
 
-1. SEC: `fetch_sec_bulk.py --tickers-only`.
-2. Ratings: download the 17g-7 archives, run `ratings_parser.py`, then `link_obligors.py`, then `fetch_companyfacts.py`
-   on the links file it writes (for the companies you want).
-3. `build_panel.py` makes the panel.
-4. Prices: `fetch_yahoo.py`, then `yahoo_market.py`, then `market_features.py`.
-5. Economy: run `fetch_public.py` for the FRED series and the Philadelphia Fed spreadsheets, then run `philly_fed.py`
-   to convert the spreadsheets to the CSV names that `features_v2.py` reads; put them in `DATA/fred` and
-   `DATA/fred/realtime`; then run `features_v2.py`.
-6. `evaluate.py` runs the rolling-origin test.
+1. Free inputs: `fetch_public.py` downloads the FRED series and the Philadelphia Fed spreadsheets, `philly_fed.py`
+   converts the spreadsheets, `lm_headers.py` reduces the Loughran-McDonald header file and
+   `fetch_sec_bulk.py --tickers-only` downloads the SEC ticker list.
+2. Ratings: `ratings_parser.py` reads the 17g-7 archives.
+3. `link_obligors.py` links rated companies to SEC filers, then `fetch_companyfacts.py` fetches their facts.
+4. `build_panel.py` makes the panel, and `tickers.py` writes the ticker lists.
+5. Prices: `fetch_yahoo.py`, then `yahoo_market.py`.
+6. `market_features.py` adds the market inputs.
+7. `features_v2.py` adds the ratio changes, beta and economy inputs and writes `build/panel_v2.csv`.
+8. `evaluate.py` runs the rolling-origin test and writes `build/run/`.
+9. `compare_models.py` writes `build/run/comparison.csv`.
 
 Each program's first lines (its docstring) tell you its arguments.
 
@@ -152,11 +154,14 @@ Each program's first lines (its docstring) tell you its arguments.
 
 This route is the lecture's. It is open only to students whose library subscribes to WRDS with CRSP and Compustat. Read
 your library's terms first; keep the files on your own machine and out of any public place.
+`python -m tcf_credit.rebuild data build --route wrds --wrds-user YOUR_NAME` runs every step, including the WRDS
+download.
 
-- `fetch_wrds.py` is the one-command route. It signs in with the official `wrds` Python package (the package asks for
-  your password itself and can save it in your own `~/.pgpass`; the code never prints, stores or logs it), runs SQL on
-  WRDS, and writes the same market folder that the old pair of programs writes:
-  `python -m tcf_credit.fetch_wrds OUT/panel.csv OUT/crsp [--username NAME] [--from-year 2009]`.
+- `fetch_wrds.py` is the WRDS download step that `rebuild.py` runs; you can also run it alone. It signs in with the
+  official `wrds` Python package (the package asks for your password itself and can save it in your own `~/.pgpass`;
+  the code never prints, stores or logs it), runs SQL on WRDS, and writes the same market folder that the old pair of
+  programs writes:
+  `python -m tcf_credit.fetch_wrds build/panel.csv build/crsp [--username NAME] [--from-year 2009]`.
   It links SEC CIK to Compustat gvkey (the `comp.company.cik` column), then to CRSP permno through the CCM link table
   (`crsp.ccmxpf_lnkhist`; link types LU and LC, primary links P and C), using the same rule as `fetch_crsp.py`.
   It writes `crsp_links.csv`, `crsp_daily.parquet` (permno, date, prc, ret, shrout, cfacpr), `crsp_sp500.csv`

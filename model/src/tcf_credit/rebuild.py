@@ -316,7 +316,7 @@ def run_step(step: Step, ctx: Context, env: dict, force: bool = False) -> bool:
             print(f"  {line}")
         print(f"  check: {step.hint}")
         return False
-    except Exception as e:                                  # a fake or a local problem; still name the step
+    except Exception as e:                                  # a test stand-in or a local problem; still name the step
         print(" FAILED", flush=True)
         print(f"  {type(e).__name__}: {e}")
         print(f"  check: {step.hint}")

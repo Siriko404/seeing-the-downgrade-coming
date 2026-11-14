@@ -1,6 +1,6 @@
 """Tests for returns.py (pipeline step 9: stock returns after the report, minus the market return).
 
-The tests use made-up daily returns in memory. They need no data and no internet.
+The tests use small test inputs (daily returns) in memory. They need no data and no internet.
 """
 import unittest
 

@@ -1,6 +1,6 @@
 """Tests for audit_returns.py (pipeline step 9b: the audit of extreme 12-month stock winners).
 
-Each test builds a small made-up price history in memory and runs the audit checks on it.
+Each test builds a small test input (a price history) in memory and runs the audit checks on it.
 It needs no data and no internet.
 """
 import unittest

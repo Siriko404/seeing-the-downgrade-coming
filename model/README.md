@@ -9,26 +9,38 @@ neural network and "fly brain" models. All are tested year by year on years they
 ```
 model/
   src/tcf_credit/   the code, one module per pipeline step (below)
-  synthetic/        make_panel.py: writes an example (made-up) panel, and its test
   tests/            unit tests of the code
   notebooks/        01 data and inputs, 02 train and test, 03 flag line and errors, 04 fly brain,
                     05 real data
   requirements.txt  the Python packages
 ```
 
-## Three ways to study the model
+## Two real routes to the data
 
-1. **Example data (anyone).** A made-up panel with the real columns, made by `model/synthetic/make_panel.py`. Steps 7
-   and 8 and the notebooks run on it (checked once on one Linux laptop with Python 3.14); the numbers mean nothing.
-   Start here (the notebooks do exactly this).
-2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories (SEC Rule 17g-7), the
+1. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories (SEC Rule 17g-7), the
    Loughran-McDonald 10-K header file, FRED and the Philadelphia Fed real-time files, and free Yahoo prices in place of
    CRSP. Results will differ from the lecture (for example, free prices may omit companies that stopped trading). Run
    end to end on 13 November 2026 with `python -m tcf_credit.rebuild DATA OUT --route free`: 4,902 test reports, logit
    ROC-AUC 0.759 (lecture: 6,380 reports, 0.802).
-3. **Licensed data (if your library gives you WRDS).** The lecture's exact route: CRSP, plus two identifier tables used
+2. **Licensed data (if your library gives you WRDS).** The lecture's exact route: CRSP, plus two identifier tables used
    only to match companies to stocks (the Compustat company file's gvkey and CIK columns and the CRSP/Compustat Merged
    link table).
+
+## Build the real table once
+
+Run the rebuild command once, first, from the repository folder with `PYTHONPATH=model/src` set:
+
+```
+python -m tcf_credit.rebuild data build --route free
+# or, with your own WRDS account:
+python -m tcf_credit.rebuild data build --route wrds --wrds-user YOUR_NAME
+```
+
+It runs every step below in order and writes the real table `build/panel_v2.csv`, the test results in `build/run/`
+(`pooled.csv`, `per_year.csv`, `predictions.csv`, `params.json`, `comparison.csv`), the rating events in
+`build/ratings/ratings_obligor_events.csv.gz`, and the other files the pipeline makes (read
+`model/src/tcf_credit/rebuild.py`). Notebook 5 explains and runs this command; notebooks 1 to 4 read the real files
+from `build/`. The WRDS route writes licensed data: keep it on your own computer and do not share it.
 
 ## Install
 
@@ -48,11 +60,10 @@ Run every command below from the repository folder, with the environment active 
 ## Run the tests
 
 ```
-python -m unittest discover -s model/tests
-python -m unittest discover -s model/synthetic
+PYTHONPATH=model/src python -m unittest discover -s model/tests
 ```
 
-The first line tests the model code, the second tests the example-data generator. No data and no internet are needed.
+No data and no internet are needed.
 
 ## What you will see
 
@@ -91,14 +102,6 @@ explain the idea.
 | 8 | Compare models with a firm-clustered bootstrap (whole companies are drawn again with replacement, so a firm's years stay together), or two runs with each other | `python -m tcf_credit.compare_models OUT/run`, `python -m tcf_credit.compare_runs RUN_A RUN_B` | none beyond the run |
 | 9, 9b | Do flagged stocks do worse than the market afterwards? Audit the extreme winners | `python -m tcf_credit.returns RUN OUT/panel_v2.csv OUT/crsp OUT/returns`, `python -m tcf_credit.audit_returns OUT/returns OUT/crsp STOCKNAMES.parquet OUT/audit` (`STOCKNAMES.parquet` is the CRSP stock-names file) | **LICENSED** |
 
-To skip steps 1 to 6, write an example panel and start at step 7:
-
-```
-python model/synthetic/make_panel.py --out example_panel.csv.gz
-python -m tcf_credit.evaluate example_panel.csv.gz example_run
-python -m tcf_credit.compare_models example_run
-```
-
 The economy files that step 6 reads are public: three daily series from FRED and three real-time files from the
 Philadelphia Fed. Step 6 expects, in `DATA/fred`: `BAA10Y.csv`, `T10Y3M.csv`, `VIXCLS.csv`, and in `DATA/fred/realtime`:
 `unemployment_first_release.csv`, `indpro_vintages.csv`, `gdp_growth_first_second_third.csv` (see `Macro` in
@@ -126,8 +129,11 @@ command stops with a message if they are missing.
 
 ## The notebooks
 
-Open them with `jupyter lab model/notebooks`. Each makes its own example panel in a temporary folder, deletes it at the
-end, and runs in under five minutes.
+Open them with `jupyter lab model/notebooks`. Notebooks 1 to 4 read the real files from `build/` (or from the folders
+set by the environment variables `TCF_NB_OUT_DIR` and `TCF_NB_DATA_DIR`). If the real table is missing, a notebook
+prints a short message and waits; run the rebuild first (notebook 5). The notebooks never write to or delete those
+folders. On the WRDS route their output holds licensed data: keep it on your own computer and clear the outputs before
+you share a notebook.
 
 1. `01_data_and_inputs.ipynb`: one row, the label, the four input groups of the main model (plus text tone, a fifth
    group used only in a side test), why each is known on the day.
@@ -151,7 +157,7 @@ end, and runs in under five minutes.
   862 downgrades, with 8.7% false alarms. Flagging the top 10% of each test year instead (642 reports, 10.06%) caught
   353, with 5.2% false alarms.
 
-Your results will differ from these. The example data is made up; free price histories often omit delisted firms, which
-can bias the public route. One run was made on 13 November 2026 and scored lower (0.759 against 0.802).
+Your results will differ from these. Free price histories often omit delisted firms, which can bias the public route.
+One run of the public route was made on 13 November 2026 and scored lower (0.759 against 0.802).
 
 A flag is a reason to look, not a reason to sell.

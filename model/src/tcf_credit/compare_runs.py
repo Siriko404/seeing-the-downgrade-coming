@@ -4,7 +4,7 @@ Goes in:  the folders of two evaluate.py runs on the same panel (for example one
 Comes out: for each model both runs have, a printed line with pooled ROC-AUC and PR-AUC in each run, the difference and
           a 95% interval from a firm-clustered bootstrap (whole companies are drawn again with replacement, so a
           firm's years stay together).
-Data:     no licensed data; works on the example panel's runs too.
+Data:     no licensed data; needs nothing but the two run folders.
 Usage: python -m tcf_credit.compare_runs RUN_A_DIR RUN_B_DIR [--boot 1000]
 """
 import sys

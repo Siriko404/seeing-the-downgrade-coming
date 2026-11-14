@@ -128,7 +128,8 @@ def _relay_steps(graph, activity, steps, scales):
 
 @lru_cache(maxsize=None)
 def calibrate(graph: Graph, steps: int, rows: int = CALIBRATION_ROWS, seed: int = CALIBRATION_SEED) -> tuple:
-    """The per-step divisors, found on made-up random inputs, never on company data."""
+    """The per-step divisors, found on random numbers the code draws itself (with a fixed seed), never on company
+    data."""
     act = np.maximum(np.random.default_rng(seed).normal(0.0, 1.0, (rows, len(graph.inputs))), 0.0).astype(np.float32)
     return tuple(s for s, _, _ in _relay_steps(graph, act, steps, None) if s is not None)
 

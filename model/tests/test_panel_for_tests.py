@@ -1,9 +1,10 @@
-"""Tests for make_panel.py (the example-data generator).
+"""Tests for the test-only panel helper (support/panel_for_tests.py).
 
-Run from the folder that holds `model/`:
-    PYTHONPATH=model/src python -m unittest discover -s model/synthetic -v
+The tests use small test inputs, not real company data. Run from the folder that holds `model/`:
+    PYTHONPATH=model/src python -m unittest discover -s model/tests -v
 """
 import re
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -11,7 +12,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import make_panel as mp
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from support import panel_for_tests as mp
 
 
 # The model's input columns and types, in order, written out here so the test also works without any other folder.
@@ -88,7 +90,7 @@ class ReproducibilityTests(unittest.TestCase):
 
 
 class ContentTests(unittest.TestCase):
-    """Checks of the values in the example panel: made-up names, flags, ratios, dates, label share."""
+    """Checks of the values in the small test inputs: names, flags, ratios, dates, label share."""
     @classmethod
     def setUpClass(cls):
         cls.panel = mp.make_panel()          # default size: 400 companies, fiscal years 2009-2025
@@ -103,13 +105,13 @@ class ContentTests(unittest.TestCase):
             share = mp.make_panel(n_firms=200, seed=seed)["label"].mean()
             self.assertTrue(0.05 <= share <= 0.25, (seed, share))
 
-    def test_names_are_example_names(self):
+    def test_names_are_test_names(self):
         pattern = re.compile(r"^Example Co \d{3,}( Inc)?$")
         for col in ("obligor", "sp_name"):
             bad = [v for v in self.back[col].unique() if not pattern.match(v)]
             self.assertEqual(bad, [], col)
 
-    def test_company_numbers_and_report_numbers_are_made_up(self):
+    def test_company_numbers_and_report_numbers_are_invented(self):
         self.assertTrue((self.panel["cik"] >= 9_000_001).all())
         self.assertTrue(self.panel["accn"].str.match(r"^0009\d{6}-\d\d-\d{6}$").all())
         self.assertTrue(self.panel["accn"].is_unique)
@@ -165,7 +167,7 @@ class ContentTests(unittest.TestCase):
         self.assertFalse(some[["ret_12m", "vol_12m"]].isna().any().any())
 
     def test_label_depends_on_inputs(self):
-        # The made-up rule makes risky-looking reports downgrade more often. If the rule were broken (for example
+        # The rule in these test inputs makes risky-looking reports downgrade more often. If the rule were broken (for example
         # labels drawn at random), a simple logistic regression could not beat chance.
         from sklearn.linear_model import LogisticRegression
         from sklearn.metrics import roc_auc_score

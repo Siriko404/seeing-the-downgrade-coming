@@ -9,7 +9,7 @@ Comes out: the same market folder that fetch_crsp.py and fetch_crsp_delist.py wr
 Data:     LICENSED. CRSP and Compustat through WRDS. Vendor data stays on your computer: never put it in a repository.
 
 Not yet run against WRDS: there is no WRDS account on the machine where this module was written. Only the unit tests
-with a fake connection were run.
+with a test stand-in connection were run.
 
 Usage: python -m tcf_credit.fetch_wrds PANEL_CSV OUT_DIR [--username NAME] [--from-year 2009]
 

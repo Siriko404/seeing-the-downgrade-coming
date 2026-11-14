@@ -3,9 +3,9 @@
 These are the lecture's results. The accounting inputs came from SEC filings as first filed; the market inputs came from
 licensed CRSP stock prices (to match companies to their stock the code used two identifier tables,
 the Compustat company file's gvkey and CIK columns and the CRSP/Compustat Merged link table; no Compustat financial data
-is used). They cannot be reproduced exactly from the example data or from free data (see
-[DATA-GUIDE.md](DATA-GUIDE.md)). Only totals are given here: no company's data or score is shown. The one exception is a
-single classroom example on the slides, described in the [README](../README.md).
+is used). They cannot be reproduced exactly from free public data; use your own WRDS account for the lecture's route
+(see [DATA-GUIDE.md](DATA-GUIDE.md)). Only totals are given here: no company's data or score is shown. The one
+exception is a single classroom example on the slides, described in the [README](../README.md).
 
 If a word is new, see the [glossary](GLOSSARY.md).
 

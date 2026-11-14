@@ -4,7 +4,6 @@ __pycache__/
 .venv/
 # data the code downloads or builds: never commit it
 /data/
-model/synthetic/out/
 /credit-watch/
 *.parquet
 *.csv.gz

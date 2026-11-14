@@ -38,8 +38,7 @@ model/
   FLY-DATA.md              the public fruit-fly files (for notebook 04)
   requirements.txt         Python packages
   src/tcf_credit/          the code
-  synthetic/               makes an example data table (made-up numbers)
-  tests/                   automatic tests
+  tests/                   automatic tests (they use small test inputs)
   notebooks/
     01_data_and_inputs.ipynb
     02_train_and_test.ipynb
@@ -49,13 +48,13 @@ model/
 agent/
   README.md                how to install and run credit-watch
   skills/credit-watch/     the skill itself
-  tests/                   automatic tests
+  tests/                   automatic tests (they use small test inputs)
   notebooks/agent_tutorial.ipynb
 deck/
   lecture-slides.pdf       the lecture slides (the last page lists corrections)
 ```
 
-## Start here in 3 steps
+## Start here in 4 steps
 
 1. **Get the package, then install Python and a virtual environment** (a private folder of packages for this project).
    The model needs Python 3.12 or newer; the agent alone is written for Python 3.10 or newer. Everything was run only on
@@ -72,11 +71,18 @@ deck/
 2. **Run the tests.** They check that the code works on your computer:
    ```
    PYTHONPATH=model/src python -m unittest discover -s model/tests
-   PYTHONPATH=model/src python -m unittest discover -s model/synthetic
    ```
-   (Windows PowerShell: set `$env:PYTHONPATH="model/src"` first, then run the same `python -m unittest ...` lines.)
-3. **Open notebook 01:** `jupyter lab model/notebooks/01_data_and_inputs.ipynb`. It makes an example data table and
-   walks through every input.
+   (Windows PowerShell: set `$env:PYTHONPATH="model/src"` first, then run the same `python -m unittest ...` line.)
+3. **Build the real table.** From the repository folder, with the environment active, run:
+   ```
+   PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route free
+   ```
+   The rating files and the Loughran-McDonald file must be downloaded by hand; the command prints where. On 13
+   November 2026 this route was run from start to end in about 30 minutes on an 8-core cloud machine. It writes the
+   real table `build/panel_v2.csv` and the test results in `build/run/`, the rating events in
+   `build/ratings/ratings_obligor_events.csv.gz`, and other files. Notebook 5 explains it.
+4. **Open notebook 01:** `jupyter lab model/notebooks/01_data_and_inputs.ipynb`. It reads the table you built and
+   walks through every input. Notebooks 1 to 5 read that table.
 
 Then follow [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
 
@@ -85,28 +91,28 @@ Then follow [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
 - Test runs may print warnings. What matters is the final `OK`.
 - The virtual environment took about 1.7 GB of disk on one Linux laptop (CPU-only torch, JupyterLab included).
 - Notebook 04 downloads about 133 MB of public fruit-fly files the first time you run it.
-- The notebooks set their own paths. You do not need to set anything.
+- The notebooks find the repository and read the real files from `build/` (or from `TCF_NB_OUT_DIR` and
+  `TCF_NB_DATA_DIR` if you set them), so you do not need to change paths.
 
-## Three ways to study the model
+## Two ways to get the data
 
-1. **Example data (anyone).** A made-up table with the real column names, made by `model/synthetic/make_panel.py`. The
-   model's test steps (7 and 8 in `model/README.md`) and model notebooks 1 to 4 run on it; the download and
-   licensed-data steps do not. The numbers mean nothing.
-2. **Public data (anyone, more work).** SEC company facts, the agencies' public rating histories, the Loughran-McDonald
-   10-K header file, FRED and Philadelphia Fed economy files, and free Yahoo prices in place of the licensed ones. One
-   command runs every step: `python -m tcf_credit.rebuild DATA OUT --route free` (the rating files and the
-   Loughran-McDonald file must be downloaded by hand; the command prints where). Free prices miss many companies that
-   stopped trading, so your results will differ from the lecture. On 13 November 2026 this route was run from start
-   to end in about 30 minutes on an 8-core cloud machine; the command downloaded the SEC ticker list and company
-   facts, the Philadelphia Fed files and the Yahoo prices fresh, while the rating-history ZIP files and the
-   Loughran-McDonald files were the lecture's hand-downloaded copies and the three FRED files were saved by hand.
-   The model was tested on 4,902 annual reports with 515 downgrades, against 6,380 with 862 in the lecture, and the
-   logit scored ROC-AUC 0.759 against the lecture's 0.802. FRED may not answer the automatic download; the command
-   then prints the links to open in your browser. See notebook 5 and [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
-3. **Licensed data (only if your library gives you WRDS).** The lecture's own route, with your own WRDS account:
-   `python -m tcf_credit.rebuild DATA OUT --route wrds --wrds-user YOUR_NAME` (it asks for your WRDS password). On the
-   lecture's saved data the package's code rebuilds the lecture's table and results exactly; the WRDS download itself
-   has not been run against WRDS yet (no account was available).
+1. **Free public data (anyone, more work).** SEC company facts, the agencies' public rating histories, the
+   Loughran-McDonald 10-K header file, FRED and Philadelphia Fed economy files, and free Yahoo prices in place of the
+   licensed ones. One command runs every step:
+   `PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route free` (the rating files and the
+   Loughran-McDonald file must be downloaded by hand; the command prints where). Free prices miss many
+   companies that stopped trading, so your results will differ from the lecture. On 13 November 2026 this route was run
+   from start to end in about 30 minutes on an 8-core cloud machine; the command downloaded the SEC ticker list and
+   company facts, the Philadelphia Fed files and the Yahoo prices fresh, while the rating-history ZIP files and the
+   Loughran-McDonald files were the lecture's hand-downloaded copies and the three FRED files were saved by hand. The
+   model was tested on 4,902 annual reports with 515 downgrades, against 6,380 with 862 in the lecture, and the logit
+   scored ROC-AUC 0.759 against the lecture's 0.802. FRED may not answer the automatic download; the command then
+   prints the links to open in your browser. See notebook 5 and [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
+2. **Licensed data (only if your library gives you WRDS).** The lecture's own route, with your own WRDS account:
+   `PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route wrds --wrds-user YOUR_NAME` (it asks for your
+   WRDS password). On the lecture's saved data the package's code rebuilds the lecture's table and results exactly; the
+   WRDS download itself has not been run against WRDS yet (no account was available). Everything this route writes
+   holds licensed data: keep it on your own computer and clear the notebook outputs before you share the notebook.
 
 ## What is NOT included, and why
 
@@ -122,11 +128,10 @@ Then follow [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
 - **No scores of real companies, with one exception.** The only real score in the package is one classroom example on
   the slides: Compass Minerals (CMP), model chance 51% of an S&P downgrade within 12 months, from its 10-K filed on 29
   November 2023 (S&P cut its rating 204 days after the filing, 203 days after the snapshot date, the day after the
-  filing). There is no other real score and no file of real scores (the agent tests use a small file of made-up scores
-  for firms that do not exist). Model notebooks 1 to 4 run on made-up data, and notebook 5 reads the table you build
-  yourself; the agent tutorial runs on saved rating passages from real filings and shows no model score. The model's
-  code is in `model/`, but the trained model, its licensed training data and its scores are not included, so a note
-  made with this package shows no model score.
+  filing). There is no other real score and no file of real scores (the agent tests use small test inputs). The
+  notebooks read the table you build; the agent tutorial runs on saved rating passages from real filings and shows no
+  model score. The model's code is in `model/`, but the trained model, its licensed training data and its scores are
+  not included, so a note made with this package shows no model score.
 - **The slides are a PDF** (`deck/lecture-slides.pdf`), not an editable file.
 
 ## Read next

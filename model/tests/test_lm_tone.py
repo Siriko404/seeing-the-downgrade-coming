@@ -1,6 +1,6 @@
 """Tests for lm_tone.py (the optional text-tone step after step 6): the change in tone since the previous 10-K.
 
-The tests use small made-up tables. They need no data and no internet.
+The tests use small test inputs (tables). They need no data and no internet.
 """
 import unittest
 

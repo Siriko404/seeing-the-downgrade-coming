@@ -1,7 +1,7 @@
 """Tests for features_v2.py (pipeline step 6: changes since the last report, beta and the economy as first
 released) and for the `Prep` class of evaluate.py (step 7: input preparation).
 
-The tests use small made-up tables and economy files written to a temporary folder.
+The tests use small test inputs (tables and economy files) written to a temporary folder.
 They need no data and no internet.
 """
 import tempfile

@@ -1,32 +1,31 @@
-"""Make an EXAMPLE firm-year panel for the credit-downgrade model. Every number in it is made up.
+"""Write small test inputs for the credit-downgrade model. Test-only helper; students do not use it.
 
 What this file is
 -----------------
-The real model is trained on a panel (a table with one row per company per annual report, called a 10-K) built from
-public SEC filings and rating files plus licensed CRSP stock data. The CRSP data (and so the panel) cannot be shared.
-This script writes a table with the same column names (except the licensed stock identifier permno), the same column
-types and a similar shape, so that evaluate.py and the notebooks run. The steps that need SEC or CRSP files do not run
-on it. The companies are called
-"Example Co 001", "Example Co 002", ...; the company numbers (CIK) are counted up from 9,000,001, the report numbers
-(accession numbers) are built from the CIK, the year and a counter, and the ratings and
-ratios are random draws. Do not read anything into them: a result on this table says nothing about real companies.
+The model's real input is a panel built from public SEC filings and rating files plus licensed CRSP stock data, which
+cannot be shared. The tests need a table with the same column names (except the licensed stock identifier permno),
+the same column types and a similar shape, so that the model code can be exercised. This helper writes such a table
+from random draws with company names "Example Co 001", "Example Co 002", ...; the company numbers (CIK) are counted
+up from 9,000,001 and the report numbers (accession numbers) are built from the CIK, the year and a counter. Every
+value is a test input: a result on this table says nothing about real companies. Nothing outside `model/tests/` may
+import this file.
 
 How to run it
 -------------
 From the folder that holds `model/`:
 
-    python model/synthetic/make_panel.py                       # writes model/synthetic/out/example_panel.csv
-    python model/synthetic/make_panel.py --out my_panel.csv.gz --firms 800 --seed 7
+    python model/tests/support/panel_for_tests.py              # writes model/tests/support/out/small_test_panel.csv
+    python model/tests/support/panel_for_tests.py --out my_panel.csv.gz --firms 800 --seed 7
 
 Options: --firms (default 400), --first-year and --last-year (fiscal years, default 2009 and 2025), --seed (default 1),
 --target-rate (share of rows with a downgrade, default 0.12), --coverage-end, --out. The same seed always gives the
 same file, byte for byte. In Python:
 
-    from make_panel import make_panel
+    from support.panel_for_tests import make_panel
     panel = make_panel(n_firms=400, seed=1)      # a pandas DataFrame
 
-How the made-up data are built (so you can see what a model could learn)
-------------------------------------------------------------------------
+How the test inputs are built
+-----------------------------
 1. Each company gets a fixed "quality" number, and each year a "shock" that fades slowly (an AR(1) series, meaning
    this year's shock is 0.6 times last year's plus new noise). Quality, shock and the economy together give a
    "health" number for every report.
@@ -54,10 +53,10 @@ How the made-up data are built (so you can see what a model could learn)
 Differences from the real panel
 -------------------------------
 - The licensed stock-database identifier column of the real panel is left out. evaluate.py and the notebooks never
-read it (features_v2.py and returns.py do, but they are not run on the example panel).
+  read it (features_v2.py and returns.py do, but they are not run on this table).
 - notch runs from 1 (AAA) to 21 (C); the real panel also leaves out rows already in default (notch 22).
 - Company numbers (CIK) start at 9,000,001; this range is meant to stay clear of real company numbers (not checked
-against EDGAR).
+  against EDGAR).
 """
 import argparse
 import gzip
@@ -99,7 +98,7 @@ MISSING = {"wc_assets": 0.04, "ebit_interest": 0.06, "cfo_debt": 0.05, "re_asset
            "op_margin": 0.03, "float_debt": 0.08, "debt_ebitda": 0.05}
 HAS_PRICES_SHARE = 0.88
 
-# The made-up rule for the label. Each term is (column, typical value, typical spread, weight) or (column, weight)
+# The rule for the label in these test inputs. Each term is (column, typical value, typical spread, weight) or (column, weight)
 # for 0/1 columns. Documented in the module docstring.
 LABEL_TERMS = [("debt_assets", 0.33, 0.15, 0.9), ("ebit_assets", 0.07, 0.05, -0.9), ("notch", 12.5, 3.4, 0.35),
                ("vol_12m", 0.30, 0.10, 0.3), ("ret_12m", 0.0, 0.25, -0.3), ("baa10y", 2.2, 0.7, 0.4)]
@@ -129,7 +128,7 @@ def make_economy(rng, first_year, last_year):
         cycle[i] = 0.97 * cycle[i - 1] + rng.normal(0, 0.22)
 
     def ar(sd, rho=0.8):
-        """A made-up series of length n that depends on its previous value (weight `rho`) plus random noise."""
+        """A series of length n that depends on its previous value (weight `rho`) plus random noise."""
         x = np.zeros(n)
         for i in range(1, n):
             x[i] = rho * x[i - 1] + rng.normal(0, sd)
@@ -167,7 +166,7 @@ def solve_intercept(base, target_rate):
 
 
 def make_panel(n_firms=400, first_year=2009, last_year=2025, seed=1, target_rate=0.12, coverage_end="2025-12-05"):
-    """Return the example panel as a DataFrame (columns in COLUMNS order). See the module docstring."""
+    """Return the test panel as a DataFrame (columns in COLUMNS order). See the module docstring."""
     rng = np.random.default_rng(seed)
     eco = make_economy(rng, first_year, last_year)
     years = np.arange(first_year, last_year + 1)
@@ -358,11 +357,11 @@ def write_csv(df, path):
 
 
 def main():
-    """Read the command-line options, make the example panel and write it to a file."""
+    """Read the command-line options, make the test panel and write it to a file."""
     here = Path(__file__).resolve().parent
-    p = argparse.ArgumentParser(description="Write an example (made-up) firm-year panel for the credit model.")
-    p.add_argument("--out", default=str(here / "out" / "example_panel.csv"), help="output file (.csv or .csv.gz)")
-    p.add_argument("--firms", type=int, default=400, help="number of example companies (default 400)")
+    p = argparse.ArgumentParser(description="Write a small test panel for the credit model (test-only helper).")
+    p.add_argument("--out", default=str(here / "out" / "small_test_panel.csv"), help="output file (.csv or .csv.gz)")
+    p.add_argument("--firms", type=int, default=400, help="number of test companies (default 400)")
     p.add_argument("--first-year", type=int, default=2009, help="first fiscal year (default 2009)")
     p.add_argument("--last-year", type=int, default=2025, help="last fiscal year (default 2025)")
     p.add_argument("--seed", type=int, default=1, help="random seed (default 1)")

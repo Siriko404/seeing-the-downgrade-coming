@@ -20,7 +20,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SKILL = Path(__file__).resolve().parents[1] / "skills" / "credit-watch"
 TOOLS = SKILL / "tools"
-MADE_UP = HERE / "fixtures" / "made-up-scores"     # made-up scores.csv that tests copy next to the real data files
+MADE_UP = HERE / "fixtures" / "test-scores"     # test scores.csv that tests copy next to the real data files
 sys.path.insert(0, str(TOOLS))
 os.environ["CREDIT_WATCH_SCORES"] = str(Path(tempfile.gettempdir()) / "credit-watch-tests-no-scores.csv")  # not this
 os.environ["CREDIT_WATCH_MODEL"] = ""                       # device's own scores file or model
@@ -31,12 +31,12 @@ import fetch as F   # noqa: E402
 class made_up_scores:
     """finish.py reads data/scores.csv next to this device's own scores file. The public package ships no
     data/scores.csv (the model is not included), so for the length of a test, point common.DATA at a folder that
-    holds the real lists plus a scores.csv of made-up values (fixtures/made-up-scores)."""
+    holds the real lists plus a scores.csv of test values (fixtures/test-scores)."""
     def __enter__(self):
         self.tmp = Path(tempfile.mkdtemp())
         shutil.copytree(SKILL / "data", self.tmp / "data")         # the real lists and scales, ...
         (self.tmp / "data" / "scores.csv").unlink(missing_ok=True)
-        shutil.copy(MADE_UP / "scores.csv", self.tmp / "data" / "scores.csv")   # ... plus the made-up scores
+        shutil.copy(MADE_UP / "scores.csv", self.tmp / "data" / "scores.csv")   # ... plus the test scores
         self.old, C.DATA = C.DATA, self.tmp / "data"
 
     def __exit__(self, *exc):
@@ -657,7 +657,7 @@ class FinishTests(Base):
 
     def test_model_lines(self):
         import finish as N
-        with made_up_scores():                      # made-up values: TSTA, TSTB, TSTC (fixtures/made-up-scores)
+        with made_up_scores():                      # test values: TSTA, TSTB, TSTC (fixtures/test-scores)
             hon = N.model_lines("TSTA", {"scope": "scored", "cik": "9990001", "name": "Test Corp A"}, "2026-11-07")
             self.assertIn("11.1%", hon[0]); self.assertIn("22.2%", hon[1]); self.assertIn("Not flagged", hon[1])
             self.assertIn("years up to 2022 scored the 2024 10-Ks", hon[2])
@@ -1010,7 +1010,7 @@ class HoldingsTests(unittest.TestCase):
         with made_up_scores():
             P = N.portfolio(res)
         hon = next(x for x in P.splitlines() if x.startswith("| TSTA"))
-        self.assertIn("| 11.1% | 22.2% | No |", hon)                                    # made-up data/scores.csv, by CIK
+        self.assertIn("| 11.1% | 22.2% | No |", hon)                                    # test data/scores.csv, by CIK
         self.assertIn("S&P A [R1]", hon); self.assertIn("Moody's negative [R2]", hon)
         self.assertIn("2026-06-25 Moody's outlook change [R2]", hon); self.assertIn("note_TSTA.md", hon)
         ry = next(x for x in P.splitlines() if x.startswith("| RY"))
@@ -1083,7 +1083,7 @@ class DataTests(unittest.TestCase):
         self.assertIsNone(C.grade("S&P", "A\u20132"))                                       # an en dash stays a dash
 
     def test_scores_hold_no_licensed_columns(self):
-        """Checked on the made-up test file, and on data/scores.csv too if someone adds one."""
+        """Checked on the test input file, and on data/scores.csv too if someone adds one."""
         files = [MADE_UP / "scores.csv"] + [f for f in [SKILL / "data/scores.csv"] if f.exists()]
         allowed = {"ticker", "cik", "report_filed", "snapshot_date", "report_url", "p", "cut", "flagged", "trained_to",
                    "cut_from", "status", "outcome"}              # scores and flags only: no market or vendor columns

@@ -1,6 +1,6 @@
 """Tests for build_panel.py (pipeline step 4: the label, the S&P rating state and the exclusion of some industries).
 
-The tests use short lists of made-up rating events. They need no data and no internet.
+The tests use short lists of small test inputs (rating events). They need no data and no internet.
 """
 import datetime as dt
 import unittest

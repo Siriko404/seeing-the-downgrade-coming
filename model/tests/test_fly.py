@@ -45,7 +45,7 @@ class FetchTests(unittest.TestCase):
 
 
 class MushroomBodyTests(unittest.TestCase):
-    """Checks of the mushroom-body model (fly.py) and its readout (readout.py) on small made-up wiring."""
+    """Checks of the mushroom-body model (fly.py) and its readout (readout.py) on small test inputs (wiring)."""
     def test_only_projection_to_kenyon_connections(self):
         con = pd.DataFrame({"pre": [1, 1, 2, 3, 9], "post": [10, 11, 10, 10, 11], "weight": [5, 7, -3, 4, 8]})
         ann = pd.DataFrame({"root_id": [1, 2, 3, 9, 10, 11],
@@ -89,7 +89,7 @@ class MushroomBodyTests(unittest.TestCase):
 
 
 class WholeBrainTests(unittest.TestCase):
-    """Checks of the whole-brain model (brain.py) on a small made-up network."""
+    """Checks of the whole-brain model (brain.py) on a small test input (a network)."""
     def toy_graph(self, n=120, seed=0):
         rng = np.random.default_rng(seed)
         m = sp.random(n, n, density=0.05, random_state=seed, format="csr", dtype=np.float32)

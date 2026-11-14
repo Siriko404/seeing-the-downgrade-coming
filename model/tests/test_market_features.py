@@ -1,6 +1,6 @@
 """Tests for market_features.py (pipeline step 5b: stock-market inputs added to the panel).
 
-The tests build a made-up daily price history in memory. They need no data and no internet.
+The tests build a small test input (a daily price history) in memory. They need no data and no internet.
 """
 import unittest
 

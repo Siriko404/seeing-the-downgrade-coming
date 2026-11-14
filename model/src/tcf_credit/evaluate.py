@@ -1,10 +1,10 @@
 """Pipeline step 7: test the models year by year on years they never saw (rolling origin, one-year gap).
 
-Goes in:  the panel written by features_v2 (one row per annual report, with the label and every input; the
-          example panel from model/synthetic/make_panel.py works too). Only rows with stock-market inputs are used.
+Goes in:  the panel written by features_v2 (one row per annual report, with the label and every input). Only rows
+          with stock-market inputs are used.
 Comes out: in OUT_DIR, pooled.csv (one line per model and flag rule: ROC-AUC, PR-AUC, caught and missed
           downgrades, false alarms), per_year.csv, predictions.csv (every test score) and params.json.
-Data:     needs no licensed data itself; with the example panel it needs nothing but the panel file.
+Data:     needs no licensed data itself; it needs nothing but the panel file.
 
 How one test year Y works (this is the whole idea of the file):
   - Train on reports dated in years <= Y-2. Year Y-1 is left out on purpose (a "one-year gap"): a report from

@@ -271,8 +271,8 @@ python3 -m unittest discover -s tests
 
 The tests plant a failure for every check (a wrong grade, a quote that is not in the filing, a date after the filing
 date, ...) and each has a control that must pass, so a check that rejects everything also fails. One test checks that
-every line of a note states only the values of the rows it cites. Tests that need a model score use a file of
-**made-up** values in `tests/fixtures/made-up-scores/`; the numbers are not real.
+every line of a note states only the values of the rows it cites. Tests that need a model score use small test inputs
+in `tests/fixtures/test-scores/`; the numbers are not model output.
 
 ## What is where
 

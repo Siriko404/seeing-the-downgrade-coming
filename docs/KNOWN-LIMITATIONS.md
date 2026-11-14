@@ -8,8 +8,8 @@ know where to check. If a word is new, see the [glossary](GLOSSARY.md).
 1. **Exact results need licensed data.** The lecture's market inputs come from CRSP stock prices through WRDS (to match
    each company to its stock, the code used two WRDS identifier tables:
    the Compustat company file, only its gvkey and CIK columns, and the CRSP/Compustat Merged link table; no Compustat
-   financial data is used, and the accounting numbers are from SEC filings). Without that access, you can study the code
-   on made-up data (the numbers mean nothing) or rebuild on public data (the numbers will differ). See
+   financial data is used, and the accounting numbers are from SEC filings). Without that access, rebuild on public
+   data (the numbers will differ); with your own WRDS account, use the lecture's route. See
    [DATA-GUIDE.md](DATA-GUIDE.md).
 2. **Free data may have survivorship bias.** Free price histories such as Yahoo's tend to omit companies that stopped
    trading. These may include companies that got into trouble, so a model built on free prices could look better than it

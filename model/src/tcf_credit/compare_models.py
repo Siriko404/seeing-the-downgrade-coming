@@ -3,7 +3,7 @@
 Goes in:  the folder of one evaluate.py run (its predictions.csv and pooled.csv).
 Comes out: comparison.csv and a printed table: each model's pooled ROC-AUC and PR-AUC, its difference from the
           reference model, and a 95% interval for that difference.
-Data:     no licensed data; works on the example panel's run too.
+Data:     no licensed data; needs nothing but the run folder.
 
 The reference model (default: logit) was named the main model before the extra models were run (its inputs were extended
 later), so the comparison asks "does anything beat the one model we named first?" and not "which of many models looks

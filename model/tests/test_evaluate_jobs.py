@@ -15,16 +15,16 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "model" / "synthetic"))
+sys.path.insert(0, str(ROOT / "model" / "tests"))
 
 import pandas as pd
 
-import make_panel as mp
+from support import panel_for_tests as mp
 from tcf_credit import evaluate as E
 
 
 class EvaluateJobsTests(unittest.TestCase):
-    """The same example panel gives the same three result files with one and with two workers."""
+    """The same small test inputs give the same three result files with one and with two workers."""
 
     def test_jobs_one_and_two_give_identical_files(self):
         panel = mp.make_panel(n_firms=20, first_year=2012, last_year=2019, seed=5)

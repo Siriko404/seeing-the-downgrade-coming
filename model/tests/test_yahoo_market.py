@@ -1,6 +1,6 @@
 """Tests for yahoo_market.py (pipeline step 5a, the free stand-in for CRSP: Yahoo prices written in the CRSP layout).
 
-The test writes small made-up price files to a temporary folder and runs the module as a command.
+The test writes small test inputs (price files) to a temporary folder and runs the module as a command.
 It needs no data and no internet.
 """
 import subprocess

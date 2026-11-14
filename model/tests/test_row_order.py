@@ -2,7 +2,7 @@
 
 The same panel, with its rows in another order, must give the same models and the same scores. Boosting draws its
 validation rows by position, so before the fix a shuffled panel gave different boosting scores. These tests build a
-small example panel with model/synthetic/make_panel.py, shuffle a copy, and compare the results.
+small test panel with model/tests/support/panel_for_tests.py, shuffle a copy, and compare the results.
 
 Run from the folder that holds `model/`:
     PYTHONPATH=model/src python -m unittest discover -s model/tests
@@ -15,12 +15,12 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "model" / "synthetic"))
+sys.path.insert(0, str(ROOT / "model" / "tests"))
 
 import numpy as np
 import pandas as pd
 
-import make_panel as mp
+from support import panel_for_tests as mp
 from tcf_credit import evaluate as E
 from tcf_credit import score_holdings, trend_v3, zoo
 from tcf_credit.features_v2 import V2_COLUMNS
