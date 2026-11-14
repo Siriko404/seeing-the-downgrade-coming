@@ -32,7 +32,17 @@ know where to check. If a word is new, see the [glossary](GLOSSARY.md).
    test reports with 515 downgrades and logit ROC-AUC 0.759, against 6,380 reports, 862 downgrades and 0.802 in the
    lecture. Fewer reports are tested because free prices are missing for many companies, often ones that stopped
    trading. Only one run was made.
-9. **Nothing here is investment advice.**
+9. **Notebooks 1 to 4 were not run on a free-route table.** They were run on the lecture's own table (the licensed
+   route), where all five notebooks ran and gave the published numbers. Notebook 5 was also run on the table that the
+   free route built on 13 November 2026. Notebooks 1 to 4 were not run on that free-route table, so a cell may fail
+   there; if one does, the message names the cell.
+10. **The WRDS sign-in was never run against WRDS.** No WRDS account was available. On the lecture's saved data the
+    package's code rebuilds the lecture's table and results exactly, but the download step (`fetch_wrds.py`) was run
+    only in the automatic tests, with a test stand-in for the connection.
+11. **Nobody has followed the README from zero on a clean machine since it was rewritten** (13 November 2026). The
+    parts were checked one by one on Linux with Python 3.14 and 3.13: the install, the tests, the rebuild command and
+    the notebooks. Windows and macOS were not tried.
+12. **Nothing here is investment advice.**
 
 ## The agent (`credit-watch`)
 
