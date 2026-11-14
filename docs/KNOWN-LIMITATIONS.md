@@ -74,8 +74,9 @@ These limits come from live runs of the agent and from reading its code. Keep th
    rated item as the filing words it, such as "Long-term" or "Commercial paper"; for an outlook or watch rating row it
    holds "outlook".
 7. **No model score here.** The model's code is in `model/`, but the trained model, its licensed training data and its
-   scores are not included (the slides keep one classroom example), so the note says the company is not scored. The
-   ratings, checks and gaps work without it.
+   scores are not included, so the note says the company is not scored. The slides keep one classroom example:
+   Compass Minerals, model chance 51%, 10-K filed 29 November 2023, S&P cut the rating 204 days after the filing,
+   203 days after the snapshot date. The ratings, checks and gaps work without it.
 8. **Long notes.** A firm with many rating actions gets a longer note than the saved examples. Read it one line at a
    time.
 9. **The AI may not stop where it should.** In one live run, the AI ran the lookup twice more with other options before

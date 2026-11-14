@@ -29,8 +29,10 @@ lecture, and the logit scored ROC-AUC 0.759 against 0.802.
    repository folder with `PYTHONPATH=model/src`: `python -m tcf_credit.rebuild data build --route free`. It was run
    from start to end on 13 November 2026, in about 30 minutes on an 8-core cloud machine. The rating-history ZIP files
    and the Loughran-McDonald files were the lecture's hand-downloaded copies, and the 1993-2025 header file that the
-   package names has not been run. `fetch_public.py` fetches the free inputs and `philly_fed.py` converts the
-   Philadelphia Fed economy files (see the steps below).
+   package names has not been run. That run downloaded the SEC ticker list and company facts, the Philadelphia Fed
+   files and the Yahoo prices itself. The three FRED files were saved by hand. The two Loughran-McDonald files are about
+   540 MB and 188 MB, and the Yahoo price files about 250 MB in total (measured 13 November 2026). `fetch_public.py`
+   fetches the free inputs and `philly_fed.py` converts the Philadelphia Fed economy files (see the steps below).
 2. **Licensed data (if your library gives you WRDS).** The lecture's route. It needs your own WRDS account with CRSP
    and Compustat. Run the same command with `--route wrds --wrds-user YOUR_NAME`. See the last section. Everything it
    writes holds licensed data: keep it on your own computer and out of any shared folder.

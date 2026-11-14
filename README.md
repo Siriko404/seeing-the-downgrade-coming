@@ -1,175 +1,134 @@
 # Credit-downgrade model and credit-watch agent
 
-Study material from a guest lecture for ADM4357 (Telfer Capital Fund, University of Ottawa), given on 11 November 2026.
-It is teaching material, not investment advice. Nothing here tells you to buy, hold or sell anything.
+Study package from a guest lecture on 11 November 2026 for ADM4357 (Telfer Capital Fund, University of Ottawa).
+It has two parts: a credit-downgrade model in `model/` and the `credit-watch` skill in `agent/`.
+It is teaching material, not investment advice.
 
-You can work through it alone, at your own pace. A path of about six study sessions is in
-[docs/STUDY-PATH.md](docs/STUDY-PATH.md).
+## Quick start
 
-## Install with your AI agent
+### With your AI agent
 
-Give your AI coding agent (Claude Code, opencode, Codex) this repository's link,
-https://github.com/Siriko404/seeing-the-downgrade-coming, and say "install everything". It follows
-[AGENTS.md](AGENTS.md), runs `python3 install.py --check`, asks only for your name and e-mail (the SEC contact), and
-then explains what it installed and how to use and change the skill.
-Without an agent, run `python3 install.py --check` yourself.
-If you are an AI agent, read [AGENTS.md](AGENTS.md) now.
+Give your agent this link and say "install everything".
 
-## What is in it
+https://github.com/Siriko404/seeing-the-downgrade-coming
 
-**Part 1, the model (`model/`).** A credit rating agency such as S&P sometimes lowers (downgrades) the rating of a
-company. The model estimates the chance that S&P downgrades a US company within 12 months of that company's annual
-report (the 10-K). It reads the report's financial ratios, the company's current S&P rating and outlook, how its stock
-has behaved, and the state of the economy (four groups of inputs; the word-list text test is a side test). The main
-model is a logistic regression ("logit"). It is compared with gradient boosting, XGBoost, a random forest, a neural
-network, and "fly brain" models (a fixed network wired like a fruit fly's brain, with only a simple readout trained).
-Every model is tested year by year on years it never saw.
+Your agent asks for your name and e-mail (the SEC contact), installs both parts, and explains what you have.
+This was tested live with opencode on 13 November 2026.
+It was not run live with Claude Code or Codex.
 
-**Part 2, the agent (`agent/`).** `credit-watch` is a skill for an AI agent (a program that uses a language model to
-carry out steps on your computer). You give it a company. Code downloads the company's SEC filings, the AI reads the
-rating paragraphs into rows, code checks every row against the filing's own words, and code writes a short note in which
-each rating line cites the rows it comes from. The AI reads; code checks and writes.
-
-## Folder layout
+### By hand
 
 ```
-README.md                  this file
-install.py                 one-step install for the model and the skill
-AGENTS.md                  what an AI agent does in this repository
-CLAUDE.md                  pointer to AGENTS.md
-docs/
-  STUDY-PATH.md            six sessions, in order
-  GLOSSARY.md              the main terms, in plain words
-  DATA-GUIDE.md            every input, where it comes from, what you must do
-  RESULTS.md               the lecture's results, and what they do not show
-  LITERATURE.md            where the model stands among published work
-  SLIDE-ERRATA.md          corrections to the slides
-  KNOWN-LIMITATIONS.md     what the model and the agent cannot do
-model/
-  README.md                how the model code is organised
-  FLY-DATA.md              the public fruit-fly files (for notebook 04)
-  requirements.txt         Python packages
-  src/tcf_credit/          the code
-  tests/                   automatic tests (they use small test inputs)
-  notebooks/
-    01_data_and_inputs.ipynb
-    02_train_and_test.ipynb
-    03_flag_line_and_errors.ipynb
-    04_fly_brain.ipynb
-    05_real_data.ipynb
-agent/
-  README.md                how to install and run credit-watch
-  MODIFYING.md             how to work with and change the skill
-  skills/credit-watch/     the skill itself
-  tests/                   automatic tests (they use small test inputs)
-  notebooks/agent_tutorial.ipynb
-deck/
-  lecture-slides.pdf       the lecture slides (the last page lists corrections)
+git clone https://github.com/Siriko404/seeing-the-downgrade-coming.git
+cd seeing-the-downgrade-coming
+python3 install.py --check
 ```
 
-## Start here in 4 steps
+The model needs Python 3.12 or newer; the install downloads about 1.7 GB of packages.
+On Windows use `python` in place of `python3`.
 
-1. **Get the package, then install Python and a virtual environment** (a private folder of packages for this project).
-   The model needs Python 3.12 or newer; the agent alone is written for Python 3.10 or newer. Everything was run only on
-   Linux, with Python 3.14 and 3.13; the Windows and macOS commands are untested. From the repository folder,
-   `python3 install.py` does this step for you: it makes the same `.venv` and installs the same pinned packages.
-   In a terminal:
+## Try the skill first
+
+Start a new agent session, then run `/credit-watch HON --offline`.
+It needs no network and no contact; the note is `credit-watch/run/note_HON.md`.
+The skill reads SEC filings, code checks every row, and code writes a cited note.
+Read [agent/README.md](agent/README.md) and [agent/MODIFYING.md](agent/MODIFYING.md).
+
+## Build the real table
+
+1. Set your own SEC contact with `python3 install.py --contact "Name e-mail"` or `TCF_SEC_CONTACT`:
+
    ```
-   git clone https://github.com/Siriko404/seeing-the-downgrade-coming.git
-   cd seeing-the-downgrade-coming
-   python3 -m venv .venv
-   source .venv/bin/activate          # Windows PowerShell: .venv\Scripts\Activate.ps1
-   pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu   # installs the CPU-only build of torch (Linux and Windows)
-   pip install -r model/requirements.txt
+   export TCF_SEC_CONTACT="Your Name you@school.ca"    # Linux and macOS
+   $env:TCF_SEC_CONTACT="Your Name you@school.ca"      # Windows PowerShell
    ```
-   The requirements include JupyterLab for the notebooks (`jupyter lab` opens them in your browser).
-2. **Run the tests.** They check that the code works on your computer:
-   ```
-   PYTHONPATH=model/src python -m unittest discover -s model/tests
-   ```
-   (Windows PowerShell: set `$env:PYTHONPATH="model/src"` first, then run the same `python -m unittest ...` line.)
-3. **Build the real table.** First give the SEC your own contact, because the SEC asks every automated client to
-   declare one. Either set the environment variable `TCF_SEC_CONTACT`, or put `[sec] contact` in
-   `~/.config/tcf_credit/settings.toml`.
-   ```
-   export TCF_SEC_CONTACT="Your Name you@school.ca"      # Linux and macOS
-   ```
-   ```
-   $env:TCF_SEC_CONTACT="Your Name you@school.ca"       # Windows PowerShell
-   ```
-   From the repository folder, with the environment active, run (Windows PowerShell: set
-   `$env:PYTHONPATH="model/src"` first, then run the same `python -m tcf_credit.rebuild ...` line):
+
+2. Download these files by hand in your browser: five rating-history ZIP files, two Loughran-McDonald files,
+   and three FRED files.
+   On 13 November 2026 FRED did not answer the automatic download on either machine tried.
+   Expect to save the three FRED files by hand.
+   The rebuild prints each page and where to save each file.
+
+3. Activate the environment with `source .venv/bin/activate` (Windows PowerShell: `.venv\Scripts\Activate.ps1`).
+
+4. From the repository folder, run the rebuild:
+
    ```
    PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route free
    ```
-   Five rating-history ZIP files and two Loughran-McDonald files must be downloaded by hand, and when FRED does not
-   answer the automatic download, three FRED files must be saved from your browser; the command prints the page and
-   where to save each. These hand downloads are not included in the 30 minutes below. The two Loughran-McDonald files
-   are about 540 MB and 188 MB, and the Yahoo price files about 250 MB in total (measured 13 November 2026). On 13
-   November 2026 this route was run from start to end in about 30 minutes on an 8-core cloud machine. It writes the
-   real table `build/panel_v2.csv` and the test results in `build/run/`, the rating events in
-   `build/ratings/ratings_obligor_events.csv.gz`, and other files. Notebook 5 explains it. `build/` and `data/` are
-   ignored by git; on the WRDS route never share them.
-4. **Open notebook 01:** `jupyter lab model/notebooks/01_data_and_inputs.ipynb`. It reads the table you built and
-   walks through every input. Notebooks 1 to 5 read that table.
 
-Then follow [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
+   On Windows PowerShell, set `$env:PYTHONPATH="model/src"` first, then run the same line.
+   On 13 November 2026 this took about 30 minutes on an 8-core cloud machine.
+   Hand downloads are not included.
+   The rebuild writes `build/panel_v2.csv`, the results in `build/run/`, and the rating events in
+   `build/ratings/ratings_obligor_events.csv.gz`.
+   See [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md) for every input.
 
-## What you will see
+5. Open notebook 01:
 
-- Test runs may print warnings. What matters is the final `OK`.
-- The virtual environment took about 1.7 GB of disk on one Linux laptop (CPU-only torch, JupyterLab included).
-- Notebook 04 downloads about 133 MB of public fruit-fly files the first time you run it.
-- The notebooks find the repository and read the real files from `build/` (or from `TCF_NB_OUT_DIR` and
-  `TCF_NB_DATA_DIR` if you set them), so you do not need to change paths.
+   ```
+   jupyter lab model/notebooks/01_data_and_inputs.ipynb
+   ```
 
 ## Two ways to get the data
 
-1. **Free public data (anyone, more work).** SEC company facts, the agencies' public rating histories, the
-   Loughran-McDonald 10-K header file, FRED and Philadelphia Fed economy files, and free Yahoo prices in place of the
-   licensed ones. First give the SEC your own contact in `TCF_SEC_CONTACT` (see step 3). One command runs every step:
-   `PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route free` (five rating-history ZIP files and two
-   Loughran-McDonald files must be downloaded by hand, and three FRED files when FRED does not answer the automatic
-   download; the command prints the page and where to save each). Free prices miss many companies that stopped
-   trading, so your results will differ from the lecture. On 13 November 2026 this route was run from start to end in
-   about 30 minutes on an 8-core cloud machine; the hand downloads are not included in that time. The command
-   downloaded the SEC ticker list and company facts, the Philadelphia Fed files and the Yahoo prices fresh, while the
-   rating-history ZIP files and the Loughran-McDonald files were the lecture's hand-downloaded copies and the three
-   FRED files were saved by hand. The two Loughran-McDonald files are about 540 MB and 188 MB, and the Yahoo price
-   files about 250 MB in total (measured 13 November 2026). The model was tested on 4,902 annual reports with 515
-   downgrades, against 6,380 with 862 in the lecture, and the logit scored ROC-AUC 0.759 against the lecture's 0.802.
-   FRED may not answer the automatic download; the command then prints the links to open in your browser. See
-   notebook 5 and [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md).
-2. **Licensed data (only if your library gives you WRDS).** The lecture's own route, with your own WRDS account:
-   `PYTHONPATH=model/src python -m tcf_credit.rebuild data build --route wrds --wrds-user YOUR_NAME` (it asks for your
-   WRDS password). On the lecture's saved data the package's code rebuilds the lecture's table and results exactly; the
-   WRDS download itself has not been run against WRDS yet (no account was available). Everything this route writes
-   holds licensed data: keep it on your own computer and clear the notebook outputs before you share the notebook.
+| Way | Who can use it | Command flag | What you get | Tested? |
+|---|---|---|---|---|
+| Free public data | Anyone | `--route free` | 4,902 reports, logit ROC-AUC 0.759 | Yes, start to end 13 November 2026 |
+| Your own WRDS account | Anyone with WRDS | `--route wrds --wrds-user YOUR_NAME` | Lecture table | Sign-in never run |
 
-## What is NOT included, and why
+The free run tested 4,902 reports with logit ROC-AUC 0.759; the lecture had 6,380 and 0.802.
+Free prices miss many companies that stopped trading, so fewer companies enter the free table.
+The WRDS route is the lecture's route; from its saved data it rebuilds the table and results exactly.
+Its files hold licensed data, so never share them.
 
-- **No licensed data and no model scores are included.** The lecture's stock prices came from CRSP, a licensed database,
-  through WRDS. To match each company to its CRSP stock, the code used two identifier tables from WRDS:
-  the Compustat company file (only its gvkey and CIK columns) and the CRSP/Compustat Merged link table. No Compustat
-  financial data is used. All accounting numbers came from the SEC filings as first filed. Licensed data is not passed
-  on here; check your library's terms before you share any of it. The agent's offline demo keeps saved rating passages
-  from public SEC filings in `agent/skills/credit-watch/cache/`. A rating passage is a paragraph or table that mentions
-  ratings, not a whole filing. There are passages for HON, RY and CMP; the file for SJ holds only a firm name and no
-  text. The agent's tests keep small saved runs built from public filings. The public data are free but must be
-  downloaded by you, under their own terms.
-- **No scores of real companies, with one exception.** The only real score in the package is one classroom example on
-  the slides: Compass Minerals (CMP), model chance 51% of an S&P downgrade within 12 months, from its 10-K filed on 29
-  November 2023 (S&P cut its rating 204 days after the filing, 203 days after the snapshot date, the day after the
-  filing). There is no other real score and no file of real scores (the agent tests use small test inputs). The
-  notebooks read the table you build; the agent tutorial runs on saved rating passages from real filings and shows no
-  model score. The model's code is in `model/`, but the trained model, its licensed training data and its scores are
-  not included, so a note made with this package shows no model score.
-- **The slides are a PDF** (`deck/lecture-slides.pdf`), not an editable file.
+## The notebooks
 
-## Read next
+- `01_data_and_inputs.ipynb`: one row, the label, the input groups, and why each input is known on the day.
+- `02_train_and_test.ipynb`: year-by-year testing, logit and gradient boosting, ROC-AUC and PR-AUC.
+- `03_flag_line_and_errors.ipynb`: the flag line, caught and missed downgrades, false alarms.
+- `04_fly_brain.ipynb`: fruit-fly models, fixed wiring with a trained readout, and the shuffled-wiring control.
+- `05_real_data.ipynb`: the two data routes and the one-command rebuild.
 
-[Glossary](docs/GLOSSARY.md) if a word is new. [Results](docs/RESULTS.md) for what the lecture found.
-[Known limitations](docs/KNOWN-LIMITATIONS.md) before you trust any number.
+Notebooks 1 to 4 were run on the lecture's table, not yet on a free-route table.
 
-Licence: the code is under the MIT licence (`LICENSE`); the documents, the notebook text and the slides are under CC BY
-4.0 (`LICENSE-docs.md`).
+## What is in the folders
+
+- `README.md`: this file.
+- `install.py`: one-step install for the model and the skill.
+- `AGENTS.md`: agent instructions; `CLAUDE.md` points to it.
+- `docs/`: study path, glossary, data guide, results, and known limitations.
+- `model/`: the model's code, five notebooks, and tests.
+- `agent/`: the `credit-watch` skill, its tests, and a tutorial notebook.
+- `deck/`: the lecture slides as one PDF file.
+
+## What is not included
+
+- No licensed data. The lecture's stock prices came from CRSP through WRDS, so you must get your own access.
+- No trained model and no scores are included. The one exception is the classroom example on the slides.
+- Compass Minerals: model chance 51%; 10-K filed 29 November 2023; S&P cut the rating 204 days after the filing.
+- No data files. You download the public data yourself under each source's terms.
+
+## Tests
+
+The model tests need the activated environment; the agent tests need only plain Python.
+
+```
+# model tests, from the repository folder
+PYTHONPATH=model/src python -m unittest discover -s model/tests
+# agent tests, from the agent/ folder
+python3 -m unittest discover -s tests
+```
+
+## Limits
+
+- Exact results need licensed data. Free data can have survivorship bias.
+- The yearly level can shift, so read a probability as a ranking.
+- The model covers only S&P-rated US 10-K filers, not financials or utilities.
+- Notebooks 1 to 4 were not run on a free-route table.
+
+Full list: [docs/KNOWN-LIMITATIONS.md](docs/KNOWN-LIMITATIONS.md). Plan: [docs/STUDY-PATH.md](docs/STUDY-PATH.md).
+
+## Licence
+
+Licence: code MIT (`LICENSE`); documents, notebook text and slides CC BY 4.0 (`LICENSE-docs.md`).
