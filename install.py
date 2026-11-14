@@ -300,6 +300,26 @@ def print_summary(repo, skill_lines, model_line, checks, uninstalled=None, kept=
     print("  next: start a NEW agent session so it sees the skill, then run /credit-watch HON --offline.")
 
 
+def print_what_you_have():
+    """Print the WHAT YOU HAVE NOW block so the agent can pass every point on to the student."""
+    print("")
+    print("WHAT YOU HAVE NOW")
+    print("  - Use the skill: start a NEW agent session, then run /credit-watch HON --offline.")
+    print("    It needs no network and no contact; the note is credit-watch/run/note_HON.md in the")
+    print("    folder where the agent runs. With a contact set, any SEC filer works: /credit-watch F.")
+    print("  - What it does: the AI reads the filings, code checks every row against the filing's own")
+    print("    words, and code writes the note. It is not investment advice.")
+    print("  - Change the skill: edit the files in agent/skills/credit-watch/ (SKILL.md is the")
+    print("    instruction text the AI reads; tools/ holds the Python that fetches, checks and writes).")
+    print("    Then run the agent tests (python3 -m unittest discover -s tests in agent/) and")
+    print("    python3 install.py --skip-model to put your version into your agent.")
+    print("    Guide: agent/MODIFYING.md")
+    print("  - The model: five notebooks in model/notebooks/ read a real table you build once")
+    print('    (README, "Start here", step 3); some files must be downloaded by hand in your browser.')
+    print("  - Limits: docs/KNOWN-LIMITATIONS.md")
+    print("  Pass EVERY point above to the user in your own words. Do not leave out changing the skill.")
+
+
 def parse_args(argv=None):
     """Read the command line and return the options."""
     parser = argparse.ArgumentParser(description="Install the credit-watch skill and the model environment.")
@@ -375,6 +395,7 @@ def main(argv=None):
     if contact_written:
         print("contact: written for the skill and the model (value not shown)")
     print_summary(repo, skill_lines, model_line, checks)
+    print_what_you_have()
     return 0 if ok else 1
 
 

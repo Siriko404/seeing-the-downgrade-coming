@@ -77,6 +77,12 @@ The run ends with a block that starts `INSTALL SUMMARY`: each skill folder writt
 
 Then start a **new** agent session so it sees the skill, and in your project folder run `/credit-watch HON --offline`.
 
+The one-step install was run live only with opencode. On 13 November 2026 opencode (DeepSeek 4.1 Flash) installed the
+package from an empty home folder: once from a local copy with the full model install (all three checks passed, about
+6 minutes) and once from the GitHub link without the model packages (about 1.5 minutes). The installer was **not** run
+live with Claude Code or Codex; for those two only the unit tests of `install.py` ran, so their skill folders
+(`~/.claude/skills/`, `~/.codex/skills/`) come from the products' documentation.
+
 Option 2, the `npx` installer (it asks which agent you use):
 
 ```

@@ -82,6 +82,11 @@ These limits come from live runs of the agent and from reading its code. Keep th
    it showed the stop message to the user. The code does not depend on this; read what the AI ran.
 10. **PDF text is copied as extracted.** A PDF can give broken words (a live run showed "I ssuer Rating"); quotes keep
     them.
+11. **The one-step install was run live only with opencode.** On 13 November 2026 opencode (DeepSeek 4.1 Flash)
+    installed the package from an empty home folder: once from a local copy with the full model install (all three
+    checks passed, about 6 minutes) and once from the GitHub link without the model packages (about 1.5 minutes). With
+    Claude Code and Codex the installer was **not** run live; for those two only the unit tests of `install.py` ran, so
+    their skill folders (`~/.claude/skills/`, `~/.codex/skills/`) come from the products' documentation.
 
 Also:
 

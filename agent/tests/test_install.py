@@ -198,6 +198,25 @@ class InstallCase(unittest.TestCase):
         self.assertTrue(any(line.startswith("  model environment: skipped (--skip-model)") for line in lines))
         self.assertTrue(any("/credit-watch HON --offline" in line for line in lines))
 
+    def test_what_you_have_now_block_is_printed(self):
+        """Every install ends with a WHAT YOU HAVE NOW block that names agent/MODIFYING.md."""
+        result = self.run_install("--skip-model", "--agents", "opencode")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        lines = result.stdout.splitlines()
+        self.assertIn("INSTALL SUMMARY", lines)
+        self.assertIn("WHAT YOU HAVE NOW", lines)
+        self.assertLess(lines.index("INSTALL SUMMARY"), lines.index("WHAT YOU HAVE NOW"))
+        self.assertTrue(any("agent/MODIFYING.md" in line for line in lines))
+        self.assertTrue(any("not investment advice" in line for line in lines))
+
+    def test_what_you_have_now_block_is_absent_on_uninstall(self):
+        """--uninstall prints the INSTALL SUMMARY but no WHAT YOU HAVE NOW block."""
+        result = self.run_install("--uninstall", "--agents", "opencode")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("INSTALL SUMMARY", result.stdout)
+        self.assertNotIn("WHAT YOU HAVE NOW", result.stdout)
+        self.assertNotIn("agent/MODIFYING.md", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

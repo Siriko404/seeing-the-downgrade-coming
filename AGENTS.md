@@ -26,12 +26,16 @@ Instructions for an AI coding agent that works in this repository. Follow them i
    Loughran-McDonald files, or the three FRED files that the student must save when FRED does not answer. The sites'
    terms forbid automated downloads or need a click-through; the student downloads these in a browser. Do not start
    the 30-minute data rebuild unless the user asks. Explain these steps instead; `docs/DATA-GUIDE.md` lists them.
-5. **Report what happened.** Read the `INSTALL SUMMARY` block that the installer prints. If it reports a failure, do
-   not say the install succeeded. Then give the user the explanation in section 3.
+5. **Report what happened.** Read both the `INSTALL SUMMARY` and the `WHAT YOU HAVE NOW` blocks that the installer
+   prints. If it reports a failure, do not say the install succeeded. Pass on **every** point of the
+   `WHAT YOU HAVE NOW` block to the user in your own words, and never leave out the point about changing the skill.
+   Then give the user the explanation in section 3.
 
 ## 3. What to tell the user after installing
 
-Adapt this script; keep it short (about 15 lines when spoken):
+The `WHAT YOU HAVE NOW` block the installer prints is the list you must deliver. Cover **every** point below in your
+own words, and never leave out the point about changing the skill. Adapt this script; keep it short (about 15 lines
+when spoken):
 
 - Tell the user what was installed and where, using the paths in `INSTALL SUMMARY`.
 - Tell the user to start a new agent session so the agent sees the skill.
